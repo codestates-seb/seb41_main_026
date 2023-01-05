@@ -9,6 +9,7 @@ import back.domain.course.dto.CourseResponseDto;
 import back.domain.dto.CourseLikeStatus;
 import back.domain.dto.UserStatus;
 import back.domain.tag.dto.TagResponseDto;
+import back.domain.tag.dto.TagResponseDtos;
 import back.domain.user.dto.UserResponseDto;
 import back.domain.user.entity.User;
 import java.time.LocalDateTime;
@@ -67,8 +68,13 @@ public class testStub {
     public static TagResponseDto createTagResponseDto(){
         return new TagResponseDto(
                 1L,
-                List.of("test1","test2"));
+                "test1");
     }
 
+    public static TagResponseDtos createTagResponseDtos(){
+        return new TagResponseDtos(
+                1L,
+                List.of("test1","test2"));
+    }
 
 }

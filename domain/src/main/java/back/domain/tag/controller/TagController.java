@@ -26,6 +26,6 @@ public class TagController {
     public ResponseEntity tagGets(){
 
         return new ResponseEntity(
-            testStub.createTagResponseDto(), HttpStatus.OK);
+            testStub.createTagResponseDtos(), HttpStatus.OK);
     }
 }

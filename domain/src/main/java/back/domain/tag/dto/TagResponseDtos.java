@@ -1,6 +1,5 @@
 package back.domain.tag.dto;
 
-
 import lombok.*;
 
 import java.util.List;
@@ -10,12 +9,10 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class TagResponseDto {
-
+public class TagResponseDtos {
 
     private Long tagId;
 
-    private String tag;
-
+    private List<String> tags;
 
 }
