@@ -1,13 +1,13 @@
-import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import TopMenu from "./components/TopMenu/TopMenu";
+import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import HomePage from './pages/HomePage/HomePage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import TopMenu from './components/TopMenu/TopMenu';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomePage />,
   },
 ]);
