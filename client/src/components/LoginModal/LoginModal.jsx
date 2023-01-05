@@ -1,5 +1,5 @@
-const LoginModal = () => {
-  return 0;
-};
+function LoginModal() {
+  return <div>모달</div>;
+}
 
 export default LoginModal;

@@ -1,5 +1,5 @@
-const LogoutModal = () => {
-  return 0;
-};
+function LogoutModal() {
+  return <div />;
+}
 
 export default LogoutModal;
