@@ -10,9 +10,6 @@ import java.util.List;
 @Setter
 @ToString
 public class TagResponseDtos {
-
     private Long tagId;
-
     private List<String> tags;
-
 }
