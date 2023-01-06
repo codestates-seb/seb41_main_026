@@ -1,6 +1,6 @@
 package back.domain.user.dto;
 
-import back.domain.dto.UserStatus;
+import back.domain.enums.UserStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -28,7 +28,7 @@ public class UserResponseDto {
 
     private UserStatus userStatus;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
 }

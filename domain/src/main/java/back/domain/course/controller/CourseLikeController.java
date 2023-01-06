@@ -3,7 +3,6 @@ package back.domain.course.controller;
 
 import back.domain.course.dto.CourseLikePatchDto;
 import back.domain.course.dto.CourseLikePostDto;
-import back.domain.dto.SingleResponseDto;
 import back.domain.utils.testStub;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class CourseLikeController {
     public ResponseEntity courseLikePost(@RequestBody CourseLikePostDto courseLikePostDto){
 
         return new ResponseEntity(
-                SingleResponseDto.of(testStub.createCourseLikeResponseDto()), HttpStatus.OK);
+                (testStub.createCourseLikeResponseDto()), HttpStatus.OK);
     }
 
     /* 코스 추천 단건 조회 */
@@ -29,7 +28,7 @@ public class CourseLikeController {
     public ResponseEntity courseLikeGet(@PathVariable Long courseLikeId){
 
         return new ResponseEntity(
-                SingleResponseDto.of(testStub.createCourseLikeResponseDto()), HttpStatus.OK);
+                (testStub.createCourseLikeResponseDto()), HttpStatus.OK);
     }
 
     /* 코스 추천 전체 조회*/

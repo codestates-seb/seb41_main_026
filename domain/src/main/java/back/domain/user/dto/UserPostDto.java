@@ -14,6 +14,4 @@ public class UserPostDto {
     private String name;
     private String email;
     private String password;
-
-
 }

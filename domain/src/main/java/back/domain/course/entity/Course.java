@@ -29,6 +29,7 @@ public class Course {
     @Column(nullable = false, unique = true)
     private String content;
 
-
-
+    @Setter
+    @Column(nullable = false)
+    private String tag;
 }

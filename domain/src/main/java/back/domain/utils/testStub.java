@@ -6,10 +6,8 @@ package back.domain.utils;
 import back.domain.comment.dto.CommentResponseDto;
 import back.domain.course.dto.CourseLikeResponseDto;
 import back.domain.course.dto.CourseResponseDto;
-import back.domain.dto.CourseLikeStatus;
-import back.domain.dto.UserStatus;
-import back.domain.tag.dto.TagResponseDto;
-import back.domain.tag.dto.TagResponseDtos;
+import back.domain.enums.CourseLikeStatus;
+import back.domain.enums.UserStatus;
 import back.domain.user.dto.UserResponseDto;
 import back.domain.user.entity.User;
 import java.time.LocalDateTime;
@@ -63,17 +61,5 @@ public class testStub {
                 1L,
                 CourseLikeStatus.LIKE,
                 0);
-    }
-
-    public static TagResponseDto createTagResponseDto(){
-        return new TagResponseDto(
-                1L,
-                "test1");
-    }
-
-    public static TagResponseDtos createTagResponseDtos(){
-        return new TagResponseDtos(
-                1L,
-                List.of("test1","test2"));
     }
 }

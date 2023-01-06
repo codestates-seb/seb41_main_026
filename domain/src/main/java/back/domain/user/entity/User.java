@@ -1,7 +1,7 @@
 package back.domain.user.entity;
 
 
-import back.domain.dto.UserStatus;
+import back.domain.enums.UserStatus;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -51,7 +51,7 @@ public class User {
     private int courseLike;
 
     @Setter
-    @Column(nullable = false, length = 1000)
+    @Column(length = 1000)
     private String userImage;
 
     @Setter
@@ -62,12 +62,11 @@ public class User {
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
-
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 }

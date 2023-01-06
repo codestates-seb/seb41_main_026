@@ -1,7 +1,7 @@
 package back.domain.course.entity;
 
 
-import back.domain.dto.CourseLikeStatus;
+import back.domain.enums.CourseLikeStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,5 +28,4 @@ public class CourseLike {
     @Column(nullable = false)
     @Setter
     private int courseLikeCount;
-
 }
