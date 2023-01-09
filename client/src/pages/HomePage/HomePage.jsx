@@ -1,13 +1,21 @@
-import CourseCard from '../../components/Card/CoruseCard';
+import styled from 'styled-components';
+import RegionSection from '../../components/RegionSection/RegionSection';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
 
 function HomePage() {
   return (
-    <div>
-      <CourseCard
-        title="🛤️ DMZ 투어"
-        text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-      />
-    </div>
+    <Container>
+      <RegionSection region="서울" />
+      <RegionSection region="부산" />
+      <RegionSection region="경남" />
+      <RegionSection region="충북" />
+    </Container>
   );
 }
 

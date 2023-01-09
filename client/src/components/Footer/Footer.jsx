@@ -1,5 +1,5 @@
 function Footer() {
-  return <div>ㅎㅇ</div>;
+  return <div>푸터 영역</div>;
 }
 
 export default Footer;
