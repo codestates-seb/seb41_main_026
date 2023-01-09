@@ -29,11 +29,11 @@ public class Course {
     private Long courseId;
 
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String courseName;
 
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String content;
 
     @Setter
@@ -44,16 +44,18 @@ public class Course {
     @Column(nullable = false)
     private String tag;
 
+    @Setter
+    @Column(nullable = false)
+    private String location;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
-    @Setter
-    @JsonBackReference
+//    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
-    @Setter
-    @JsonBackReference
+//    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
 

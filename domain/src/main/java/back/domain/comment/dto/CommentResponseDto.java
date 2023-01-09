@@ -19,7 +19,7 @@ public class CommentResponseDto {
 
         private LocalDateTime createAt;
 
-        private LocalDateTime updateAt;
+        private LocalDateTime modifiedAt;
 
 
 }

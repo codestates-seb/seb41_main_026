@@ -5,6 +5,7 @@ import back.domain.course.dto.CourseLikePatchDto;
 import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
 import back.domain.course.repository.CourseLikeRepository;
+import back.domain.enums.CourseLikeStatus;
 import back.domain.exceoption.BusinessException;
 import back.domain.exceoption.ErrorCode;
 import back.domain.user.entity.User;
@@ -59,9 +60,25 @@ public class CourseLikeService {
         CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
         findCourseLike.addUser(user);
 
-        Optional.ofNullable(courseLike.getCourseLikeStatus())
-                .ifPresent(courseLikeStatus -> findCourseLike.setCourseLikeStatus(courseLikeStatus));
+        CourseLikeStatus vote = courseLike.getCourseLikeStatus();
 
+        if(vote != null){
+            if(vote.equals(CourseLikeStatus.LIKE)){
+                if(vote.equals(findCourseLike.getCourseLikeStatus())){
+                    return findCourseLike;
+                } else{
+                    Optional.ofNullable(courseLike.getCourseLikeStatus())
+                            .ifPresent(LikeStatus -> findCourseLike.setCourseLikeStatus(LikeStatus));
+                }
+            } else{
+                if(vote.equals(findCourseLike.getCourseLikeStatus())){
+                    return findCourseLike;
+                } else {
+                    Optional.ofNullable(courseLike.getCourseLikeStatus())
+                            .ifPresent(LikeStatus -> findCourseLike.setCourseLikeStatus(LikeStatus));
+                }
+            }
+        }
         return courseLikeRepository.save(findCourseLike);
 
     }

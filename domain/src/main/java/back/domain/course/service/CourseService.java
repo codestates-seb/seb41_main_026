@@ -44,6 +44,8 @@ public class CourseService {
     /* course 전체 조회 */
     public List<Course> gets() {
        List<Course> courses  = courseRepository.findAll();
+
+
        return courses;
     }
     /* course 수정 */
@@ -54,10 +56,12 @@ public class CourseService {
                .ifPresent(name -> findCourse.setCourseName(name));
        Optional.ofNullable(course.getContent())
                .ifPresent(content -> findCourse.setContent(content));
-        Optional.ofNullable(course.getTag())
+       Optional.ofNullable(course.getTag())
                 .ifPresent(tag -> findCourse.setTag(tag));
+        Optional.ofNullable(course.getLocation())
+                .ifPresent(location -> findCourse.setLocation(location));
 
-       return findCourse;
+       return courseRepository.save(findCourse);
     }
     /* course 삭제 */
     public void delete(Long courseId) {

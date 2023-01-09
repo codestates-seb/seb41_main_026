@@ -30,6 +30,12 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
 
+    public User(Long userId, String name, String email, String password) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,14 +83,14 @@ public class User {
     @Setter
     private LocalDateTime modifiedAt= LocalDateTime.now();
 
-    @ToString.Exclude
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
-    @JsonBackReference
+//    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
-    @ToString.Exclude
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
-    @JsonBackReference
+//    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
     public void addCourseLike(CourseLike courseLike){

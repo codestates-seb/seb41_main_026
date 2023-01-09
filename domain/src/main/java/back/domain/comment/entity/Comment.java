@@ -49,14 +49,17 @@ public class Comment {
     @Setter
     private LocalDateTime modifiedAt;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     private User user;
 
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     private Course course;
 
 

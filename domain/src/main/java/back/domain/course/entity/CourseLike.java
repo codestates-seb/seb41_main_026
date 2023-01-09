@@ -30,21 +30,23 @@ public class CourseLike {
     @Setter
     private CourseLikeStatus courseLikeStatus;
 
-    @Column(nullable = false)
-    @Setter
-    private int courseLikeCount;
+//    @Column(nullable = false)
+//    @Setter
+//    private int courseLikeCount;
 
 
 
     @ManyToOne(optional=true,fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     private User user;
 
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     private Course course;
 
     public void addUser(User user){
