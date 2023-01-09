@@ -3,8 +3,9 @@ import google from '../../img/google.png';
 import naver from '../../img/naver.png';
 import email from '../../img/email.png';
 import password from '../../img/password.png';
+import name from '../../img/name.png';
 
-function LoginModal() {
+function SignUpModal() {
   return (
     <>
       <button
@@ -13,7 +14,7 @@ function LoginModal() {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >
-        로그인
+        회원가입
       </button>
       <div
         className="modal fade"
@@ -27,11 +28,11 @@ function LoginModal() {
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-3"
+                  className="modal-title fs-2"
                   id="exampleModalLabel"
                   style={{ fontFamily: 'Heebo' }}
                 >
-                  Log In
+                  Sign Up
                 </h1>
               </div>
               <button
@@ -45,6 +46,22 @@ function LoginModal() {
               />
             </div>
             <div className="modal-body p-5">
+              <img
+                src={name}
+                alt="logo"
+                style={{
+                  width: '35px',
+                  height: '35px',
+                  marginBottom: '-37px',
+                }}
+              />
+              <input
+                type="email"
+                className="form-control border-0 border-bottom"
+                id="floatingInput"
+                placeholder="     이름을 적으세요"
+              />
+              <br />
               <img
                 src={email}
                 alt="logo"
@@ -60,7 +77,6 @@ function LoginModal() {
                 id="floatingInput"
                 placeholder="     이메일을 적으세요"
               />
-              <br />
               <br />
               <img
                 src={password}
@@ -87,12 +103,12 @@ function LoginModal() {
                     backgroundColor: 'rgba(178, 211, 190, 1)',
                   }}
                 >
-                  로그인
+                  회원가입
                 </button>
               </div>
             </div>
-            <div className="p-5">
-              <div className="modal-body border-top d-flex gap-4 m-auto">
+            <div className="">
+              <div className="modal-body d-flex gap-4 m-auto">
                 <button
                   type="submit"
                   className="btn"
@@ -101,8 +117,7 @@ function LoginModal() {
                     borderColor: 'rgba(178, 211, 190, 1)',
                     borderRadius: '20px',
                     width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
+                    marginLeft: '50px',
                   }}
                 >
                   <img
@@ -124,7 +139,6 @@ function LoginModal() {
                     borderRadius: '20px',
                     width: '80px',
                     marginLeft: '10px',
-                    marginTop: '20px',
                   }}
                 >
                   <img
@@ -146,7 +160,6 @@ function LoginModal() {
                     borderRadius: '20px',
                     width: '80px',
                     marginLeft: '10px',
-                    marginTop: '20px',
                   }}
                 >
                   <img
@@ -168,10 +181,7 @@ function LoginModal() {
             >
               <div className="modal-footer">
                 <button type="button" className="btn">
-                  비밀번호 찾기
-                </button>
-                <button type="button" className="btn">
-                  회원가입
+                  로그인
                 </button>
               </div>
             </div>
@@ -182,4 +192,4 @@ function LoginModal() {
   );
 }
 
-export default LoginModal;
+export default SignUpModal;
