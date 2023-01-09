@@ -2,10 +2,20 @@ import styled from 'styled-components';
 import img from '../../img/sampleImg.jpg';
 
 const CardBox = styled.div`
+  &:hover {
+    box-shadow: 0px 65.3611px 52.2889px rgba(68, 68, 68, 0.1),
+      0px 42.3637px 30.6229px rgba(68, 68, 68, 0.0759259),
+      0px 25.1761px 16.655px rgba(68, 68, 68, 0.0607407),
+      0px 13.0722px 8.49694px rgba(68, 68, 68, 0.05),
+      0px 5.32572px 4.26057px rgba(68, 68, 68, 0.0392593),
+      0px 1.21039px 2.05766px rgba(68, 68, 68, 0.0240741);
+    transform: translateY(-2px);
+  }
   width: 293px;
   height: 391px;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-right: 9px;
 `;
 
 const CardImg = styled.img`
@@ -55,6 +65,7 @@ const CardButton = styled.button`
   color: white;
   margin-left: 15px;
   margin-top: 13px;
+  cursor: pointer;
 `;
 
 function CourseCard({ title, text }) {
