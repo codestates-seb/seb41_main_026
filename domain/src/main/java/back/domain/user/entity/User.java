@@ -26,12 +26,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    public User(Long userId, String name, String email, String password) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,11 +46,11 @@ public class User {
 
     @Setter
     @Column(nullable = false, length = 1000)
-    // 좋아요한 게시물 조회
+    // 좋아요한 게시물
     private int courseLike;
 
     @Setter
-    @Column(length = 1000)
+    @Column(nullable = false, length = 1000)
     private String userImage;
 
     @Setter
@@ -78,13 +72,17 @@ public class User {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    @JsonBackReference
+//    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    @JsonBackReference
+//    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
+
+    @Column(nullable = false)
+    @Setter
+    private long likeCount = 0;
 
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);

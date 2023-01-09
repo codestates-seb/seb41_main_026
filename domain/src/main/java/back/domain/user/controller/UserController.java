@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class UserController {
     public ResponseEntity userPost(@RequestBody UserPostDto userPostDto){
         User user = userMapper.UserPostDtoToEntity(userPostDto);
         User save = userService.post(user, userPostDto);
-        UserResponseDto userResponseDto = userMapper.UserEntityToResponseDto(user);
+        UserResponseDto userResponseDto = userMapper.UserEntityToResponseDto(save);
 
         return new ResponseEntity<>(
                  userResponseDto,HttpStatus.OK);
@@ -36,8 +37,7 @@ public class UserController {
         User user = userService.get(userId);
         UserResponseDto userResponseDto = userMapper.UserEntityToResponseDto(user);
 
-        return new ResponseEntity<>(userResponseDto,
-                HttpStatus.OK);
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
 //    @GetMapping

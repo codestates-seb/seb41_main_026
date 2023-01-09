@@ -1,11 +1,9 @@
 package back.domain.course.service;
 
 import back.domain.course.dto.CourseLikePatchDto;
-import back.domain.course.dto.CourseLikeResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
 import back.domain.course.repository.CourseLikeRepository;
-import back.domain.course.repository.CourseRepository;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
 import back.domain.user.entity.User;

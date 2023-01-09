@@ -3,6 +3,7 @@ package back.domain.course.entity;
 
 import back.domain.enums.CourseLikeStatus;
 import back.domain.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,18 +28,18 @@ public class CourseLike {
     @Setter
     private CourseLikeStatus courseLikeStatus;
 
-    @Column(nullable = false)
-    @Setter
-    private int courseLikeCount;
+//    @Column(nullable = false)
+//    @Setter
+//    private int courseLikeCount;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
     private User user;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @Setter
-    @JsonManagedReference
+    @JsonIgnore
     private Course course;
 
     public void addUser(User user) {

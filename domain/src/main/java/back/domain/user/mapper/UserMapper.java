@@ -11,7 +11,13 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
     User UserPostDtoToEntity(UserPostDto userPostDto);
 
-    User UserPatchDtoToEntity(UserPatchDto userPatchDto);
+   default User UserPatchDtoToEntity(UserPatchDto userPatchDto) {
+        User user = new User();
+        user.setPassword(userPatchDto.getPassword());
+        user.setName(userPatchDto.getName());
+        user.setUserImage(userPatchDto.getUserImage());
+        return user;
+    }
 
     UserResponseDto UserEntityToResponseDto(User user);
 }

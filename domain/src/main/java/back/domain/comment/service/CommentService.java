@@ -14,6 +14,7 @@ import back.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,8 @@ public class CommentService {
         Course course = courseService.verifiedCourse(commentPostDto.getCourseId());
         comment.addUser(user);
         comment.addCourse(course);
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setModifiedAt(LocalDateTime.now());
         Comment save = commentRepository.save(comment);
         return save;
     }
@@ -52,12 +55,18 @@ public class CommentService {
         User user = userService.verifiedUser(commentPatchDto.getUserId());
         Course course = courseService.verifiedCourse(commentPatchDto.getCourseId());
 
+//        if (!user.getUserId().equals(comment.getUser().getUserId())) {
+//            throw new BusinessException(ErrorCode.BAD_REQUEST);
+//        }
+
         Comment findComment = verifiedComment(commentId);
         findComment.addCourse(course);
         findComment.addUser(user);
 
         Optional.ofNullable(comment.getContent())
                 .ifPresent(content -> findComment.setContent(content));
+
+        comment.setModifiedAt(LocalDateTime.now());
 
         return commentRepository.save(findComment);
     }

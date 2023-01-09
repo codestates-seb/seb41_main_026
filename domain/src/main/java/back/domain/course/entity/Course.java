@@ -43,16 +43,18 @@ public class Course {
     @Column(nullable = false)
     private int viewCount;
 
+    @Setter
+    @Column(nullable = false)
+    private String location;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @Setter
-    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @Setter
-    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
     public void addCourseLike(CourseLike courseLike) {

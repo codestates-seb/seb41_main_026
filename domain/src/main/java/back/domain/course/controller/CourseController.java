@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
 @RequestMapping("/course")
 @RequiredArgsConstructor
@@ -52,7 +53,7 @@ public class CourseController {
     }
 
     @PatchMapping("/{courseId}")
-    public ResponseEntity coursepatch(@PathVariable Long courseId,
+    public ResponseEntity coursePatch(@PathVariable Long courseId,
                                       @RequestBody CoursePatchDto coursePatchDto){
 
         Course course = courseMapper.CoursePatchDtoToEntity(coursePatchDto);
@@ -64,7 +65,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{courseId}")
-    public ResponseEntity coursedelete(@PathVariable Long courseId){
+    public ResponseEntity courseDelete(@PathVariable Long courseId){
         courseService.delete(courseId);
 
         return ResponseEntity.noContent().build();

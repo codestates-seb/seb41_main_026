@@ -14,5 +14,5 @@ public class CourseLikeResponseDto {
 
     private CourseLikeStatus courseLikeStatus;
 
-    private int courseLikeCount;
+//    private int courseLikeCount;
 }

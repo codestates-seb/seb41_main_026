@@ -28,6 +28,8 @@ public class UserService {
         user.setUserStatus(UserStatus.ACTIVITY);
         user.setPassword(userPostDto.getPassword());
         User save = userRepository.save(user);
+        user.setLikeCount(user.getLikeCount());
+
         return save;
     }
 
