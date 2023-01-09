@@ -3,10 +3,10 @@ import logo from '../../img/logo.png';
 function Header() {
   return (
     <nav
-      className="navbar bg-dark navbar-expand-lg fixed-top"
+      className="navbar bg-dark navbar-expand-lg sticky-top"
       data-bs-theme="dark"
     >
-      <div className="container-fluid">
+      <div className="container-xl">
         <a className="navbar-brand" href="/">
           <img src={logo} alt="logo" height="40px" />
         </a>
