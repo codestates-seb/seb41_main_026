@@ -13,4 +13,5 @@ public class CommentPatchDto {
 
     private String content;
     private Long userId;
+    private Long courseId;
 }

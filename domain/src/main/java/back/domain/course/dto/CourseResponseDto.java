@@ -1,6 +1,8 @@
 package back.domain.course.dto;
 
 
+import back.domain.comment.entity.Comment;
+import back.domain.course.entity.CourseLike;
 import lombok.*;
 
 import java.util.List;
@@ -15,7 +17,9 @@ public class CourseResponseDto {
     private Long courseId;
     private String courseName;
     private String content;
-    private List<String> comments;
+    private String tag;
+    private List<Comment> comments;
+    private List<CourseLike> courseLikes;
 
 
 }

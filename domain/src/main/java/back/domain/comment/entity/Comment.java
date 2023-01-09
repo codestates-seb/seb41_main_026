@@ -1,6 +1,10 @@
 package back.domain.comment.entity;
 
 
+import back.domain.course.entity.Course;
+import back.domain.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,12 +39,35 @@ public class Comment {
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
+    @Setter
     private LocalDateTime createdAt;
 
 
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     @LastModifiedDate
+    @Setter
     private LocalDateTime modifiedAt;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @Setter
+    @JsonManagedReference
+    private User user;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @Setter
+    @JsonManagedReference
+    private Course course;
+
+
+    public void addUser(User user){
+        this.user =user ;
+        user.addComment(this);
+    }
+
+    public void addCourse(Course course){
+        this.course = course;
+        course.addComment(this);
+    }
 
 }

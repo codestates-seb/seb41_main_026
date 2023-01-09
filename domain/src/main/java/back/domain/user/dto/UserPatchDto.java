@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 public class UserPatchDto {
 
-    private Long userId;
+
     private String name;
     private String password;
     private String userImage;

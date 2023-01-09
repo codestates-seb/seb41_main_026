@@ -1,6 +1,6 @@
 package back.domain.course.dto;
 
-import back.domain.dto.CourseLikeStatus;
+import back.domain.enums.CourseLikeStatus;
 import lombok.*;
 
 @AllArgsConstructor
@@ -16,7 +16,6 @@ public class CourseLikeResponseDto {
 
     private CourseLikeStatus courseLikeStatus;
 
-    private int courseLikeCount;
 
 
 }
