@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import union from '../../img/union.png';
 import polygon from '../../img/Polygon.png';
-// import { useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import axios from 'axios';
 
 const Container = styled.div`
   width: 1200px;
@@ -144,16 +144,16 @@ const CommentButton = styled.div`
 `;
 
 function ContentPage() {
-  // const { params } = useParams();
+  const { id } = useParams();
   // const [courseData, setCourseData] = useState(null);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${params}`,
-  //     )
-  //     .then(res => console.log(res.data));
-  // });
+  console.log(id);
+  useEffect(() => {
+    axios
+      .get(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${id}`,
+      )
+      .then(res => console.log(res.data));
+  });
   return (
     <Container>
       <TitleBox>
