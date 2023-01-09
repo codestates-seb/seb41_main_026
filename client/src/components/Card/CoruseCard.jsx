@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import img from '../../img/sampleImg.jpg';
 
 const CardBox = styled.div`
@@ -68,13 +69,15 @@ const CardButton = styled.button`
   cursor: pointer;
 `;
 
-function CourseCard({ title, text }) {
+function CourseCard({ title, text, id }) {
   return (
     <CardBox>
       <CardImg src={img} />
       <CardTitle>{title}</CardTitle>
       <CardText>{text}</CardText>
-      <CardButton>코스 살펴보기</CardButton>
+      <Link style={{ textDecoration: 'none' }} to={`./course/${id}`}>
+        <CardButton>코스 살펴보기</CardButton>
+      </Link>
     </CardBox>
   );
 }
