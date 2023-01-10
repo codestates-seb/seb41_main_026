@@ -5,15 +5,15 @@ function LogoutModal() {
         type="button"
         className="btn btn-outline-success"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#exampleModal3"
       >
         로그아웃
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="exampleModal3"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabel3"
         aria-hidden="true"
       >
         <div className="modal-dialog">
