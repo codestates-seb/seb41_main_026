@@ -11,5 +11,6 @@ import lombok.*;
 public class CourseLikePatchDto {
 
     private Long userId;
+//    private long courseId;
     private String courseLikeStatus;
 }

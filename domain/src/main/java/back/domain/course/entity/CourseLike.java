@@ -19,6 +19,7 @@ import javax.swing.text.html.Option;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
+@Table(name = "COURSELIKE")
 @NoArgsConstructor
 public class CourseLike {
 
@@ -30,9 +31,6 @@ public class CourseLike {
     @Setter
     private CourseLikeStatus courseLikeStatus;
 
-//    @Column(nullable = false)
-//    @Setter
-//    private int courseLikeCount;
 
 
 

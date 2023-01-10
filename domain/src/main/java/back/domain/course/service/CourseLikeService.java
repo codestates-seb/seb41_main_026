@@ -31,11 +31,65 @@ public class CourseLikeService {
         courseLike.addCourse(course);
         courseLike.addUser(user);
 
-        CourseLike saved = courseLikeRepository.save(courseLike);
+//        if(courseLike.getCourseLikeStatus()!=null){
+//            if (courseLike.getCourseLikeStatus() == CourseLikeStatus.LIKE) {
+//                courseLike.setCourseLikeStatus(CourseLikeStatus.NONE);
+//                return courseLikeRepository.save(courseLike);
+//            } else {
+//                courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//                return courseLikeRepository.save(courseLike);
+//            }
+//        } else {
+//            courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//            return courseLikeRepository.save(courseLike);
+//        }
 
-        return saved;
-
+//        courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//
+        return courseLikeRepository.save(courseLike);
     }
+    public CourseLike postdown(CourseLike courseLike, Long courseId, Long userId) {
+            User user = userService.verifiedUser(userId);
+            Course course = courseService.verifiedCourse(courseId);
+
+            courseLike.addCourse(course);
+            courseLike.addUser(user);
+//            if(courseLike.getCourseLikeId()==null){
+//                courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//                courseLikeRepository.save(courseLike);
+//            } else {
+//                if (courseLike.getCourseLikeStatus() == CourseLikeStatus.LIKE) {
+//                    courseLike.setCourseLikeStatus(CourseLikeStatus.NONE);
+//                    courseLikeRepository.save(courseLike);
+//                } else {
+//                    courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//                    courseLikeRepository.save(courseLike);
+//                }
+//            }
+
+//            courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+
+//        return courseLikeRepository.save(courseLike);
+//            return courseLike;
+
+
+//
+        if (courseLike.getCourseLikeStatus()!=null){
+            if(courseLike.getCourseLikeStatus() == CourseLikeStatus.LIKE){
+                courseLike.setCourseLikeStatus(CourseLikeStatus.NONE);
+            } else{
+                courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+            }
+        } else {
+            if(courseLike.getCourseLikeStatus()==null){
+                courseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+                courseLikeRepository.save(courseLike);
+            }
+        }
+        return courseLike;
+    }
+
+
 
     public CourseLike get(Long courseLikeId) {
         CourseLike courseLike  = verifiedCourseLike(courseLikeId);
@@ -54,11 +108,23 @@ public class CourseLikeService {
         return courseLikes;
     }
 
-    public CourseLike patch(CourseLike courseLike, Long courseLikeId, CourseLikePatchDto courseLikePatchDto) {
+    public CourseLike patch(CourseLike courseLike ,Long courseLikeId, CourseLikePatchDto courseLikePatchDto) {
 
-        User user = userService.verifiedUser(courseLikePatchDto.getUserId());
-        CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
-        findCourseLike.addUser(user);
+            User user = userService.verifiedUser(courseLikePatchDto.getUserId());
+//            Course course = courseService.verifiedCourse(courseLikePatchDto.getCourseId());
+            CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
+//            findCourseLike.addCourse(course);
+            findCourseLike.addUser(user);
+
+//        findCourseLike.setCourseLikeStatus(CourseLikeStatus.NONE);
+
+
+//            if (findCourseLike.getCourseLikeStatus() == CourseLikeStatus.LIKE) {
+//                findCourseLike.setCourseLikeStatus(CourseLikeStatus.NONE);
+//            } else {
+//                findCourseLike.setCourseLikeStatus(CourseLikeStatus.LIKE);
+//            }
+
 
         CourseLikeStatus vote = courseLike.getCourseLikeStatus();
 
@@ -79,7 +145,7 @@ public class CourseLikeService {
                 }
             }
         }
-        return courseLikeRepository.save(findCourseLike);
+            return courseLikeRepository.save(findCourseLike);
 
     }
 }

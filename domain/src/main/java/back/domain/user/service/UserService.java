@@ -28,6 +28,7 @@ public class UserService {
         user.setPassword(userPostDto.getPassword());
         user.setUserImage("basic");
         user.setUserStatus(UserStatus.ACTIVITY);
+        user.setCreatedAt(LocalDateTime.now());
 
         User save  = userRepository.save(user);
         return save;

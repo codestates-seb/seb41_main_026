@@ -3,6 +3,7 @@ package back.domain.course.service;
 
 import back.domain.course.entity.Course;
 import back.domain.course.repository.CourseRepository;
+import back.domain.enums.CourseLikeStatus;
 import back.domain.exceoption.BusinessException;
 import back.domain.exceoption.ErrorCode;
 
@@ -22,7 +23,9 @@ public class CourseService {
     public Course post(Course course) {
 
         course.setViewCount(0);
+        course.setCourseLike(0);
         Course save = courseRepository.save(course);
+
         return save;
 
     }

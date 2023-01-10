@@ -1,13 +1,18 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+#  datasource:
+#    url: jdbc:h2:mem:test;MODE=MySQL
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
   datasource:
-    url: jdbc:h2:mem:test;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+      url: jdbc:mysql://127.0.0.1:3306/main_project?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+      username: root
+      password: 4298
+      driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -38,5 +43,9 @@ logging.level:
             org.hibernate.type.descriptor.sql.BasicBinder: trace
     springframework:
       web.servlet: debug
+
+
+
+
 
 

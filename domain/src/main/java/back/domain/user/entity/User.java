@@ -74,6 +74,7 @@ public class User {
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
+    @Setter
     private LocalDateTime createdAt= LocalDateTime.now();
 
 

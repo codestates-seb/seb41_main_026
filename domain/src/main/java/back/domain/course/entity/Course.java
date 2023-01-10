@@ -48,6 +48,10 @@ public class Course {
     @Column(nullable = false)
     private String location;
 
+    @Setter
+    @Column(nullable = false)
+    private Integer courseLike;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
 //    @JsonBackReference
