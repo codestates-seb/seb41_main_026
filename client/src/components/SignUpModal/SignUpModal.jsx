@@ -24,13 +24,13 @@ function SignUpModal() {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered p-4">
-          <div className="modal-content">
+          <div className="modal-content bg-white">
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-2"
+                  className="modal-title fs-3"
                   id="exampleModalLabel"
-                  style={{ fontFamily: 'Heebo' }}
+                  style={{ fontFamily: 'Heebo', color: 'black' }}
                 >
                   Sign Up
                 </h1>
@@ -42,6 +42,7 @@ function SignUpModal() {
                 aria-label="Close"
                 style={{
                   marginBottom: '20px',
+                  color: 'black',
                 }}
               />
             </div>
@@ -52,14 +53,18 @@ function SignUpModal() {
                 style={{
                   width: '35px',
                   height: '35px',
-                  marginBottom: '-37px',
+                  marginBottom: '-39px',
                 }}
               />
               <input
                 type="email"
                 className="form-control border-0 border-bottom"
                 id="floatingInput"
-                placeholder="     이름을 적으세요"
+                placeholder="이름을 적으세요"
+                style={{
+                  borderRadius: '0',
+                  paddingLeft: '30px',
+                }}
               />
               <br />
               <img
@@ -75,7 +80,11 @@ function SignUpModal() {
                 type="email"
                 className="form-control border-0 border-bottom"
                 id="floatingInput"
-                placeholder="     이메일을 적으세요"
+                placeholder="이메일을 적으세요"
+                style={{
+                  borderRadius: '0',
+                  paddingLeft: '30px',
+                }}
               />
               <br />
               <img
@@ -92,7 +101,12 @@ function SignUpModal() {
                 type="password"
                 className="form-control border-0 border-bottom"
                 id="floatingInput"
-                placeholder="     비밀번호를 적으세요"
+                placeholder="비밀번호를 적으세요"
+                style={{
+                  borderRadius: '0',
+                  paddingLeft: '30px',
+                  borderColor: 'rgba(222, 226, 230, 1)',
+                }}
               />
               <br />
               <div className="col-lg-12 col-sm-12 text-sm-end text-center">
@@ -108,7 +122,12 @@ function SignUpModal() {
               </div>
             </div>
             <div className="">
-              <div className="modal-body d-flex gap-4 m-auto">
+              <div
+                className="modal-body d-flex gap-4 m-auto"
+                style={{
+                  paddingBottom: '40px',
+                }}
+              >
                 <button
                   type="submit"
                   className="btn"
