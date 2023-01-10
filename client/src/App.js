@@ -23,13 +23,21 @@ const Container = styled.div`
   align-items: center;
 `;
 
+function Main({ children }) {
+  const location = window.location.pathname;
+  if (location === '/' || location === '/course/:id') {
+    return <Container>{children}</Container>;
+  }
+  return <div>{children}</div>;
+}
+
 function App() {
   return (
     <>
       <Header />
-      <Container>
+      <Main>
         <RouterProvider router={router} />
-      </Container>
+      </Main>
       <Footer />
     </>
   );

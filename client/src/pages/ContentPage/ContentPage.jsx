@@ -1,9 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { GoogleMap, LoadScriptNext, MarkerF } from '@react-google-maps/api';
 import styled from 'styled-components';
 import axios from 'axios';
 import union from '../../img/union.png';
 import polygon from '../../img/Polygon.png';
+import sampleImg from '../../img/sampleImg.jpg';
+import time from '../../img/time.png';
+import route from '../../img/route.png';
 
 const Container = styled.div`
   width: 1200px;
@@ -143,6 +147,132 @@ const CommentButton = styled.div`
   padding: 0px 12px;
 `;
 
+const Comment = styled.div`
+  padding: 16px;
+  background-color: white;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+  position: relative;
+  margin-top: 13px;
+`;
+
+const Triangle = styled.div`
+  width: 7px;
+  height: 7px;
+  background: #ffffff;
+  transform: rotate(135deg);
+  position: absolute;
+  top: 19px;
+  right: -3px;
+`;
+
+const MapBox = styled.div`
+  width: 1200px;
+  margin: 100px 0;
+
+  display: flex;
+  justify-content: space-between;
+  .map-container {
+    width: 57.5%;
+    height: 400px;
+  }
+`;
+
+const LocationBox = styled.div`
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Location = styled.div`
+  width: 435px;
+  height: 80px;
+  background: #f2f4d1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  position: relative;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+
+const LocationImg = styled.img`
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: -2px;
+`;
+
+const LocationText = styled.div`
+  font-family: 'ABeeZee';
+  font-style: italic;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: #313131;
+  position: absolute;
+  left: 100px;
+  top: 30px;
+`;
+
+const InfoContainer = styled.div`
+  width: 1200px;
+`;
+
+const InfoBox = styled.div`
+  width: 642px;
+  height: 126px;
+  background: #f2f4d1;
+  border: 1px solid #b2d3be;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const CourseBox1 = styled.div`
+  margin-left: 30px;
+  flex: 0.2;
+  display: flex;
+  flex-direction: column;
+`;
+const CourseBox2 = styled.div`
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CourseTitle = styled.div`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5e6073;
+  display: flex;
+`;
+
+const Course = styled.div`
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5e6073;
+  display: flex;
+  align-items: center;
+`;
+
+const TagBox = styled.div`
+  width: 558px;
+  height: 126px;
+`;
+
 function ContentPage() {
   const { id } = useParams();
   // const [courseData, setCourseData] = useState(null);
@@ -154,6 +284,36 @@ function ContentPage() {
       )
       .then(res => console.log(res.data));
   });
+
+  const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
+
+  const markers = [
+    {
+      id: 1,
+      name: '한국 서울타워점',
+      position: { lat: 37.5512141, lng: 126.9882024 },
+    },
+    {
+      id: 2,
+      name: 'Denver, Colorado',
+      position: { lat: 39.739235, lng: 124.99025 },
+    },
+    {
+      id: 3,
+      name: 'Los Angeles, California',
+      position: { lat: 34.052235, lng: -118.243683 },
+    },
+    {
+      id: 4,
+      name: 'New York, New York',
+      position: { lat: 40.712776, lng: -74.005974 },
+    },
+  ];
+
+  const locationHandler = idValue => {
+    setCenter(markers[idValue - 1].position);
+  };
+
   return (
     <Container>
       <TitleBox>
@@ -175,13 +335,84 @@ function ContentPage() {
         </ShortsBox>
         <CommentBox>
           <CommentTitle>댓글 목록</CommentTitle>
-          <CommentList>테스트</CommentList>
+          <CommentList>
+            <Comment>
+              댓글 내용입니다
+              <Triangle />
+            </Comment>
+            <Comment>
+              댓글 내용입니다!!!
+              <Triangle />
+            </Comment>
+            {/* {comment.map((ele) => {
+              return <Comment key={ele.id}>{ele.text}<Triangle/></Comment>
+            })} */}
+          </CommentList>
           <CommentInputSection>
             <CommentInput placeholder="댓글 달기" />
             <CommentButton>게시</CommentButton>
           </CommentInputSection>
         </CommentBox>
       </MainBox>
+
+      <MapBox>
+        <LoadScriptNext googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM">
+          <GoogleMap
+            style={{ width: '600px', height: '600px' }}
+            zoom={13}
+            center={center}
+            mapContainerClassName="map-container"
+          >
+            {markers.map(ele => {
+              return (
+                <MarkerF key={ele.id} position={ele.position}>
+                  {ele.name}
+                </MarkerF>
+              );
+            })}
+          </GoogleMap>
+        </LoadScriptNext>
+        <LocationBox>
+          {markers.map(ele => {
+            return (
+              <Location onClick={() => locationHandler(ele.id)}>
+                <LocationImg src={sampleImg} alt="기본" />
+                <LocationText>{ele.name}</LocationText>
+              </Location>
+            );
+          })}
+        </LocationBox>
+      </MapBox>
+      <InfoContainer>
+        <InfoBox>
+          <CourseBox1>
+            <CourseTitle>
+              <img
+                style={{ width: '20px', marginRight: '5px' }}
+                src={route}
+                alt="코스"
+              />
+              도보코스
+            </CourseTitle>
+            <CourseTitle>
+              <img
+                style={{ width: '20px', marginRight: '5px' }}
+                src={time}
+                alt="시간"
+              />
+              소요시간
+            </CourseTitle>
+          </CourseBox1>
+          <CourseBox2>
+            <Course>
+              임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대 -
+              통일촌
+            </Course>
+            <Course>3시간</Course>
+          </CourseBox2>
+        </InfoBox>
+        <TagBox />
+      </InfoContainer>
     </Container>
   );
 }

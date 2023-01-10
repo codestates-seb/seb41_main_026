@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import CourseCard from '../Card/CoruseCard';
 import leftImg from '../../img/leftImg.png';
 import rightImg from '../../img/rightImg.png';
@@ -54,6 +55,7 @@ const ArrowImg = styled.img`
 function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
+  // const [locationData, setLocationData] = useState(null);
   console.log(ref.current);
   const rightHandler = () => {
     setLocation(prev => prev + 500);
@@ -81,13 +83,24 @@ function RegionSection({ region }) {
   // else if(region === '부산') {
   //   setlocationData(locationData.busan)
   // }
-  // {locationData.map((ele) => {
-  //   return <CourseCard key={ele.courseId} ele={ele} />
-  // })}
+
+  useEffect(() => {
+    axios
+      .get(
+        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
+      )
+      .then(res => console.log(res.data));
+  });
+
   return (
     <Container>
       <Title>{region}</Title>
       <CardBox ref={ref}>
+        {/* {locationData.map(ele => {
+          if (region === ele.location) {
+            return <CourseCard key={ele.courseId} ele={ele} />;
+          }
+        })} */}
         <CourseCard
           title="🛤️ DMZ 투어"
           text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
