@@ -1,71 +1,109 @@
+import { useEffect, useState } from 'react';
 import logo from '../../img/logo.png';
 import LoginModal from '../LoginModal/LoginModal';
+import LogoutModal from '../LogoutModal/LogoutModal';
 import SignUpModal from '../SignUpModal/SignUpModal';
 
 function Header() {
+  const [isLogin, setIsLogin] = useState(true);
+  useEffect(() => {
+    setIsLogin(console.log(isLogin));
+  });
   return (
-    <nav
-      className="navbar bg-dark navbar-expand-lg sticky-top"
-      data-bs-theme="dark"
-    >
-      <div className="container-xl">
-        <a className="navbar-brand" href="/">
-          <img src={logo} alt="logo" height="40px" />
-        </a>
+    <header className="p-3 text-bg-dark sticky-top" data-bs-theme="dark">
+      <div className="container">
+        <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a className="navbar-brand me-3" href="/">
+            <img src={logo} alt="logo" height="40px" />
+          </a>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">
+          <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li>
+              <a className="nav-link px-2 text-white" href="/">
                 쇼츠
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/destination">
+            <li>
+              <a className="nav-link px-2 text-white" href="/destination">
                 지역
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/season">
-                season
+            <li>
+              <a className="nav-link px-2 text-white" href="/season">
+                계절
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/guide">
+            <li>
+              <a className="nav-link px-2 text-white" href="/guide">
                 가이드
               </a>
             </li>
           </ul>
-        </div>
 
-        <form className="d-flex me-5" role="search">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="검색하기"
-            aria-label="Search"
-          />
-          <button className="btn btn-outline-secondary" type="submit">
-            Search
-          </button>
-        </form>
-        <form className="justify-content-end">
-          <LoginModal />
-          <SignUpModal />
-        </form>
+          <form
+            className="d-flex col-12 col-lg-auto mb-3 mb-lg-0 me-lg-5"
+            role="search"
+          >
+            <input
+              className="form-control form-control-dark text-bg-dark me-3"
+              type="search"
+              placeholder="검색하기"
+              aria-label="Search"
+            />
+            <button className="btn btn-outline-secondary" type="submit">
+              Search
+            </button>
+          </form>
+
+          {!isLogin ? (
+            <div className="dropdown text-end">
+              <a
+                href="/mypage"
+                className="d-block link text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="https://github.com/mdo.png"
+                  alt="mdo"
+                  width="32"
+                  height="32"
+                  className="rounded-circle"
+                />
+              </a>
+              <ul className="dropdown-menu text-small">
+                <li>
+                  <a className="dropdown-item" href="/mypage/like">
+                    내 좋아요
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/mypage/comment">
+                    내 댓글
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/mypage/edit">
+                    회원 정보 변경
+                  </a>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <LogoutModal />
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <form className="justify-content-end">
+              <LoginModal />
+              <SignUpModal />
+            </form>
+          )}
+        </div>
       </div>
-    </nav>
+    </header>
   );
 }
 
