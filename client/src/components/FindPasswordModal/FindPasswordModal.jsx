@@ -7,15 +7,15 @@ function FindPasswordModal() {
         type="button"
         className="btn btn-outline-success"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#exampleModal4"
       >
         비밀번호 찾기
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="exampleModal4"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabel4"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered">

@@ -9,7 +9,7 @@ function LoginModal() {
     <>
       <button
         type="button"
-        className="btn btn-outline-success"
+        className="btn btn-outline-light me-2"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
       >

@@ -1,4 +1,6 @@
 import logo from '../../img/logo.png';
+import LoginModal from '../LoginModal/LoginModal';
+import SignUpModal from '../SignUpModal/SignUpModal';
 
 function Header() {
   return (
@@ -59,12 +61,8 @@ function Header() {
           </button>
         </form>
         <form className="justify-content-end">
-          <button className="btn btn-outline-light me-2" type="button">
-            로그인
-          </button>
-          <button className="btn btn-outline-info" type="button">
-            회원가입
-          </button>
+          <LoginModal />
+          <SignUpModal />
         </form>
       </div>
     </nav>

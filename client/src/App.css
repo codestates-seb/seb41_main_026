@@ -115,7 +115,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
@@ -125,4 +125,9 @@ table {
 
 * {
   box-sizing: border-box;
+}
+
+.modal-backdrop.show {
+  opacity: var(--bs-backdrop-opacity);
+  z-index: auto;
 }

@@ -10,17 +10,17 @@ function SignUpModal() {
     <>
       <button
         type="button"
-        className="btn btn-outline-success"
+        className="btn btn-outline-info"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#exampleModal1"
       >
         회원가입
       </button>
       <div
-        className="modal fade"
-        id="exampleModal"
+        className="modal"
+        id="exampleModal1"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabel1"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered p-4">
