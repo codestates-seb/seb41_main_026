@@ -5,6 +5,10 @@ import HomePage from './pages/HomePage/HomePage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ContentPage from './pages/ContentPage/ContentPage';
+import MyPage from './pages/MyPage/MyPage';
+import MyPageLike from './components/MyPage/MyPageLike';
+import MyPageComment from './components/MyPage/MyPageComment';
+import MyPageInfo from './components/MyPage/MyPageInfo';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +18,22 @@ const router = createBrowserRouter([
   {
     path: '/course/:id',
     element: <ContentPage />,
+  },
+  {
+    path: '/mypage',
+    element: <MyPage />,
+  },
+  {
+    path: '/mypage/like',
+    element: <MyPageLike />,
+  },
+  {
+    path: '/mypage/comment',
+    element: <MyPageComment />,
+  },
+  {
+    path: '/mypage/edit',
+    element: <MyPageInfo />,
   },
 ]);
 
