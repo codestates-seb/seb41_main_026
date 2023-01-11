@@ -4,12 +4,12 @@ import Sidebar from './Sidebar';
 
 function MyPageInfo() {
   return (
-    <div className="container overflow-auto">
-      <div className="row flex-grow-sm-1 flex-grow-0">
+    <div className="container">
+      <div className="row ">
         <Sidebar />
-        <div className="col overflow-auto h-100 mt-5 mb-5">
-          <div className="mb-3">
-            <h1 className="mb-3 fs-2 fw-bold">회원 정보 수정</h1>
+        <div className="col mt-5 mb-5 align-items-stretch">
+          <div className="mb-3 align-items-stretch">
+            <h1 className="mb-3 fs-2 fw-bold">회원 정보 변경</h1>
 
             <form className="pt-3">
               <div className="mb-3">

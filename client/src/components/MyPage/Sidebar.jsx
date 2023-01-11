@@ -25,12 +25,12 @@ const List = styled.li`
 function Sidebar() {
   const { pathname } = useLocation();
   return (
-    <div className="col-sm-3 flex-nowrap d-flex">
-      <div className="d-flex flex-column  p-3  bg-primary-subtle">
+    <div className="col-sm-3  d-flex align-items-stretch">
+      <div className="d-flex flex-column p-3 bg-primary-subtle">
         <ul className="nav nav-pills flex-column mb-auto">
           <List selected={pathname === '/mypage'} className="nav-item mb-2">
             <Link to="/mypage" className="nav-link text-white">
-              <span>My Page</span>
+              <span>나의 정보</span>
             </Link>
           </List>
           <hr />
