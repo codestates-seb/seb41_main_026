@@ -1,6 +1,6 @@
 import email from '../../img/email.png';
 
-function FindPasswordModal() {
+function ModalFindPassword() {
   return (
     <>
       <button
@@ -82,4 +82,4 @@ function FindPasswordModal() {
   );
 }
 
-export default FindPasswordModal;
+export default ModalFindPassword;

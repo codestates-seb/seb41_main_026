@@ -1,4 +1,4 @@
-function LogoutModal() {
+function ModalLogout() {
   return (
     <>
       <button
@@ -53,4 +53,4 @@ function LogoutModal() {
   );
 }
 
-export default LogoutModal;
+export default ModalLogout;

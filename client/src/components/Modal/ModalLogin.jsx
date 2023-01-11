@@ -4,7 +4,7 @@ import naver from '../../img/naver.png';
 import email from '../../img/email.png';
 import password from '../../img/password.png';
 
-function LoginModal() {
+function ModalLogin() {
   return (
     <>
       <button
@@ -192,4 +192,4 @@ function LoginModal() {
   );
 }
 
-export default LoginModal;
+export default ModalLogin;

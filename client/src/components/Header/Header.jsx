@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import logo from '../../img/logo.png';
-import LoginModal from '../Modal/ModalLogin';
-import LogoutModal from '../Modal/ModalLogout';
-import SignUpModal from '../Modal/ModalSignUp';
+import ModalLogin from '../Modal/ModalLogin';
+import ModalLogout from '../Modal/ModalLogout';
+import ModalSignUp from '../Modal/ModalSignUp';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
@@ -91,14 +91,14 @@ function Header() {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <LogoutModal />
+                  <ModalLogout />
                 </li>
               </ul>
             </div>
           ) : (
             <form className="justify-content-end">
-              <LoginModal />
-              <SignUpModal />
+              <ModalLogin />
+              <ModalSignUp />
             </form>
           )}
         </div>
