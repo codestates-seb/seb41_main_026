@@ -1,0 +1,42 @@
+spring:
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://{AWS RDS Endpoint}:13306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: {RDS_USERNAME}
+    password: {RDS_PASSWORD}
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    #    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # Fetch size 설정 1+N 문제 임시 해결
+        default_batch_fetch_size: 1000
+        # Entity에 예약어가 있다면 '' 자동 추가
+  #        auto_quote_keyword: true
+  sql:
+    init:
+      mode: always
+
+
+  jackson:
+    serialization:
+      fail-on-empty-beans : false # 디버깅 용이하게 하기 위한 로깅 레벨 수정
+logging.level:
+  org.hibernate.SQL: debug
+  org:
+    hibernate:
+      type:
+        descriptor:
+          sql:
+            org.hibernate.type.descriptor.sql.BasicBinder: trace
+    springframework:
+      web.servlet: debug
+
+

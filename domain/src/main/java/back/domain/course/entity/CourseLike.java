@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -33,14 +35,31 @@ public class CourseLike {
 //    private int courseLikeCount;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId")
     @Setter
     @JsonIgnore
     private User user;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JoinColumn(name = "courseId")
     @Setter
     @JsonIgnore
     private Course course;
+
+//    @Column(nullable = false)
+//    private boolean status; // true = 좋아요, false = 좋아요 취소
+//
+//    public void LikeCourse(Course course, User user) {
+//        this.course = course;
+//        this.user = user;
+//        this.status = status;
+//    }
+//
+//    public void unLikeCourse(Course course) {
+//        this.status = false;
+////        course.setCourseLikes(course.getCourseLikes() -1);
+//    }
 
     public void addUser(User user) {
         this.user = user;

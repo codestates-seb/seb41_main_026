@@ -12,12 +12,9 @@ import java.time.LocalDateTime;
 @ToString
 public class CommentResponseDto {
 
-
+        private Long userId;
         private Long commentId;
-
         private String content;
-
         private LocalDateTime createdAt;
-
         private LocalDateTime modifiedAt;
 }

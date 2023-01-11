@@ -26,16 +26,16 @@ public class CourseLikeController {
 
 
     /* 코스 추천 생성 (좋아요 누른 것)  */
-    @PostMapping("/{courseId}")
-    public ResponseEntity courseLikePost(@PathVariable Long courseId, @RequestBody CourseLikePostDto courseLikePostDto){
-
-        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
-        CourseLike save = courseLikeService.post(courseLike, courseId, courseLikePostDto.getUserId());
-        CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
-
-        return new ResponseEntity(
-                courseEntityToResponseDto, HttpStatus.OK);
-    }
+//    @PostMapping("/{courseId}")
+//    public ResponseEntity courseLikePost(@PathVariable Long courseId, @RequestBody CourseLikePostDto courseLikePostDto){
+//
+//        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
+//        CourseLike save = courseLikeService.post(courseLike, courseId, courseLikePostDto.getUserId());
+//        CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
+//
+//        return new ResponseEntity(
+//                courseEntityToResponseDto, HttpStatus.OK);
+//    }
 
     /* 코스 추천 단건 조회 */
     @GetMapping("/course/{courseLikeId}")

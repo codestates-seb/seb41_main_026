@@ -14,6 +14,7 @@ import back.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class CommentService {
     public Comment post(Comment comment, CommentPostDto commentPostDto) {
         User user = userService.verifiedUser(commentPostDto.getUserId());
         Course course = courseService.verifiedCourse(commentPostDto.getCourseId());
+//        comment.setUser(user.getUserId());
         comment.addUser(user);
         comment.addCourse(course);
         comment.setCreatedAt(LocalDateTime.now());
@@ -41,6 +43,7 @@ public class CommentService {
     /* Comment 단건 조회 */
     public Comment get(Long commentId) {
         Comment comment = verifiedComment(commentId);
+        comment.setModifiedAt(comment.getModifiedAt());
         return comment;
     }
 
@@ -51,29 +54,33 @@ public class CommentService {
     }
 
     /* Comment 수정 */
-    public Comment patch (Comment comment, Long commentId, CommentPatchDto commentPatchDto) {
-        User user = userService.verifiedUser(commentPatchDto.getUserId());
-        Course course = courseService.verifiedCourse(commentPatchDto.getCourseId());
+    @Transactional
+    public Comment patch (Long commentId, CommentPatchDto commentPatchDto, Long userId) {
 
-//        if (!user.getUserId().equals(comment.getUser().getUserId())) {
-//            throw new BusinessException(ErrorCode.BAD_REQUEST);
-//        }
+        Comment comment = commentRepository.findByIdWithUser(commentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
 
-        Comment findComment = verifiedComment(commentId);
-        findComment.addCourse(course);
-        findComment.addUser(user);
+        if (!userId.equals(comment.getUser().getUserId())) {
+            throw new BusinessException(ErrorCode.BAD_REQUEST);
+        }
 
-        Optional.ofNullable(comment.getContent())
-                .ifPresent(content -> findComment.setContent(content));
-
+        comment.modify(commentPatchDto.getContent());
         comment.setModifiedAt(LocalDateTime.now());
 
-        return commentRepository.save(findComment);
+        return commentRepository.save(comment);
     }
 
     /* Comment 삭제 */
-    public void delete(Long commentId) {
-        Comment comment = verifiedComment(commentId);
+    @Transactional
+    public void delete(Long commentId, Long userId) {
+
+        Comment comment = commentRepository.findByIdWithUser(commentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+
+        if (!userId.equals(comment.getUser().getUserId())) {
+            throw new BusinessException(ErrorCode.BAD_REQUEST);
+        }
+
         commentRepository.delete(comment);
     }
 

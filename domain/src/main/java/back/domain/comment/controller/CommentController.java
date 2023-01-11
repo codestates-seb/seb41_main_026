@@ -6,11 +6,13 @@ import back.domain.comment.dto.CommentResponseDto;
 import back.domain.comment.entity.Comment;
 import back.domain.comment.mapper.CommentMapper;
 import back.domain.comment.service.CommentService;
+import back.global.argumentresolver.LoginAccountId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
@@ -59,7 +61,7 @@ public class CommentController {
     public ResponseEntity commentPatch(@PathVariable Long commentId,
                                        @RequestBody CommentPatchDto commentPatchDto){
         Comment comment = commentMapper.CommentPatchDtoToEntity(commentPatchDto);
-        Comment patched = commentService.patch(comment, commentId, commentPatchDto);
+        Comment patched = commentService.patch(commentId, commentPatchDto, commentPatchDto.getUserId());
         CommentResponseDto commentResponseDto = commentMapper.CommentEntityToResponseDto(patched);
 
         return new ResponseEntity<>(
@@ -68,8 +70,8 @@ public class CommentController {
 
     /* comment 삭제 */
     @DeleteMapping("/{commentId}")
-    public ResponseEntity commentDelete(@PathVariable Long commentId){
-        commentService.delete(commentId);
+    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId, @LoginAccountId Long userId){
+        commentService.delete(commentId, userId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

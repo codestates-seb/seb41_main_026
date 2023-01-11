@@ -2,12 +2,14 @@ package back.domain.course.service;
 
 
 import back.domain.course.entity.Course;
+import back.domain.course.repository.CourseLikeRepository;
 import back.domain.course.repository.CourseRepository;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 

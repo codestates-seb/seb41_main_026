@@ -70,4 +70,8 @@ public class Comment {
         this.course = course;
         course.addComment(this);
     }
+
+    public void modify(String content) {
+        this.content = content;
+    }
 }
