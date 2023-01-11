@@ -5,7 +5,7 @@ import email from '../../img/email.png';
 import password from '../../img/password.png';
 import name from '../../img/name.png';
 
-function SignUpModal() {
+function ModalSignUp() {
   return (
     <>
       <button
@@ -211,4 +211,4 @@ function SignUpModal() {
   );
 }
 
-export default SignUpModal;
+export default ModalSignUp;
