@@ -4,9 +4,9 @@ spring:
 #      enabled: true
 #      path: /h2
   datasource:
-    url: jdbc:mysql://${RDS_ENDPOINT}:13306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
+    url: jdbc:mysql://main-project.ckgffrfctcvv.ap-northeast-2.rds.amazonaws.com:13306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: admin
+    password: mainproject1
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     defer-datasource-initialization: true
@@ -19,6 +19,7 @@ spring:
         # Fetch size 설정 1+N 문제 임시 해결
         default_batch_fetch_size: 1000
         # Entity에 예약어가 있다면 '' 자동 추가
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   #        auto_quote_keyword: true
   sql:
     init:
