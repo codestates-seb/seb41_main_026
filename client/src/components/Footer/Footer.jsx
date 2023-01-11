@@ -2,7 +2,7 @@ import logoGit from '../../img/github_dark.png';
 
 function Footer() {
   return (
-    <nav className="navbar bg-dark sticky-bottom" data-bs-theme="dark">
+    <nav className="navbar bg-dark fixed-bottom" data-bs-theme="dark">
       <div className="container-xl">
         <span className="text-light">Copyrights ⓒ 여행가조</span>
 

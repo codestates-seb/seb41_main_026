@@ -9,11 +9,26 @@ import MyPage from './pages/MyPage/MyPage';
 import MyPageLike from './components/MyPage/MyPageLike';
 import MyPageComment from './components/MyPage/MyPageComment';
 import MyPageInfo from './components/MyPage/MyPageInfo';
+import MainShorts from './pages/HomePage/MainShorts';
+import MainSeason from './pages/HomePage/MainSeason';
+import MainGuide from './pages/HomePage/MainGuide';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/shorts',
+    element: <MainShorts />,
+  },
+  {
+    path: '/season',
+    element: <MainSeason />,
+  },
+  {
+    path: '/guide',
+    element: <MainGuide />,
   },
   {
     path: '/course/:id',
