@@ -12,20 +12,20 @@ function ModalFindPassword() {
         비밀번호 찾기
       </button>
       <div
-        className="modal fade"
+        className="modal"
         id="exampleModal4"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel4"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+          <div className="modal-content bg-white">
             <div className="modal-header border-bottom-0">
               <div className="col-lg-9 col-sm-12 text-lg-end text-center">
                 <h1
                   className="modal-title fs-3 p-2"
                   id="exampleModalLabel"
-                  style={{ fontFamily: 'Heebo' }}
+                  style={{ fontFamily: 'Heebo', color: 'black' }}
                 >
                   Find a Password
                 </h1>
@@ -54,7 +54,11 @@ function ModalFindPassword() {
                 type="email"
                 className="form-control border-0 border-bottom"
                 id="floatingInput"
-                placeholder="     이메일을 적으세요"
+                placeholder="이메일을 적으세요"
+                style={{
+                  borderRadius: '0',
+                  paddingLeft: '30px',
+                }}
               />
               <br />
               <div className="col-lg-12 col-sm-12 text-sm-end text-center">
@@ -67,13 +71,30 @@ function ModalFindPassword() {
                 </button>
               </div>
             </div>
-            <div className="modal-footer p-4">
-              <button type="button" className="btn">
-                로그인
-              </button>
-              <button type="button" className="btn">
-                회원가입
-              </button>
+            <div
+              className=""
+              style={{
+                padding: '0 50px 0 50px',
+              }}
+            >
+              <div className="modal-footer p-4">
+                <button
+                  type="button"
+                  className="btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal2"
+                >
+                  로그인
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
+                >
+                  회원가입
+                </button>
+              </div>
             </div>
           </div>
         </div>
