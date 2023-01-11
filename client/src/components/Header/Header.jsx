@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import logo from '../../img/logo.png';
-import LoginModal from '../LoginModal/LoginModal';
-import LogoutModal from '../LogoutModal/LogoutModal';
-import SignUpModal from '../SignUpModal/SignUpModal';
+import LoginModal from '../Modal/ModalLogin';
+import LogoutModal from '../Modal/ModalLogout';
+import SignUpModal from '../Modal/ModalSignUp';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
