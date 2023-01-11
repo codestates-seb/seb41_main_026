@@ -11,19 +11,23 @@ function ModalLogin() {
         type="button"
         className="btn btn-outline-light me-2"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#exampleModal2"
       >
         로그인
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="exampleModal2"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered p-4">
-          <div className="modal-content bg-white">
+          <div
+            className="modal-content"
+            tabIndex="-1"
+            style={{ backgroundColor: 'white' }}
+          >
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
@@ -36,10 +40,10 @@ function ModalLogin() {
               </div>
               <button
                 type="button"
-                className="btn-close"
+                className="btn-close btn-close-success"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-                style={{ color: 'black' }}
+                style={{ zIndex: '0' }}
               />
             </div>
             <div className="modal-body p-5">
@@ -177,10 +181,26 @@ function ModalLogin() {
               }}
             >
               <div className="modal-footer">
-                <button type="button" className="btn">
+                <button
+                  type="button"
+                  className="btn border-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal4"
+                  style={{
+                    color: 'black',
+                  }}
+                >
                   비밀번호 찾기
                 </button>
-                <button type="button" className="btn">
+                <button
+                  type="button"
+                  className="btn border-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
+                  style={{
+                    color: 'black',
+                  }}
+                >
                   회원가입
                 </button>
               </div>

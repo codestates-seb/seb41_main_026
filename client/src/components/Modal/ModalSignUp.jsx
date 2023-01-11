@@ -54,6 +54,7 @@ function ModalSignUp() {
                   width: '35px',
                   height: '35px',
                   marginBottom: '-39px',
+                  marginLeft: '-3px',
                 }}
               />
               <input
@@ -199,7 +200,15 @@ function ModalSignUp() {
               }}
             >
               <div className="modal-footer">
-                <button type="button" className="btn">
+                <button
+                  type="button"
+                  className="btn border-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal2"
+                  style={{
+                    color: 'black',
+                  }}
+                >
                   로그인
                 </button>
               </div>
