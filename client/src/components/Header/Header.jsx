@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
-import ModalLogout from '../Modal/ModalLogout';
 import ModalSignUp from '../Modal/ModalSignUp';
+import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
@@ -55,43 +55,59 @@ function Header() {
             </button>
           </form>
 
-          {!isLogin ? (
-            <div className="dropdown text-end">
+          {isLogin ? (
+            <div className="dropdown">
               <a
                 href="/mypage"
-                className="d-block link text-decoration-none dropdown-toggle"
+                className="nav-link"
+                role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 <img
-                  src="https://github.com/mdo.png"
+                  src={profileImg}
                   alt="mdo"
-                  width="32"
-                  height="32"
+                  width="40"
+                  height="40"
                   className="rounded-circle"
                 />
               </a>
-              <ul className="dropdown-menu text-small">
-                <li>
+              <ul className="dropdown-menu dropdown-menu-dark text-small">
+                <li className="mt-2">
+                  <a className="dropdown-item" href="/mypage">
+                    나의 정보
+                  </a>
+                </li>
+                {/* <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li className="mb-3">
                   <a className="dropdown-item" href="/mypage/like">
                     내 좋아요
                   </a>
                 </li>
-                <li>
+                <li className="mb-3">
                   <a className="dropdown-item" href="/mypage/comment">
                     내 댓글
                   </a>
                 </li>
-                <li>
+                <li className="mb-3">
                   <a className="dropdown-item" href="/mypage/edit">
                     회원 정보 변경
                   </a>
-                </li>
+                </li> */}
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
-                <li>
-                  <ModalLogout />
+                <li className="ms-3 mt-3 mb-1">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal3"
+                  >
+                    로그아웃
+                  </button>
                 </li>
               </ul>
             </div>
@@ -101,6 +117,43 @@ function Header() {
               <ModalSignUp />
             </form>
           )}
+        </div>
+      </div>
+
+      <div
+        className="modal fade"
+        id="exampleModal3"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel3"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                로그아웃
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <div className="modal-body mb-3">정말 로그아웃 하시겠습니까?</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                취소
+              </button>
+              <button type="button" className="btn btn-outline-danger">
+                예, 로그아웃 합니다.
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
