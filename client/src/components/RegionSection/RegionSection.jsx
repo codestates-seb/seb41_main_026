@@ -96,13 +96,16 @@ function RegionSection({ region }) {
     <Container>
       <Title>{region}</Title>
       <CardBox ref={ref}>
-        {locationData !== null &&
+        {locationData === null ? (
+          <div style={{ fontSize: '35px' }}>Loading...</div>
+        ) : (
           locationData.map(ele => {
             if (region === ele.location) {
               return <CourseCard key={ele.courseId} ele={ele} />;
             }
             return '';
-          })}
+          })
+        )}
       </CardBox>
       <ButtonBox>
         <Button>
