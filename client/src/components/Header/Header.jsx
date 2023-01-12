@@ -10,13 +10,26 @@ function Header() {
     setIsLogin(console.log(isLogin));
   });
   return (
-    <header className="p-3 text-bg-dark sticky-top" data-bs-theme="dark">
+    <nav
+      className="navbar navbar-dark navbar-expand-lg bg-dark sticky-top"
+      data-bs-theme="dark"
+    >
       <div className="container">
-        <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a className="navbar-brand me-3" href="/">
-            <img src={logo} alt="logo" height="40px" />
-          </a>
-
+        <a className="navbar-brand me-3" href="/">
+          <img src={logo} alt="logo" height="40px" />
+        </a>
+        <button
+          className="navbar-toggler border-white "
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li>
               <a className="nav-link px-2 text-white" href="/">
@@ -112,7 +125,7 @@ function Header() {
               </ul>
             </div>
           ) : (
-            <form className="justify-content-end">
+            <form className="d-flex justify-content-end">
               <ModalLogin />
               <ModalSignUp />
             </form>
@@ -156,7 +169,7 @@ function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   );
 }
 
