@@ -44,6 +44,7 @@ public class CourseController {
     }
 
 
+    /* Course 전체 조회 */
     @GetMapping
     public ResponseEntity courseGets(){
         List<Course> courses = courseService.gets();

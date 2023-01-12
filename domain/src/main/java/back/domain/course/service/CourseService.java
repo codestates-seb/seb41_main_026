@@ -27,6 +27,7 @@ public class CourseService {
     public Course get(Long courseId) {
         Course course = verifiedCourse(courseId);
         course.setViewCount(course.getViewCount() +1);
+        courseRepository.save(course);
         return course;
     }
 

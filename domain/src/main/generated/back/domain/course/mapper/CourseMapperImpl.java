@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-11T11:08:59+0900",
+    date = "2023-01-12T11:18:44+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -48,6 +48,7 @@ public class CourseMapperImpl implements CourseMapper {
         courseResponseDto.setContent( save.getContent() );
         courseResponseDto.setLocation( save.getLocation() );
         courseResponseDto.setTag( save.getTag() );
+        courseResponseDto.setViewCount( save.getViewCount() );
         List<Comment> list = save.getComments();
         if ( list != null ) {
             courseResponseDto.setComments( new ArrayList<Comment>( list ) );
@@ -71,6 +72,7 @@ public class CourseMapperImpl implements CourseMapper {
         course.setCourseName( coursePatchDto.getCourseName() );
         course.setContent( coursePatchDto.getContent() );
         course.setTag( coursePatchDto.getTag() );
+        course.setLocation( coursePatchDto.getLocation() );
 
         return course;
     }
