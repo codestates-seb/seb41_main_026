@@ -492,22 +492,22 @@ function ContentPage() {
   const travelSpot = [
     {
       id: 1,
-      name: '한국 서울타워점',
+      name: '1. 한국 서울타워점',
       position: { lat: 37.5512141, lng: 126.9882024 },
     },
     {
       id: 2,
-      name: 'Denver, Colorado',
+      name: '2. 잠실 타워',
       position: { lat: 37.739235, lng: 126.99025 },
     },
     {
       id: 3,
-      name: 'Los Angeles, California',
+      name: '3. 한강 공원',
       position: { lat: 37.052235, lng: 126.243683 },
     },
     {
       id: 4,
-      name: 'New York, New York',
+      name: '4. 명동',
       position: { lat: 37.712776, lng: 126.005974 },
     },
   ];
