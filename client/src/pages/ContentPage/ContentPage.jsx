@@ -507,7 +507,7 @@ function ContentPage() {
     },
     {
       id: 4,
-      name: '4. 명동',
+      name: '4. 명동 거리',
       position: { lat: 37.712776, lng: 126.005974 },
     },
   ];

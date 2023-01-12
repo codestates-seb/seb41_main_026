@@ -89,11 +89,8 @@ function RegionSection({ region }) {
       .get(
         'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
       )
-      .then(res => res.data)
-      .then(res => setLocationData(res));
+      .then(res => setLocationData(res.data));
   }, []);
-
-  console.log(locationData);
 
   return (
     <Container>
