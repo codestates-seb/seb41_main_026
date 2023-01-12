@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
@@ -40,12 +42,14 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity userGets(){
-//
-//        return new ResponseEntity<>(
-//               testStub.createUserResponseDto(),HttpStatus.OK);
-//    }
+    @GetMapping
+    public ResponseEntity userGets() {
+        List<User> users = userService.gets();
+        List<UserResponseDto> response = userMapper.UsersEntityToResponseDto(users);
+
+        return new ResponseEntity<>(
+               response,HttpStatus.OK);
+    }
 
 
 

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,9 @@ public class UserService {
 
     public User get(Long userId) {
         return verifiedUser(userId);
+    }
+    public List<User> gets() {
+        return (List<User>) userRepository.findAll();
     }
 
     public User verifiedUser(Long userId) {

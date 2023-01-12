@@ -7,6 +7,8 @@ import back.domain.user.dto.UserResponseDto;
 import back.domain.user.entity.User;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     User UserPostDtoToEntity(UserPostDto userPostDto);
@@ -20,4 +22,6 @@ public interface UserMapper {
     }
 
     UserResponseDto UserEntityToResponseDto(User user);
+
+   List<UserResponseDto> UsersEntityToResponseDto(List<User> users);
 }
