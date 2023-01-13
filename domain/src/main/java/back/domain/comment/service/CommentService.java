@@ -31,7 +31,6 @@ public class CommentService {
     public Comment post(Comment comment, CommentPostDto commentPostDto) {
         User user = userService.verifiedUser(commentPostDto.getUserId());
         Course course = courseService.verifiedCourse(commentPostDto.getCourseId());
-//        comment.setUser(user.getUserId());
         comment.addUser(user);
         comment.addCourse(course);
         comment.setCreatedAt(LocalDateTime.now());
@@ -71,17 +70,25 @@ public class CommentService {
     }
 
     /* Comment 삭제 */
+//    @Transactional
+//    public Comment delete(Long commentId, Long userId) {
+//
+//        Comment comment = commentRepository.findByIdWithUser(commentId)
+//                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+//
+//        if (!userId.equals(comment.getUser().getUserId())) {
+//            throw new BusinessException(ErrorCode.BAD_REQUEST);
+//        }
+//
+//        return commentRepository.delete(comment);
+//    }
+
     @Transactional
-    public void delete(Long commentId, Long userId) {
+    public void delete(long commentId) {
+        // comment 삭제
+        Comment findComment = verifiedComment(commentId);
 
-        Comment comment = commentRepository.findByIdWithUser(commentId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
-
-        if (!userId.equals(comment.getUser().getUserId())) {
-            throw new BusinessException(ErrorCode.BAD_REQUEST);
-        }
-
-        commentRepository.delete(comment);
+        commentRepository.delete(findComment);
     }
 
     /* Comment 유효 확인 */

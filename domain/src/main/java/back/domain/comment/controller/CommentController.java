@@ -6,7 +6,6 @@ import back.domain.comment.dto.CommentResponseDto;
 import back.domain.comment.entity.Comment;
 import back.domain.comment.mapper.CommentMapper;
 import back.domain.comment.service.CommentService;
-import back.global.argumentresolver.LoginAccountId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,9 +68,16 @@ public class CommentController {
     }
 
     /* comment 삭제 */
+//    @DeleteMapping("/{commentId}")
+//    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId, Long userId){
+//        commentService.delete(commentId, userId);
+//
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+
     @DeleteMapping("/{commentId}")
-    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId, @LoginAccountId Long userId){
-        commentService.delete(commentId, userId);
+    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId) {
+        commentService.delete(commentId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

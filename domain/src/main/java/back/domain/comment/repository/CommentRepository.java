@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment,Long> {
-
     @EntityGraph(attributePaths = {"user"})
     @Query("select c from Comment c where c.commentId = :commentId")
     Optional<Comment> findByIdWithUser(@Param("commentId") Long commentId);
