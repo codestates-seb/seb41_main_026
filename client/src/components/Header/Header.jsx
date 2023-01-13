@@ -19,7 +19,7 @@ function Header() {
           <img src={logo} alt="logo" height="40px" />
         </a>
         <button
-          className="navbar-toggler border-white "
+          className="navbar-toggler border-secondary border-2 "
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -68,61 +68,46 @@ function Header() {
             </button>
           </form>
 
-          {isLogin ? (
-            <div className="dropdown">
-              <a
-                href="/mypage"
-                className="nav-link"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  src={profileImg}
-                  alt="mdo"
-                  width="40"
-                  height="40"
-                  className="rounded-circle"
-                />
-              </a>
-              <ul className="dropdown-menu dropdown-menu-dark text-small">
-                <li className="mt-2">
-                  <a className="dropdown-item" href="/mypage">
-                    나의 정보
-                  </a>
-                </li>
-                {/* <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li className="mb-3">
-                  <a className="dropdown-item" href="/mypage/like">
-                    내 좋아요
-                  </a>
-                </li>
-                <li className="mb-3">
-                  <a className="dropdown-item" href="/mypage/comment">
-                    내 댓글
-                  </a>
-                </li>
-                <li className="mb-3">
-                  <a className="dropdown-item" href="/mypage/edit">
-                    회원 정보 변경
-                  </a>
-                </li> */}
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li className="ms-3 mt-3 mb-1">
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal3"
-                  >
-                    로그아웃
-                  </button>
-                </li>
-              </ul>
+          {!isLogin ? (
+            <div className="d-flex justify-content-end">
+              <div className="dropdown">
+                <a
+                  href="/mypage"
+                  className="btn btn-scondary dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  data-bs-display="static"
+                  aria-expanded="false"
+                >
+                  <img
+                    src={profileImg}
+                    alt="mdo"
+                    width="40"
+                    height="40"
+                    className="rounded-circle"
+                  />
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-lg-end mt-2 dropdown-menu-dark text-small">
+                  <li className="mt-2 ms-2">
+                    <a className="dropdown-item" href="/mypage">
+                      나의 정보
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li className="ms-4 mt-3 mb-1">
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal3"
+                    >
+                      로그아웃
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           ) : (
             <form className="d-flex justify-content-end">
@@ -134,7 +119,7 @@ function Header() {
       </div>
 
       <div
-        className="modal fade"
+        className="modal fade "
         id="exampleModal3"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel3"
