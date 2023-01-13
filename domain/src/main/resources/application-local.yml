@@ -18,7 +18,7 @@ spring:
           format_sql: true
           dialect: org.hibernate.dialect.Mysql8Dialect
           # Fetch size 설정 1+N 문제 임시 해결
-          default_batch_fetch_size: 1000
+#          default_batch_fetch_size: 1000
           # Entity에 예약어가 있다면 '' 자동 추가
   #        auto_quote_keyword: true
   sql:

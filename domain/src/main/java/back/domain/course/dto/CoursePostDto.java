@@ -3,6 +3,8 @@ package back.domain.course.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,5 +15,5 @@ public class CoursePostDto {
     private String courseName;
     private String content;
     private String location;
-    private String tag;
+    private List<String> tag;
 }

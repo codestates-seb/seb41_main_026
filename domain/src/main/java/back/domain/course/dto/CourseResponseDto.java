@@ -18,7 +18,7 @@ public class CourseResponseDto {
     private String courseName;
     private String content;
     private String location;
-    private String tag;
+    private List<String> tag;
     private int viewCount;
     private List<Comment> comments;
     private List<CourseLike> courseLikes;

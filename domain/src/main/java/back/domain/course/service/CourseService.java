@@ -1,6 +1,7 @@
 package back.domain.course.service;
 
 
+import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.repository.CourseLikeRepository;
 import back.domain.course.repository.CourseRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +61,11 @@ public class CourseService {
     public void delete(Long courseId) {
         Course course = verifiedCourse(courseId);
         courseRepository.delete(course);
+    }
+    /* search */
+    @Transactional
+    public List<Course> search(String keyword) {
+        return courseRepository.findByCourseNameContaining(keyword);
+//        return courseRepository.findByTagContaining(keyword);
     }
 }

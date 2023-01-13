@@ -7,6 +7,8 @@ import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
 
@@ -15,4 +17,6 @@ public interface CourseMapper {
     CourseResponseDto CourseEntityToResponseDto(Course save);
 
     Course CoursePatchDtoToEntity(CoursePatchDto coursePatchDto);
+
+    List<CourseResponseDto> CoursesResponseDto(List<Course> courses);
 }

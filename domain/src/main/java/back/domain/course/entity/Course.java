@@ -2,6 +2,7 @@ package back.domain.course.entity;
 
 
 import back.domain.comment.entity.Comment;
+import back.domain.enums.Tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,11 +38,16 @@ public class Course {
     @Setter
     @Column(nullable = false)
 //    @Enumerated(EnumType.STRING)
-    private String tag;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> tag = new ArrayList<>();
 
     @Setter
     @Column(nullable = false)
-    private int viewCount;
+    private int viewCount; // 조회수
+
+    @Setter
+    @Column(nullable = true)
+    private int likeCount; // 좋아요 수
 
     @Setter
     @Column(nullable = false)
@@ -63,5 +69,13 @@ public class Course {
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount -= 1;
     }
 }

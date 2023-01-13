@@ -4,6 +4,7 @@ package back.domain.course.controller;
 import back.domain.course.dto.CoursePatchDto;
 import back.domain.course.dto.CoursePostDto;
 import back.domain.course.dto.CourseResponseDto;
+import back.domain.course.dto.CoursesResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.mapper.CourseMapper;
 import back.domain.course.service.CourseService;
@@ -23,7 +24,7 @@ public class CourseController {
     private final CourseMapper courseMapper;
     private final CourseService courseService;
 
-
+    /* 코스 업로드 */
     @PostMapping
     public ResponseEntity coursePost(@RequestBody CoursePostDto coursePostDto){
         Course course = courseMapper.CoursePostDtoToEntity(coursePostDto);
@@ -33,7 +34,7 @@ public class CourseController {
         return new ResponseEntity<>(
               courseResponseDto, HttpStatus.CREATED);
     }
-
+    /* 코스 단건 조회 */
     @GetMapping("/{courseId}")
     public ResponseEntity courseGet(@PathVariable Long courseId){
         Course course = courseService.get(courseId);
@@ -42,9 +43,15 @@ public class CourseController {
         return new ResponseEntity<>(
                 courseResponseDto, HttpStatus.OK);
     }
+    /* 코스 검색 */
+    @GetMapping("/search")
+    public ResponseEntity courseSearch(String keyword) {
+        List<Course> courses = courseService.search(keyword);
 
+        return new ResponseEntity<>(new CoursesResponseDto<>(courseMapper.CoursesResponseDto(courses)), HttpStatus.OK);
+    }
 
-    /* Course 전체 조회 */
+    /* 코스 전체 조회 */
     @GetMapping
     public ResponseEntity courseGets(){
         List<Course> courses = courseService.gets();
@@ -52,7 +59,7 @@ public class CourseController {
         return new ResponseEntity<>(
            courses, HttpStatus.OK);
     }
-
+    /* 코스 수정 */
     @PatchMapping("/{courseId}")
     public ResponseEntity coursePatch(@PathVariable Long courseId,
                                       @RequestBody CoursePatchDto coursePatchDto){
@@ -64,7 +71,7 @@ public class CourseController {
         return new ResponseEntity<>(
               courseResponseDto, HttpStatus.OK);
     }
-
+    /* 코스 삭제 */
     @DeleteMapping("/{courseId}")
     public ResponseEntity courseDelete(@PathVariable Long courseId){
         courseService.delete(courseId);

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-12T11:18:44+0900",
+    date = "2023-01-13T13:50:10+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -29,7 +29,10 @@ public class CourseMapperImpl implements CourseMapper {
 
         course.setCourseName( coursePostDto.getCourseName() );
         course.setContent( coursePostDto.getContent() );
-        course.setTag( coursePostDto.getTag() );
+        List<String> list = coursePostDto.getTag();
+        if ( list != null ) {
+            course.setTag( new ArrayList<String>( list ) );
+        }
         course.setLocation( coursePostDto.getLocation() );
 
         return course;
@@ -47,15 +50,18 @@ public class CourseMapperImpl implements CourseMapper {
         courseResponseDto.setCourseName( save.getCourseName() );
         courseResponseDto.setContent( save.getContent() );
         courseResponseDto.setLocation( save.getLocation() );
-        courseResponseDto.setTag( save.getTag() );
-        courseResponseDto.setViewCount( save.getViewCount() );
-        List<Comment> list = save.getComments();
+        List<String> list = save.getTag();
         if ( list != null ) {
-            courseResponseDto.setComments( new ArrayList<Comment>( list ) );
+            courseResponseDto.setTag( new ArrayList<String>( list ) );
         }
-        List<CourseLike> list1 = save.getCourseLikes();
+        courseResponseDto.setViewCount( save.getViewCount() );
+        List<Comment> list1 = save.getComments();
         if ( list1 != null ) {
-            courseResponseDto.setCourseLikes( new ArrayList<CourseLike>( list1 ) );
+            courseResponseDto.setComments( new ArrayList<Comment>( list1 ) );
+        }
+        List<CourseLike> list2 = save.getCourseLikes();
+        if ( list2 != null ) {
+            courseResponseDto.setCourseLikes( new ArrayList<CourseLike>( list2 ) );
         }
 
         return courseResponseDto;
@@ -71,9 +77,26 @@ public class CourseMapperImpl implements CourseMapper {
 
         course.setCourseName( coursePatchDto.getCourseName() );
         course.setContent( coursePatchDto.getContent() );
-        course.setTag( coursePatchDto.getTag() );
+        List<String> list = coursePatchDto.getTag();
+        if ( list != null ) {
+            course.setTag( new ArrayList<String>( list ) );
+        }
         course.setLocation( coursePatchDto.getLocation() );
 
         return course;
+    }
+
+    @Override
+    public List<CourseResponseDto> CoursesResponseDto(List<Course> courses) {
+        if ( courses == null ) {
+            return null;
+        }
+
+        List<CourseResponseDto> list = new ArrayList<CourseResponseDto>( courses.size() );
+        for ( Course course : courses ) {
+            list.add( CourseEntityToResponseDto( course ) );
+        }
+
+        return list;
     }
 }
