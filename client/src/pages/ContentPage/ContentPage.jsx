@@ -15,6 +15,8 @@ import time from '../../img/time.png';
 import route from '../../img/route.png';
 import github from '../../img/vector.png';
 import jinwoo from '../../img/jinwoo.png';
+import heart from '../../img/heart.png';
+import heartFill from '../../img/heart_fill.png';
 
 const Container = styled.div`
   width: 1200px;
@@ -112,6 +114,7 @@ const CommentList = styled.div`
   background: #b2d3be;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0px 0px;
+  overflow: auto;
 `;
 
 const CommentInputSection = styled.div`
@@ -165,6 +168,11 @@ const Comment = styled.div`
   color: #000000;
   position: relative;
   margin-top: 13px;
+`;
+
+const CommentDate = styled.div`
+  font-size: 12px;
+  margin-top: 8px;
 `;
 
 const Triangle = styled.div`
@@ -457,37 +465,63 @@ const GuideText = styled.div`
   color: #828282;
 `;
 
+const HeartBox = styled.span`
+  width: 20px;
+  height: 20px;
+  margin-left: 7px;
+`;
+
+const Heart = styled.img`
+  width: 22px;
+  position: relative;
+  top: 5px;
+`;
+
 function ContentPage() {
   const { id } = useParams();
-  // const [courseData, setCourseData] = useState(null);
-  console.log(id);
+  const [courseData, setCourseData] = useState(null);
+  const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
+  const [marker, setMarker] = useState('travelSpot');
+  const [travelFocus, setTravelFocus] = useState(false);
+  const [eatFocus, setEatFocus] = useState(false);
+  const [sleepFocus, setSleepFocus] = useState(false);
+  const [pathCoordinates, setPathCoordinates] = useState([
+    {
+      id: 1,
+      route: [
+        { lat: 37.5512141, lng: 126.9882024 },
+        { lat: 37.739235, lng: 126.99025 },
+      ],
+    },
+    {
+      id: 2,
+      route: [
+        { lat: 37.739235, lng: 126.99025 },
+        { lat: 37.052235, lng: 126.243683 },
+      ],
+    },
+    {
+      id: 3,
+      route: [
+        { lat: 37.052235, lng: 126.243683 },
+        { lat: 37.712776, lng: 126.005974 },
+      ],
+    },
+  ]);
+  const [heartState, setHeartState] = useState(false);
+  const [heartAllCount, setHeartAllCount] = useState(0);
+  const [heartMyCount, setHeartMyCount] = useState(0);
+  const [comment, setComment] = useState('');
+
   useEffect(() => {
     axios
       .get(
         `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${id}`,
       )
-      .then(res => console.log(res.data));
-  });
+      .then(res => setCourseData(res.data));
+  }, []);
 
-  const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
-  const [marker, setMarker] = useState('travelSpot');
-  const [focus1, setFocus1] = useState(false);
-  const [focus2, setFocus2] = useState(false);
-  const [focus3, setFocus3] = useState(false);
-  const [pathCoordinates, setPathCoordinates] = useState([
-    [
-      { lat: 37.5512141, lng: 126.9882024 },
-      { lat: 37.739235, lng: 126.99025 },
-    ],
-    [
-      { lat: 37.739235, lng: 126.99025 },
-      { lat: 37.052235, lng: 126.243683 },
-    ],
-    [
-      { lat: 37.052235, lng: 126.243683 },
-      { lat: 37.712776, lng: 126.005974 },
-    ],
-  ]);
+  console.log(courseData);
 
   const travelSpot = [
     {
@@ -558,7 +592,14 @@ function ContentPage() {
     },
   ];
 
-  const tag = ['파주', '봄', '여름', '가울', '겨울', '최진우'];
+  const tag = [
+    { id: 1, tag: '파주' },
+    { id: 2, tag: '봄' },
+    { id: 3, tag: '여름' },
+    { id: 4, tag: '가울' },
+    { id: 5, tag: '겨울' },
+    { id: 6, tag: '최진우' },
+  ];
 
   const data = [
     {
@@ -583,6 +624,23 @@ function ContentPage() {
     },
   ];
 
+  const commentHandler = e => {
+    setComment(e.target.value);
+  };
+
+  const postHandler = () => {
+    axios
+      .post(
+        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
+        {
+          content: comment,
+          userId: 4,
+          courseId: parseInt(id, 10),
+        },
+      )
+      .then(() => window.location.reload());
+  };
+
   const locationHandler = idValue => {
     setCenter(travelSpot[idValue - 1].position);
   };
@@ -590,39 +648,68 @@ function ContentPage() {
   const spot1Handler = () => {
     setMarker('travelSpot');
     setPathCoordinates([
-      [
-        { lat: 37.5512141, lng: 126.9882024 },
-        { lat: 37.739235, lng: 126.99025 },
-      ],
-      [
-        { lat: 37.739235, lng: 126.99025 },
-        { lat: 37.052235, lng: 126.243683 },
-      ],
-      [
-        { lat: 37.052235, lng: 126.243683 },
-        { lat: 37.712776, lng: 126.005974 },
-      ],
+      {
+        id: 1,
+        route: [
+          { lat: 37.5512141, lng: 126.9882024 },
+          { lat: 37.739235, lng: 126.99025 },
+        ],
+      },
+      {
+        id: 2,
+        route: [
+          { lat: 37.739235, lng: 126.99025 },
+          { lat: 37.052235, lng: 126.243683 },
+        ],
+      },
+      {
+        id: 3,
+        route: [
+          { lat: 37.052235, lng: 126.243683 },
+          { lat: 37.712776, lng: 126.005974 },
+        ],
+      },
     ]);
-    setFocus1(true);
-    setFocus2(false);
-    setFocus3(false);
+    setTravelFocus(true);
+    setEatFocus(false);
+    setSleepFocus(false);
   };
 
   const spot2Handler = () => {
     setMarker('eatSpot');
-    setFocus1(false);
-    setFocus2(true);
-    setFocus3(false);
+    setTravelFocus(false);
+    setEatFocus(true);
+    setSleepFocus(false);
     setPathCoordinates(null);
   };
 
   const spot3Handler = () => {
     setMarker('sleepSpot');
-    setFocus1(false);
-    setFocus2(false);
-    setFocus3(true);
+    setTravelFocus(false);
+    setEatFocus(false);
+    setSleepFocus(true);
     setPathCoordinates(null);
   };
+
+  const heartHandler = () => {
+    setHeartState(!heartState);
+  };
+
+  useEffect(() => {
+    if (heartState === true) {
+      setHeartMyCount(1);
+    } else if (heartState === false && heartAllCount > 0) {
+      setHeartMyCount(-1);
+    }
+  }, [heartState]);
+
+  useEffect(() => {
+    if (heartState === true) {
+      setHeartAllCount(heartAllCount + heartMyCount);
+    } else if (heartState === false && heartAllCount > 0) {
+      setHeartAllCount(heartAllCount + heartMyCount);
+    }
+  }, [heartMyCount]);
 
   return (
     <Container>
@@ -634,6 +721,16 @@ function ContentPage() {
         <Des>봄, 여름, 가을, 겨울</Des>
         <Des>|</Des>
         <Des>최진우 가이드</Des>
+        <Des>|</Des>
+        <Des>좋아요</Des>
+        <HeartBox>
+          {heartState ? (
+            <Heart src={heartFill} onClick={heartHandler} />
+          ) : (
+            <Heart src={heart} onClick={heartHandler} />
+          )}
+        </HeartBox>
+        <Des>{heartAllCount}</Des>
       </TitleBox>
       <MainBox>
         <ShortsBox>
@@ -646,21 +743,27 @@ function ContentPage() {
         <CommentBox>
           <CommentTitle>댓글 목록</CommentTitle>
           <CommentList>
-            <Comment>
-              댓글 내용입니다
-              <Triangle />
-            </Comment>
-            <Comment>
-              댓글 내용입니다!!!
-              <Triangle />
-            </Comment>
-            {/* {comment.map((ele) => {
-              return <Comment key={ele.id}>{ele.text}<Triangle/></Comment>
-            })} */}
+            {courseData !== null
+              ? courseData.comments.map(ele => {
+                  return (
+                    <>
+                      <Comment key={ele.commentId}>
+                        {ele.content}
+                        <Triangle />
+                      </Comment>
+                      <CommentDate>
+                        {ele.createdAt.slice(2, 10)}
+                        &ensp;
+                        {ele.createdAt.slice(-8, -3)}
+                      </CommentDate>
+                    </>
+                  );
+                })
+              : null}
           </CommentList>
           <CommentInputSection>
-            <CommentInput placeholder="댓글 달기" />
-            <CommentButton>게시</CommentButton>
+            <CommentInput placeholder="댓글 달기" onChange={commentHandler} />
+            <CommentButton onClick={postHandler}>게시</CommentButton>
           </CommentInputSection>
         </CommentBox>
       </MainBox>
@@ -688,7 +791,8 @@ function ContentPage() {
               pathCoordinates.map(ele => {
                 return (
                   <Polyline
-                    path={ele}
+                    key={ele.id}
+                    path={ele.route}
                     options={{
                       strokeColor: 'black',
                       strokeOpacity: 1,
@@ -716,13 +820,13 @@ function ContentPage() {
                 );
               })}
             <Category>
-              <Spot focus={focus1} onClick={spot1Handler}>
+              <Spot focus={travelFocus} onClick={spot1Handler}>
                 주요 명소
               </Spot>
-              <Spot focus={focus2} onClick={spot2Handler}>
+              <Spot focus={eatFocus} onClick={spot2Handler}>
                 맛집
               </Spot>
-              <Spot focus={focus3} onClick={spot3Handler}>
+              <Spot focus={sleepFocus} onClick={spot3Handler}>
                 숙박
               </Spot>
             </Category>
@@ -732,7 +836,7 @@ function ContentPage() {
           {marker === 'travelSpot' &&
             travelSpot.map(ele => {
               return (
-                <Location onClick={() => locationHandler(ele.id)}>
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
                   <LocationImg src={sampleImg} alt="기본" />
                   <LocationText>{ele.name}</LocationText>
                 </Location>
@@ -742,7 +846,7 @@ function ContentPage() {
           {marker === 'eatSpot' &&
             eatSpot.map(ele => {
               return (
-                <Location onClick={() => locationHandler(ele.id)}>
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
                   <LocationImg src={sampleImg} alt="기본" />
                   <LocationText>{ele.name}</LocationText>
                 </Location>
@@ -752,7 +856,7 @@ function ContentPage() {
           {marker === 'sleepSpot' &&
             sleepSpot.map(ele => {
               return (
-                <Location onClick={() => locationHandler(ele.id)}>
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
                   <LocationImg src={sampleImg} alt="기본" />
                   <LocationText>{ele.name}</LocationText>
                 </Location>
@@ -792,7 +896,7 @@ function ContentPage() {
           <TagTitle>태그</TagTitle>
           <TagBox>
             {tag.map(ele => {
-              return <Tag>{ele}</Tag>;
+              return <Tag key={ele.id}>{ele.tag}</Tag>;
             })}
           </TagBox>
         </TagWrap>
