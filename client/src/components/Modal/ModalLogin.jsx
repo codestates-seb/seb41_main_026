@@ -1,6 +1,47 @@
-import naver from '../../img/naver.png';
+import { useState } from 'react';
+import { regEmail } from '../../util/regStore';
+import whiteNaver from '../../img/whiteNaver.png';
+import logInAPI from '../../API/loginAPI';
 
 function ModalLogin() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChangeEmail = e => {
+    setEmail(e.target.value);
+  };
+  const onChangePassword = e => {
+    setPassword(e.target.value);
+  };
+
+  // eslint-disable-next-line consistent-return
+  const handleLogIn = () => {
+    if (email.length === 0) {
+      alert('이메일이 비어있습니다.');
+      return false;
+    }
+    if (!regEmail.test(email)) {
+      alert('이메일이 타당하지 않습니다.');
+      return false;
+    }
+    if (password.length === 0) {
+      alert('비밀번호가 비어있습니다.');
+      return false;
+    }
+    // if (!regPassword.test(password)) {
+    //   alert('최소 8자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.');
+    // }
+    logInAPI(email, password).then(res => {
+      if (res !== '') {
+        window.alert('로그인 성공!');
+        console.log(res.data);
+        setEmail('');
+        setPassword('');
+      } else {
+        alert('로그인 실패');
+      }
+    });
+  };
   return (
     <>
       <button
@@ -54,6 +95,8 @@ function ModalLogin() {
                   className="form-control border-0 border-bottom ms-3"
                   id="floatingInput"
                   placeholder="이메일을 적으세요"
+                  onChange={onChangeEmail}
+                  value={email}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -78,6 +121,8 @@ function ModalLogin() {
                   className="form-control border-0 border-bottom ms-3"
                   id="floatingInput"
                   placeholder="비밀번호를 적으세요"
+                  onChange={onChangePassword}
+                  value={password}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -94,7 +139,15 @@ function ModalLogin() {
                 >
                   취소
                 </button>
-                <button type="submit" className="btn btn-light">
+                <button
+                  type="submit"
+                  className="btn border-0"
+                  onClick={handleLogIn}
+                  style={{
+                    backgroundColor: 'rgba(20, 40, 80, 1)',
+                    color: 'white',
+                  }}
+                >
                   로그인
                 </button>
               </div>
@@ -154,7 +207,7 @@ function ModalLogin() {
                   }}
                 >
                   <img
-                    src={naver}
+                    src={whiteNaver}
                     alt="logo"
                     style={{
                       width: '25px',
@@ -169,7 +222,7 @@ function ModalLogin() {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-outline-dark border-0"
+                  className="btn border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal4"
                 >
@@ -177,7 +230,7 @@ function ModalLogin() {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline-dark border-0"
+                  className="btn border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal1"
                 >
@@ -252,7 +305,14 @@ function ModalLogin() {
                 >
                   취소
                 </button>
-                <button type="submit" className="btn btn-light">
+                <button
+                  type="submit"
+                  className="btn border-0"
+                  style={{
+                    backgroundColor: 'rgba(20, 40, 80, 1)',
+                    color: 'white',
+                  }}
+                >
                   보내기
                 </button>
               </div>
@@ -266,7 +326,7 @@ function ModalLogin() {
               <div className="modal-footer ">
                 <button
                   type="button"
-                  className="btn"
+                  className="btn border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal2"
                 >
@@ -274,7 +334,7 @@ function ModalLogin() {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-outline-dark border-0"
+                  className="btn border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal1"
                 >
