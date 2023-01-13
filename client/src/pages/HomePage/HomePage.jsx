@@ -11,10 +11,8 @@ const Container = styled.div`
 function HomePage() {
   return (
     <Container>
-      <RegionSection region="서울" />
-      <RegionSection region="부산" />
-      <RegionSection region="경남" />
-      <RegionSection region="충북" />
+      <RegionSection region="seoul" />
+      <RegionSection region="Busan" />
     </Container>
   );
 }

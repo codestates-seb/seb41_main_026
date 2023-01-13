@@ -7,6 +7,7 @@ import rightImg from '../../img/rightImg.png';
 
 const Container = styled.div`
   width: 1200px;
+  margin-bottom: 120px;
 `;
 
 const Title = styled.div`
@@ -55,8 +56,7 @@ const ArrowImg = styled.img`
 function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
-  // const [locationData, setLocationData] = useState(null);
-  console.log(ref.current);
+  const [locationData, setLocationData] = useState(null);
   const rightHandler = () => {
     setLocation(prev => prev + 500);
   };
@@ -89,53 +89,23 @@ function RegionSection({ region }) {
       .get(
         'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
       )
-      .then(res => console.log(res.data));
-  });
+      .then(res => setLocationData(res.data));
+  }, []);
 
   return (
     <Container>
       <Title>{region}</Title>
       <CardBox ref={ref}>
-        {/* {locationData.map(ele => {
-          if (region === ele.location) {
-            return <CourseCard key={ele.courseId} ele={ele} />;
-          }
-        })} */}
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="1"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="2"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="3"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="4"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="5"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="6"
-        />
-        <CourseCard
-          title="🛤️ DMZ 투어"
-          text="6.25 비통의 한이 서려 있는 장소를 방문 합니다. 남북 통일의 염원을 빌며 리본을 걸고 옵시다."
-          id="7"
-        />
+        {locationData === null ? (
+          <div style={{ fontSize: '35px' }}>Loading...</div>
+        ) : (
+          locationData.map(ele => {
+            if (region === ele.location) {
+              return <CourseCard key={ele.courseId} ele={ele} />;
+            }
+            return '';
+          })
+        )}
       </CardBox>
       <ButtonBox>
         <Button>

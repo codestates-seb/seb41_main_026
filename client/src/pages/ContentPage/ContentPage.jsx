@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { GoogleMap, LoadScriptNext, MarkerF } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  LoadScriptNext,
+  MarkerF,
+  Polyline,
+} from '@react-google-maps/api';
 import styled from 'styled-components';
 import axios from 'axios';
 import union from '../../img/union.png';
@@ -469,26 +474,40 @@ function ContentPage() {
   const [focus1, setFocus1] = useState(false);
   const [focus2, setFocus2] = useState(false);
   const [focus3, setFocus3] = useState(false);
+  const [pathCoordinates, setPathCoordinates] = useState([
+    [
+      { lat: 37.5512141, lng: 126.9882024 },
+      { lat: 37.739235, lng: 126.99025 },
+    ],
+    [
+      { lat: 37.739235, lng: 126.99025 },
+      { lat: 37.052235, lng: 126.243683 },
+    ],
+    [
+      { lat: 37.052235, lng: 126.243683 },
+      { lat: 37.712776, lng: 126.005974 },
+    ],
+  ]);
 
   const travelSpot = [
     {
       id: 1,
-      name: '한국 서울타워점',
+      name: '1. 한국 서울타워점',
       position: { lat: 37.5512141, lng: 126.9882024 },
     },
     {
       id: 2,
-      name: 'Denver, Colorado',
+      name: '2. 잠실 타워',
       position: { lat: 37.739235, lng: 126.99025 },
     },
     {
       id: 3,
-      name: 'Los Angeles, California',
+      name: '3. 한강 공원',
       position: { lat: 37.052235, lng: 126.243683 },
     },
     {
       id: 4,
-      name: 'New York, New York',
+      name: '4. 명동 거리',
       position: { lat: 37.712776, lng: 126.005974 },
     },
   ];
@@ -570,6 +589,20 @@ function ContentPage() {
 
   const spot1Handler = () => {
     setMarker('travelSpot');
+    setPathCoordinates([
+      [
+        { lat: 37.5512141, lng: 126.9882024 },
+        { lat: 37.739235, lng: 126.99025 },
+      ],
+      [
+        { lat: 37.739235, lng: 126.99025 },
+        { lat: 37.052235, lng: 126.243683 },
+      ],
+      [
+        { lat: 37.052235, lng: 126.243683 },
+        { lat: 37.712776, lng: 126.005974 },
+      ],
+    ]);
     setFocus1(true);
     setFocus2(false);
     setFocus3(false);
@@ -580,6 +613,7 @@ function ContentPage() {
     setFocus1(false);
     setFocus2(true);
     setFocus3(false);
+    setPathCoordinates(null);
   };
 
   const spot3Handler = () => {
@@ -587,6 +621,7 @@ function ContentPage() {
     setFocus1(false);
     setFocus2(false);
     setFocus3(true);
+    setPathCoordinates(null);
   };
 
   return (
@@ -641,9 +676,25 @@ function ContentPage() {
             {marker === 'travelSpot' &&
               travelSpot.map(ele => {
                 return (
-                  <MarkerF key={ele.id} position={ele.position}>
-                    {ele.name}
-                  </MarkerF>
+                  <MarkerF
+                    key={ele.id}
+                    position={ele.position}
+                    label={String(ele.id)}
+                  />
+                );
+              })}
+
+            {marker === 'travelSpot' &&
+              pathCoordinates.map(ele => {
+                return (
+                  <Polyline
+                    path={ele}
+                    options={{
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      strokeWeight: 2,
+                    }}
+                  />
                 );
               })}
 

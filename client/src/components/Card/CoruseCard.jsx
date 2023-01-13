@@ -69,13 +69,13 @@ const CardButton = styled.button`
   cursor: pointer;
 `;
 
-function CourseCard({ title, text, id }) {
+function CourseCard({ ele }) {
   return (
     <CardBox>
       <CardImg src={img} />
-      <CardTitle>{title}</CardTitle>
-      <CardText>{text}</CardText>
-      <Link style={{ textDecoration: 'none' }} to={`./course/${id}`}>
+      <CardTitle>{ele.courseName}</CardTitle>
+      <CardText>{ele.content}</CardText>
+      <Link style={{ textDecoration: 'none' }} to={`./course/${ele.courseId}`}>
         <CardButton>코스 살펴보기</CardButton>
       </Link>
     </CardBox>
