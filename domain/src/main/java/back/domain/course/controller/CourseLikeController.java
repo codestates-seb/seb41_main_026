@@ -11,11 +11,15 @@ import back.domain.course.repository.CourseLikeRepository;
 import back.domain.course.service.CourseLikeService;
 import back.domain.course.service.CourseService;
 
+import back.domain.user.entity.User;
+import back.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -27,6 +31,8 @@ public class CourseLikeController {
 
     private final CourseLikeService courseLikeService;
     private final CourseLikeMapper courseLikeMapper;
+    private final UserService userService;
+
 
 
     /* 코스 추천 생성 */
@@ -34,7 +40,9 @@ public class CourseLikeController {
     public ResponseEntity courseLikePost(@PathVariable Long courseId,
                         @RequestBody CourseLikePostDto courseLikePostDto){
 
+
         CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
+        System.out.println("courseLike : "+ courseLike);
         CourseLike save = courseLikeService.post(courseLike,courseId,courseLikePostDto.getUserId());
         CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
 
@@ -53,9 +61,6 @@ public class CourseLikeController {
         return new ResponseEntity(
                 courseEntityToResponseDto, HttpStatus.OK);
     }
-
-
-
 
 
     /* 코스 추천 단건 조회 */

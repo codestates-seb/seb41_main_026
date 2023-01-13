@@ -1,6 +1,8 @@
 package back.domain.user.dto;
 
 import back.domain.comment.entity.Comment;
+//import back.domain.course.entity.CourseLike;
+import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
 import back.domain.enums.UserStatus;
 import lombok.*;
@@ -31,7 +33,7 @@ public class UserResponseDto {
 
     private UserStatus userStatus;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
 

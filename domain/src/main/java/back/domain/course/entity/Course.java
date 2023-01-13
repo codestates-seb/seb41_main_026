@@ -4,6 +4,7 @@ package back.domain.course.entity;
 import back.domain.comment.entity.Comment;
 import back.domain.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 @Getter
 @ToString
-@Table(name = "COURSES")
+@Table(name = "COURSE")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @NoArgsConstructor
@@ -48,14 +49,20 @@ public class Course {
     @Column(nullable = false)
     private String location;
 
-    @Setter
-    @Column(nullable = false)
-    private Integer courseLike;
+//    @Setter
+//    @Column(nullable = false)
+//    private Integer courseLike;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
 //    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
+
+//    @ManyToOne(optional=true,fetch = FetchType.LAZY)
+//    @Setter
+//    @JsonIgnore
+////    @JsonManagedReference
+//    private User user;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
@@ -71,5 +78,9 @@ public class Course {
         comments.add(comment);
     }
 
+//    public void addUser(User user){
+//        this.user =user ;
+//        user.addCourse(this);
+//    }
 
 }

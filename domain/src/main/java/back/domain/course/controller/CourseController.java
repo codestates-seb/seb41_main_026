@@ -4,6 +4,7 @@ package back.domain.course.controller;
 import back.domain.course.dto.CoursePatchDto;
 import back.domain.course.dto.CoursePostDto;
 import back.domain.course.dto.CourseResponseDto;
+import back.domain.course.dto.CourseUserId;
 import back.domain.course.entity.Course;
 import back.domain.course.mapper.CourseMapper;
 import back.domain.course.repository.CourseRepository;
@@ -37,6 +38,19 @@ public class CourseController {
                 courseResponseDto, HttpStatus.CREATED);
     }
 
+    /* courselike 수정 */
+//    @PatchMapping("/courselike/{courseId}")
+//    public ResponseEntity courselike(@PathVariable Long courseId,
+//                                     @RequestBody CourseUserId courseUserId){
+//        Course course = courseService.courselikepatch(courseId,courseUserId.getUserId());
+//        CourseResponseDto courseResponseDto = courseMapper.CourseEntityToResponseDto(course);
+//
+//        return new ResponseEntity<>(
+//                courseResponseDto, HttpStatus.OK);
+//    }
+
+
+
     /* course 단건 조회 */
     @GetMapping("/{courseId}")
     public ResponseEntity courseGet(@PathVariable Long courseId){
@@ -68,12 +82,17 @@ public class CourseController {
         return new ResponseEntity<>(
                 courseResponseDto, HttpStatus.OK);
     }
+
     /* course 삭제 */
     @DeleteMapping("/{courseId}")
     public ResponseEntity coursedelete(@PathVariable Long courseId){
         courseService.delete(courseId);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
 
 
 }

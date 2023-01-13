@@ -17,7 +17,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-
 @ToString
 @Table(indexes = {
         @Index(columnList = "createdAt"),
@@ -50,13 +49,13 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
 
-    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @Setter
     @JsonIgnore
 //    @JsonManagedReference
     private User user;
 
-    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @Setter
     @JsonIgnore
 //    @JsonManagedReference
@@ -71,6 +70,10 @@ public class Comment {
     public void addCourse(Course course){
         this.course = course;
         course.addComment(this);
+    }
+
+    public void modify(String content){
+        this.content = content;
     }
 
 }

@@ -16,4 +16,5 @@ public class CoursePostDto {
     private String content;
     private String tag;
     private String location;
+
 }

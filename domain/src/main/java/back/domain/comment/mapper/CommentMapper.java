@@ -15,7 +15,15 @@ public interface CommentMapper {
     Comment CommentPostDtoToEntity(CommentPostDto commentPostDto);
 
 
-    CommentResponseDto CommentEntityToResponseDto(Comment comment);
+    default CommentResponseDto CommentEntityToResponseDto(Comment comment){
+        CommentResponseDto commentResponseDto = new CommentResponseDto();
+        commentResponseDto.setCommentId(comment.getCommentId());
+        commentResponseDto.setUserId(comment.getUser().getUserId());
+        commentResponseDto.setModifiedAt(comment.getModifiedAt());
+        commentResponseDto.setCreatedAt(comment.getCreatedAt());
+        commentResponseDto.setContent(comment.getContent());
+        return commentResponseDto;
+    };
 
     List<CommentResponseDto> CommentEntityToResponseDtos(List<Comment> comments);
 

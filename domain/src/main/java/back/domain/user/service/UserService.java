@@ -1,7 +1,8 @@
 package back.domain.user.service;
 
 
-import back.domain.course.service.CourseLikeService;
+//import back.domain.course.service.CourseLikeService;
+import back.domain.course.entity.CourseLike;
 import back.domain.enums.UserStatus;
 import back.domain.exceoption.BusinessException;
 import back.domain.exceoption.ErrorCode;
@@ -26,10 +27,10 @@ public class UserService {
         user.setEmail(userPostDto.getEmail());
         user.setName(userPostDto.getName());
         user.setPassword(userPostDto.getPassword());
+        user.setLikeCount(0);
         user.setUserImage("basic");
         user.setUserStatus(UserStatus.ACTIVITY);
         user.setCreatedAt(LocalDateTime.now());
-
         User save  = userRepository.save(user);
         return save;
     }
@@ -38,8 +39,12 @@ public class UserService {
     public User get(Long userId) {
 
         User user = verifiedUser(userId);
-//        user.setLikeCount(user);
-        return user;
+        Integer count = user.getCourseLikes().stream()
+                .map(CourseLike::getCourseLikeStatus)
+                .mapToInt(i -> i)
+                .sum();
+        user.setLikeCount(count);
+        return userRepository.save(user);
     }
 
 

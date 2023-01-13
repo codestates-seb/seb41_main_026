@@ -24,14 +24,13 @@ import javax.swing.text.html.Option;
 public class CourseLike {
 
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseLikeId;
 
     @Column(nullable = false)
     @Setter
-    private CourseLikeStatus courseLikeStatus;
-
-
+    private Integer courseLikeStatus;
 
 
     @ManyToOne(optional=true,fetch = FetchType.LAZY)

@@ -2,6 +2,7 @@ package back.domain.course.dto;
 
 
 import back.domain.comment.entity.Comment;
+//import back.domain.course.entity.CourseLike;
 import back.domain.course.entity.CourseLike;
 import lombok.*;
 
@@ -19,7 +20,10 @@ public class CourseResponseDto {
     private String content;
     private String tag;
     private String location;
+    private int viewCount;
+//    private Integer courseLike;
     private List<Comment> comments;
+    // todo 좋아요 수가 나오도록 수정
     private List<CourseLike> courseLikes;
 
 

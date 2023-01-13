@@ -8,9 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class CourseLikePostDto {
+public class CourseUserId {
 
     private Long userId;
-
-
 }
