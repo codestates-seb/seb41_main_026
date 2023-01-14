@@ -7,11 +7,12 @@ function MyPageInfo() {
     <div className="container">
       <div className="row ">
         <Sidebar />
-        <div className="col mt-5 mb-5 align-items-stretch">
-          <div className="mb-3 align-items-stretch">
+        <div className="col-sm-3" />
+        <div className="col-lg-5 overflow-auto h-100 mt-5 mb-5">
+          <div className="mb-3 ">
             <h1 className="mb-3 fs-2 fw-bold">회원 정보 변경</h1>
 
-            <form className="pt-3">
+            <form className="pt-3 container">
               <div className="mb-3">
                 <label htmlFor="inputPassword5" className="form-label">
                   이름

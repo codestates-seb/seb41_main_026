@@ -8,6 +8,7 @@ function MyPage() {
     <div className="container">
       <div className="row flex-grow-sm-1 flex-grow-0">
         <Sidebar />
+        <div className="col-sm-3" />
         <div className="col-sm-9">
           <div className="mb-3">
             <div className="d-flex justify-content-between mt-4">

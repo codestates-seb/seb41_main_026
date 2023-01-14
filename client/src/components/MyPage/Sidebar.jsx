@@ -45,38 +45,44 @@ function Sidebar() {
               >
                 <Link
                   to="/mypage/like"
-                  className="nav-link "
+                  className="nav-link d-flex align-items-bottom "
                   aria-current="page"
                 >
                   <img
                     src={`${process.env.PUBLIC_URL}/icon-like.svg`}
                     alt="like icon"
-                    width="16"
-                    height="16"
+                    width="18"
+                    height="18"
                     className="me-2 "
                   />
                   좋아요
                 </Link>
               </List>
               <List selected={pathname === '/mypage/comment'} className="mb-2">
-                <Link to="/mypage/comment" className="nav-link text-white">
+                <Link
+                  to="/mypage/comment"
+                  className="nav-link text-white d-flex align-items-bottom"
+                >
                   <img
                     src={`${process.env.PUBLIC_URL}/icon-comment.svg`}
                     alt="like icon"
-                    width="16"
-                    height="16"
+                    width="18"
+                    height="18"
                     className="me-2 "
                   />
                   댓글
                 </Link>
               </List>
               <List selected={pathname === '/mypage/edit'} className="mb-2">
-                <Link to="/mypage/edit" className="nav-link text-white">
+                <Link
+                  to="/mypage/edit"
+                  className="nav-link text-white d-flex align-items-bottom"
+                >
                   <img
                     src={`${process.env.PUBLIC_URL}/icon-user-edit.svg`}
                     alt="like icon"
-                    width="16"
-                    height="16"
+                    width="18"
+                    height="18"
                     className="me-2 "
                   />
                   회원 정보 변경
