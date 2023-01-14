@@ -1,6 +1,66 @@
-import naver from '../../img/naver.png';
+import { useState } from 'react';
+import signUpAPI from '../../API/signUpAPI';
+import { regEmail } from '../../util/regStore';
+import whiteNaver from '../../img/whiteNaver.png';
 
 function ModalSignUp() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onChangeName = e => {
+    setName(e.target.value);
+  };
+  const onChangeEmail = e => {
+    setEmail(e.target.value);
+  };
+  const onChangePassword = e => {
+    setPassword(e.target.value);
+  };
+
+  // eslint-disable-next-line consistent-return
+  const handleSignUp = () => {
+    if (name.length === 0) {
+      alert('이름이 비어있습니다.');
+      return false;
+    }
+    if (name.length < 2 || name.length > 15) {
+      alert('이름을 최소 2글자 이상 15글자 이하로 적어주세요.');
+      return false;
+    }
+    // if (!regName.test(name)) {
+    //   alert('이름은 숫자나 영어만 가능합니다.');
+    //   return false;
+    // }
+    if (email.length === 0) {
+      alert('이메일이 비어있습니다.');
+      return false;
+    }
+    if (!regEmail.test(email)) {
+      alert('이메일이 타당하지 않습니다.');
+      return false;
+    }
+    if (password.length === 0) {
+      alert('비밀번호가 비어있습니다.');
+      return false;
+    }
+    // if (!regPassword.test(password)) {
+    //   alert('최소 8자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.');
+    // }
+
+    signUpAPI(name, email, password).then(res => {
+      if (res !== '') {
+        window.alert('회원가입 성공!');
+        console.log(res.data);
+        setName('');
+        setEmail('');
+        setPassword('');
+      } else {
+        alert('회원가입 실패');
+      }
+    });
+  };
+
   return (
     <>
       <button
@@ -50,10 +110,12 @@ function ModalSignUp() {
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                 </svg>
                 <input
-                  type="email"
+                  type="name"
                   className="form-control border-0 border-bottom ms-3"
                   id="floatingInput"
                   placeholder="이름을 적으세요"
+                  onChange={onChangeName}
+                  value={name}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -74,10 +136,12 @@ function ModalSignUp() {
                   <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                 </svg>
                 <input
-                  type="email"
+                  type="name"
                   className="form-control border-0 border-bottom ms-3"
                   id="floatingInput"
                   placeholder="이메일을 적으세요"
+                  onChange={onChangeEmail}
+                  value={email}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -102,6 +166,8 @@ function ModalSignUp() {
                   className="form-control border-0 border-bottom ms-3"
                   id="floatingInput"
                   placeholder="비밀번호를 적으세요"
+                  onChange={onChangePassword}
+                  value={password}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -118,7 +184,15 @@ function ModalSignUp() {
                 >
                   취소
                 </button>
-                <button type="submit" className="btn btn-light">
+                <button
+                  type="submit"
+                  className="btn border-0"
+                  onClick={handleSignUp}
+                  style={{
+                    backgroundColor: 'rgba(20, 40, 80, 1)',
+                    color: 'white',
+                  }}
+                >
                   회원가입
                 </button>
               </div>
@@ -178,7 +252,7 @@ function ModalSignUp() {
                   }}
                 >
                   <img
-                    src={naver}
+                    src={whiteNaver}
                     alt="logo"
                     style={{
                       width: '25px',
@@ -197,7 +271,7 @@ function ModalSignUp() {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-outline-dark border-0"
+                  className="btn border-0"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal2"
                 >
