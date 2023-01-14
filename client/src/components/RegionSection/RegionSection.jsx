@@ -68,20 +68,10 @@ function RegionSection({ region }) {
     if (location < 0) {
       setLocation(0);
     } else if (location > 1000) {
-      setLocation(1000);
+      setLocation(1200);
     }
     ref.current.scrollTo({ left: location, behavior: 'smooth' });
   }, [location]);
-
-  /* axios.get으로 전체 도시 데이터를 받고,
-  useEffect에서 locationData가 변하면,
-  아래 코드가 실행되도록 구현. */
-  // if(region === '서울') {
-  //   setlocationData(locationData.seoul)
-  // }
-  // else if(region === '부산') {
-  //   setlocationData(locationData.busan)
-  // }
 
   useEffect(() => {
     axios
@@ -90,6 +80,8 @@ function RegionSection({ region }) {
       )
       .then(res => setLocationData(res.data));
   }, []);
+
+  console.log(locationData);
 
   return (
     <Container>
