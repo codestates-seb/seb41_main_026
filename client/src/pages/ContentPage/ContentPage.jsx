@@ -16,10 +16,6 @@ import route from '../../img/route.png';
 import github from '../../img/vector.png';
 import jinwoo from '../../img/jinwoo.png';
 
-const Container = styled.div`
-  width: 1200px;
-`;
-
 const TitleBox = styled.div`
   width: 1200px;
   border-bottom: 1px solid #b2d3be;
@@ -29,8 +25,6 @@ const TitleBox = styled.div`
 const Title = styled.span`
   width: 135px;
   height: 38px;
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 32px;
   line-height: 38px;
@@ -41,7 +35,6 @@ const Title = styled.span`
 const Des = styled.span`
   width: 30px;
   height: 19px;
-  font-family: 'ABeeZee';
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
@@ -78,7 +71,6 @@ const ShortsText = styled.span`
   margin-left: 10px;
   width: 59px;
   height: 23px;
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -94,7 +86,6 @@ const CommentBox = styled.div`
 const CommentTitle = styled.div`
   width: 347px;
   height: 24px;
-  font-family: 'ABeeZee';
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -139,7 +130,6 @@ const CommentInput = styled.input`
 const CommentButton = styled.div`
   width: 48px;
   height: 30px;
-  font-family: 'ABeeZee';
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -157,7 +147,6 @@ const CommentButton = styled.div`
 const Comment = styled.div`
   padding: 16px;
   background-color: white;
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -217,8 +206,6 @@ const LocationImg = styled.img`
 `;
 
 const LocationText = styled.div`
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
@@ -229,8 +216,8 @@ const LocationText = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 1200px;
   display: flex;
+  margin-top: 30px;
 `;
 
 const InfoBox = styled.div`
@@ -238,6 +225,7 @@ const InfoBox = styled.div`
   height: 126px;
   background: #f2f4d1;
   border: 1px solid #b2d3be;
+  border-radius: 5px;
   padding: 10px;
   display: flex;
   align-items: center;
@@ -256,7 +244,6 @@ const CourseBox2 = styled.div`
 `;
 
 const CourseTitle = styled.div`
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -266,7 +253,6 @@ const CourseTitle = styled.div`
 `;
 
 const Course = styled.div`
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -299,7 +285,7 @@ const Spot = styled.div`
 `;
 
 const TagWrap = styled.div`
-  width: 470px;
+  width: 449px;
   height: 126px;
   display: flex;
   flex-direction: column;
@@ -308,19 +294,17 @@ const TagWrap = styled.div`
 `;
 
 const TagTitle = styled.div`
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #212529;
+  color: #00a8cc;
   margin-bottom: 10px;
 `;
 
 const TagBox = styled.div`
   padding: 8px;
   height: 50px;
-  border: 1px solid #b2d3be;
+  border: 3px solid #00a8cc;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -329,7 +313,7 @@ const TagBox = styled.div`
 const Tag = styled.span`
   width: 50px;
   height: 25px;
-  background: #b2d3be;
+  background: #00a8cc;
   border-radius: 4px;
   padding: 0px 4px;
   margin-left: 10px;
@@ -337,6 +321,7 @@ const Tag = styled.span`
   justify-content: center;
   align-items: center;
   font-size: 13px;
+  color: white;
 `;
 
 const RouteContainer = styled.div`
@@ -344,6 +329,24 @@ const RouteContainer = styled.div`
   display: flex;
   margin-top: 100px;
   margin-bottom: 100px;
+  .tabCustom button {
+    background-color: #0c7b93;
+    color: white;
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
+  .tabCustom button:hover {
+    background-color: #00a8cc;
+  }
+  .tabCustom .active {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #00a8cc;
+    margin-bottom: 0px;
+  }
+  .tabBorderCustom {
+    border: 3px solid #00a8cc;
+  }
 `;
 
 const RouteBox = styled.div`
@@ -354,52 +357,47 @@ const RouteCard = styled.div`
   width: 642px;
   display: flex;
   margin-top: 30px;
+  margin-bottom: 80px;
+  border-radius: 5px;
 `;
 
 const RouteImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
 `;
 
 const RouteText = styled.div`
-  width: 342px;
-  height: 300px;
-  margin-left: 40px;
-  overflow: scroll;
+  margin-left: 20px;
+  text-align: justify;
 `;
 
 const RouteTitle = styled.div`
-  margin-top: 20px;
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
   color: #313131;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 `;
 
 const RouteDes = styled.div`
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 16px;
-  line-height: 110%;
+  line-height: 150%;
   color: #828282;
 `;
 
 const GuideWrap = styled.div`
   width: 500px;
   margin-left: 70px;
+  margin-top: 40px;
 `;
 
 const GuideTitle = styled.div`
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #212529;
+  color: #00a8cc;
   margin-bottom: 10px;
 `;
 
@@ -407,7 +405,7 @@ const GuideBox = styled.div`
   width: 449px;
   height: 300px;
   position: relative;
-  border: 3px solid #b2d3be;
+  border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
 `;
@@ -415,7 +413,7 @@ const GuideBox = styled.div`
 const Guideline = styled.div`
   width: 445px;
   height: 95px;
-  background: #b2d3be;
+  background: #00a8cc;
   border-top-left-radius: 33px;
   border-top-right-radius: 33px;
   border-bottom-left-radius: 170px;
@@ -439,8 +437,6 @@ const GithubImg = styled.img`
 
 const GuideName = styled.div`
   margin-top: 80px;
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -449,8 +445,6 @@ const GuideName = styled.div`
 
 const GuideText = styled.div`
   margin-top: 20px;
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 16px;
   line-height: 110%;
@@ -625,7 +619,7 @@ function ContentPage() {
   };
 
   return (
-    <Container>
+    <div className="container">
       <TitleBox>
         <Title>DMZ 투어</Title>
         <Des>|</Des>
@@ -760,73 +754,123 @@ function ContentPage() {
             })}
         </LocationBox>
       </MapBox>
-      <InfoContainer>
-        <InfoBox>
-          <CourseBox1>
-            <CourseTitle>
-              <img
-                style={{ width: '20px', marginRight: '5px' }}
-                src={route}
-                alt="코스"
-              />
-              도보코스
-            </CourseTitle>
-            <CourseTitle>
-              <img
-                style={{ width: '20px', marginRight: '5px' }}
-                src={time}
-                alt="시간"
-              />
-              소요시간
-            </CourseTitle>
-          </CourseBox1>
-          <CourseBox2>
-            <Course>
-              임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대 -
-              통일촌
-            </Course>
-            <Course>3시간</Course>
-          </CourseBox2>
-        </InfoBox>
-        <TagWrap>
-          <TagTitle>태그</TagTitle>
-          <TagBox>
-            {tag.map(ele => {
-              return <Tag>{ele}</Tag>;
-            })}
-          </TagBox>
-        </TagWrap>
-      </InfoContainer>
+
       <RouteContainer>
-        <RouteBox>
-          {data.map(ele => {
-            return (
-              <RouteCard key={ele.id}>
-                <RouteImg src={sampleImg} />
-                <RouteText>
-                  <RouteTitle>{ele.title}</RouteTitle>
-                  <RouteDes>{ele.text}</RouteDes>
-                </RouteText>
-              </RouteCard>
-            );
-          })}
-        </RouteBox>
-        <GuideWrap>
-          <GuideTitle>가이드</GuideTitle>
-          <GuideBox>
-            <Guideline />
-            <GuideImg src={jinwoo} />
-            <GithubImg src={github} />
-            <GuideName>최진우</GuideName>
-            <GuideText>
-              여행은 자고로 즐거워야한다!
-              <br />
-              오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
-            </GuideText>
-          </GuideBox>
-        </GuideWrap>
+        <nav>
+          <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
+            <button
+              className="nav-link"
+              id="nav-home-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-home"
+              type="button"
+              role="tab"
+              aria-controls="nav-home"
+              aria-selected="true"
+            >
+              코스소개
+            </button>
+            <button
+              className="nav-link"
+              id="nav-profile-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-profile"
+              type="button"
+              role="tab"
+              aria-controls="nav-profile"
+              aria-selected="false"
+            >
+              일정
+            </button>
+          </div>
+          <div
+            className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
+            id="nav-tabContent"
+          >
+            <RouteBox
+              className="tab-pane active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+              tabindex="0"
+            >
+              {data.map(ele => {
+                return (
+                  <RouteCard key={ele.id}>
+                    <RouteImg src={sampleImg} />
+                    <RouteText>
+                      <RouteTitle>{ele.title}</RouteTitle>
+                      <RouteDes>{ele.text}</RouteDes>
+                    </RouteText>
+                  </RouteCard>
+                );
+              })}
+            </RouteBox>
+            <div
+              className="tab-pane"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+              tabIndex="0"
+            >
+              <InfoContainer>
+                <InfoBox>
+                  <CourseBox1>
+                    <CourseTitle>
+                      <img
+                        style={{ width: '20px', marginRight: '5px' }}
+                        src={route}
+                        alt="코스"
+                      />
+                      도보코스
+                    </CourseTitle>
+                    <CourseTitle>
+                      <img
+                        style={{ width: '20px', marginRight: '5px' }}
+                        src={time}
+                        alt="시간"
+                      />
+                      소요시간
+                    </CourseTitle>
+                  </CourseBox1>
+                  <CourseBox2>
+                    <Course>
+                      임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대
+                      - 통일촌
+                    </Course>
+                    <Course>3시간</Course>
+                  </CourseBox2>
+                </InfoBox>
+              </InfoContainer>
+            </div>
+          </div>
+        </nav>
+        <div>
+          <TagWrap>
+            <TagTitle>태그</TagTitle>
+            <TagBox>
+              {tag.map(ele => {
+                return <Tag>{ele}</Tag>;
+              })}
+            </TagBox>
+          </TagWrap>
+          <GuideWrap>
+            <GuideTitle>가이드</GuideTitle>
+            <GuideBox>
+              <Guideline />
+              <GuideImg src={jinwoo} />
+              <GithubImg src={github} />
+              <GuideName>최진우</GuideName>
+              <GuideText>
+                여행은 자고로 즐거워야한다!
+                <br />
+                오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
+              </GuideText>
+            </GuideBox>
+          </GuideWrap>
+        </div>
       </RouteContainer>
-    </Container>
+    </div>
   );
 }
 

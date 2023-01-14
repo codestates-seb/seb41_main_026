@@ -13,7 +13,6 @@ const Container = styled.div`
 const Title = styled.div`
   width: 1200px;
   text-align: center;
-  font-family: 'ABeeZee';
   margin: 50px 0px;
   font-weight: 400;
   font-size: 40px;
