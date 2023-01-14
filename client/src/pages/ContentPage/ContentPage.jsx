@@ -862,7 +862,7 @@ function ContentPage() {
         <nav>
           <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
             <button
-              className="nav-link"
+              className="nav-link active"
               id="nav-home-tab"
               data-bs-toggle="tab"
               data-bs-target="#nav-home"
@@ -953,7 +953,7 @@ function ContentPage() {
             <TagTitle>태그</TagTitle>
             <TagBox>
               {tag.map(ele => {
-                return <Tag>{ele}</Tag>;
+                return <Tag key={ele.id}>{ele.tag}</Tag>;
               })}
             </TagBox>
           </TagWrap>
