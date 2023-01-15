@@ -11,8 +11,9 @@ function Header() {
   });
   return (
     <nav
-      className="navbar navbar-dark navbar-expand-lg bg-dark sticky-top"
+      className="navbar  navbar-expand-lg sticky-top"
       data-bs-theme="dark"
+      style={{ backgroundColor: '#142850' }}
     >
       <div className="container">
         <a className="navbar-brand me-3" href="/">
