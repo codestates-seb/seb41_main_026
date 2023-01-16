@@ -4,9 +4,10 @@ import MyPageCard from '../Card/MyPageCard';
 
 function MyPageLike() {
   return (
-    <div className="container overflow-auto">
+    <div className="container">
       <div className="row flex-grow-sm-1 flex-grow-0">
         <Sidebar />
+        <div className="col-sm-3" />
         <div className="col overflow-auto h-100 mt-5 mb-5">
           <div className="mb-3">
             <div className="row row-cols-1 row-cols-md-3 g-4">
