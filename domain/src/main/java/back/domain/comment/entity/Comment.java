@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
         @Index(columnList = "createdAt"),
         @Index(columnList = "modifiedAt")
 }, name = "COMMENTS")
-//@EntityListeners(AuditingEntityListener.class)
 @Entity
 @NoArgsConstructor
 public class Comment {
@@ -52,13 +51,12 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @Setter
-//    @JsonManagedReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Setter
-    @JsonIgnore
-//    @JsonManagedReference
+//    @JsonIgnore
+    @JsonManagedReference
     private Course course;
 
     public void addUser(User user) {

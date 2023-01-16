@@ -68,13 +68,6 @@ public class CommentController {
     }
 
     /* comment 삭제 */
-//    @DeleteMapping("/{commentId}")
-//    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId, Long userId){
-//        commentService.delete(commentId, userId);
-//
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-
     @DeleteMapping("/{commentId}")
     public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId) {
         commentService.delete(commentId);

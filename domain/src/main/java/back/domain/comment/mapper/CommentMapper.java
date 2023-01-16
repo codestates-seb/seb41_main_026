@@ -17,6 +17,7 @@ public interface CommentMapper {
     default CommentResponseDto CommentEntityToResponseDto(Comment comment) {
         CommentResponseDto commentResponseDto = new CommentResponseDto();
         commentResponseDto.setUserId(comment.getUser().getUserId());
+        commentResponseDto.setCourseId(comment.getCourse().getCourseId());
         commentResponseDto.setCommentId(comment.getCommentId());
         commentResponseDto.setCreatedAt(comment.getCreatedAt());
         commentResponseDto.setModifiedAt(comment.getModifiedAt());
