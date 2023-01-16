@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-13T13:50:10+0900",
+    date = "2023-01-16T14:14:29+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -45,7 +45,9 @@ public class UserMapperImpl implements UserMapper {
         userResponseDto.setName( user.getName() );
         userResponseDto.setEmail( user.getEmail() );
         userResponseDto.setPassword( user.getPassword() );
-        userResponseDto.setLikeCount( (int) user.getLikeCount() );
+        if ( user.getLikeCount() != null ) {
+            userResponseDto.setLikeCount( user.getLikeCount() );
+        }
         userResponseDto.setUserImage( user.getUserImage() );
         userResponseDto.setUserStatus( user.getUserStatus() );
         userResponseDto.setCreatedAt( user.getCreatedAt() );
