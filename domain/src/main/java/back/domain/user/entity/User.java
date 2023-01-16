@@ -46,11 +46,6 @@ public class User {
 
     @Setter
     @Column(nullable = false, length = 1000)
-    // 좋아요한 게시물
-    private int courseLike;
-
-    @Setter
-    @Column(nullable = false, length = 1000)
     private String userImage;
 
     @Setter
@@ -82,7 +77,7 @@ public class User {
 
     @Column(nullable = false)
     @Setter
-    private long likeCount = 0;
+    private Integer likeCount;
 
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);

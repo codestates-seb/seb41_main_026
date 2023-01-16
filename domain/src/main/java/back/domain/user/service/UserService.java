@@ -9,6 +9,7 @@ import back.domain.user.entity.User;
 import back.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import back.domain.course.entity.CourseLike;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,15 +29,21 @@ public class UserService {
         user.setUserImage("basic");
         user.setUserStatus(UserStatus.ACTIVITY);
         user.setPassword(userPostDto.getPassword());
+        user.setLikeCount(0);
         User save = userRepository.save(user);
-        user.setLikeCount(user.getLikeCount());
 
         return save;
     }
-
     public User get(Long userId) {
-        return verifiedUser(userId);
+        User user = verifiedUser(userId);
+        Integer count = user.getCourseLikes().stream()
+                .map(CourseLike::getCourseLikeStatus)
+                .mapToInt(i -> i)
+                .sum();
+        user.setLikeCount(count);
+        return userRepository.save(user);
     }
+
     public List<User> gets() {
         return (List<User>) userRepository.findAll();
     }
