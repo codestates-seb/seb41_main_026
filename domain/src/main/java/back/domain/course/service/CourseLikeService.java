@@ -25,50 +25,45 @@ public class CourseLikeService {
     private final CourseService courseService;
     private final CourseLikeRepository courseLikeRepository;
 
-    List<List<String>> value = new ArrayList<>();
+    List<List<String>> valueList = new ArrayList<>();
 
     public CourseLike post(CourseLike courseLike, Long courseId, Long userId) {
         User user = userService.verifiedUser(userId);
         Course course = courseService.verifiedCourse(courseId);
         courseLike.addCourse(courseService.verifiedCourse(courseId));
         courseLike.addUser(userService.verifiedUser(userId));
-//        courseLike.setCourseLikeId(courseId);
 
-        String courseidint = String.valueOf(courseId);
-        String useridint = String.valueOf(userId);
 
-//        List<List<String>> value = new ArrayList<>();
-        List<String> value1= Arrays.asList(courseidint,useridint);
+        String courseIdToString = String.valueOf(courseId);
+        String userIdToString = String.valueOf(userId);
 
-        if(value.contains(value1)==false){
-            value.add(value1);
+
+        List<String> value= Arrays.asList(courseIdToString,userIdToString);
+
+        if(valueList.contains(value)==false){
+            valueList.add(value);
         }
-        int id= value.indexOf(value1);
-        id=id+1;
-        Long idtoLong = Long.valueOf(id);
-        System.out.println("value :" + value);
-        System.out.println("id : "+id);
+        int index= valueList.indexOf(value);
+        index=index+1;
+        Long courseLikeid = Long.valueOf(index);
 
         if(userId == courseId){
-            courseLike.setCourseLikeId(idtoLong);
-            if (!courseLikeRepository.existsById(idtoLong)) {
+            courseLike.setCourseLikeId(courseLikeid);
+            if (!courseLikeRepository.existsById(courseLikeid)) {
                 courseLike.setCourseLikeStatus(1);
                 courseLike.addCourse(courseService.verifiedCourse(courseId));
                 courseLike.addUser(userService.verifiedUser(userId));
                 courseLikeRepository.save(courseLike);
             } else {
-                CourseLike findCourseLike = verifiedCourseLike(idtoLong);
-                System.out.println("findCourseLike : "+findCourseLike);
+                CourseLike findCourseLike = verifiedCourseLike(courseLikeid);
                 if (findCourseLike.getCourseLikeStatus() == 0) {
 
-                    System.out.println("courseLike=0 : " + findCourseLike);
                     findCourseLike.addCourse(courseService.verifiedCourse(courseId));
                     findCourseLike.addUser(userService.verifiedUser(userId));
                     findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() + 1);
                     courseLikeRepository.save(findCourseLike);
                 } else if (findCourseLike.getCourseLikeStatus() == 1) {
 
-                    System.out.println("courseLike=1 : " + findCourseLike);
                     findCourseLike.addCourse(courseService.verifiedCourse(courseId));
                     findCourseLike.addUser(userService.verifiedUser(userId));
                     findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() - 1);
@@ -76,25 +71,22 @@ public class CourseLikeService {
                 }
             }
         } else{
-            courseLike.setCourseLikeId(idtoLong);
-            if (!courseLikeRepository.existsById(idtoLong)) {
+            courseLike.setCourseLikeId(courseLikeid);
+            if (!courseLikeRepository.existsById(courseLikeid)) {
                 courseLike.setCourseLikeStatus(1);
                 courseLike.addCourse(courseService.verifiedCourse(courseId));
                 courseLike.addUser(userService.verifiedUser(userId));
                 courseLikeRepository.save(courseLike);
             } else {
-                CourseLike findCourseLike = verifiedCourseLike(idtoLong);
-                System.out.println("findCourseLike : "+findCourseLike);
+                CourseLike findCourseLike = verifiedCourseLike(courseLikeid);
                 if (findCourseLike.getCourseLikeStatus() == 0) {
 
-                    System.out.println("courseLike=0 : " + findCourseLike);
                     findCourseLike.addCourse(courseService.verifiedCourse(courseId));
                     findCourseLike.addUser(userService.verifiedUser(userId));
                     findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() + 1);
                     courseLikeRepository.save(findCourseLike);
                 } else if (findCourseLike.getCourseLikeStatus() == 1) {
 
-                    System.out.println("courseLike=1 : " + findCourseLike);
                     findCourseLike.addCourse(courseService.verifiedCourse(courseId));
                     findCourseLike.addUser(userService.verifiedUser(userId));
                     findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() - 1);
@@ -103,7 +95,7 @@ public class CourseLikeService {
             }
         }
 
-        return verifiedCourseLike(idtoLong);
+        return verifiedCourseLike(courseLikeid);
     }
 
 
