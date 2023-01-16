@@ -12,6 +12,7 @@ import MyPageInfo from './components/MyPage/MyPageInfo';
 import MainShorts from './pages/HomePage/MainShorts';
 import MainSeason from './pages/HomePage/MainSeason';
 import MainGuide from './pages/HomePage/MainGuide';
+import MainSearch from './pages/HomePage/MainSearch';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: '/guide',
     element: <MainGuide />,
+  },
+  {
+    path: '/search',
+    element: <MainSearch />,
   },
   {
     path: '/course/:id',

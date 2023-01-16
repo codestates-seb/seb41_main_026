@@ -31,13 +31,12 @@ function MyPage() {
   }
 
   return (
-    <div className="container mb-5">
-      <div className="row flex-grow-sm-1 flex-grow-0">
+    <div className="container">
+      <div className="row min-vh-100 flex-column flex-md-row">
         <Sidebar />
-        <div className="col-sm-3" />
-        <div className="col overflow-auto h-100 mt-5 mb-5">
-          <div className="mb-3">
-            <div>
+        <main className="col-sm-9 px-0 flex-grow-1">
+          <div className="container py-3">
+            <article>
               <div className="d-flex p-2">
                 <h1 className="fw-bold mt-3 flex-grow-1">
                   내 최근 좋아요 코스
@@ -68,39 +67,42 @@ function MyPage() {
                   })
                 )}
               </div>
-            </div>
-            <div className="mt-5">
-              <div className="d-flex p-2">
-                <h1 className="fw-bold mt-3 flex-grow-1">내 최근 댓글 코스</h1>
-                <Link to="/mypage/comment">
+
+              <div className="mt-5">
+                <div className="d-flex p-2">
+                  <h1 className="fw-bold mt-3 flex-grow-1">
+                    내 최근 댓글 코스
+                  </h1>
+                  <Link to="/mypage/comment">
+                    {myCommentCourse.length === 0 ? (
+                      <div />
+                    ) : (
+                      <button className="btn btn-sm btn-info">더보기</button>
+                    )}
+                  </Link>
+                </div>
+                <div className="row row-cols-1 row-cols-md-3 g-4">
                   {myCommentCourse.length === 0 ? (
-                    <div />
+                    <div className="p-4 text-light-emphasis flex-grow-1 ">
+                      아직 댓글을 작성한 코스가 없습니다.
+                    </div>
                   ) : (
-                    <button className="btn btn-sm btn-info">더보기</button>
+                    myCommentCourse.map(data => {
+                      return (
+                        <MyPageCard
+                          title={data.course.courseName}
+                          key={data.commentId}
+                          location={data.course.location}
+                          id={data.course.courseId}
+                        />
+                      );
+                    })
                   )}
-                </Link>
+                </div>
               </div>
-              <div className="row row-cols-1 row-cols-md-3 g-4">
-                {myCommentCourse.length === 0 ? (
-                  <div className="p-4 text-light-emphasis flex-grow-1 ">
-                    아직 댓글을 작성한 코스가 없습니다.
-                  </div>
-                ) : (
-                  myCommentCourse.map(data => {
-                    return (
-                      <MyPageCard
-                        title={data.course.courseName}
-                        key={data.commentId}
-                        location={data.course.location}
-                        id={data.course.courseId}
-                      />
-                    );
-                  })
-                )}
-              </div>
-            </div>
+            </article>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
