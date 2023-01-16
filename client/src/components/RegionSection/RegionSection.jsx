@@ -6,8 +6,19 @@ import leftImg from '../../img/leftImg.png';
 import rightImg from '../../img/rightImg.png';
 
 const Container = styled.div`
-  width: 1200px;
-  margin-bottom: 120px;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const BgImgBox = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-image: url(${({ bg }) => bg});
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
@@ -53,23 +64,28 @@ const ArrowImg = styled.img`
   width: 20px;
 `;
 
-function RegionSection({ region }) {
+function RegionSection({ region, id }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
   const [locationData, setLocationData] = useState(null);
+  const bgLink = [
+    { id: 0, imgLink: '/img/seoulBg.jpg' },
+    { id: 1, imgLink: '/img/busanBg.jpg' },
+  ];
+
   const rightHandler = () => {
-    setLocation(prev => prev + 500);
+    setLocation(prev => prev + 1000);
   };
 
   const leftHandler = () => {
-    setLocation(prev => prev - 500);
+    setLocation(prev => prev - 1000);
   };
 
   useEffect(() => {
     if (location < 0) {
       setLocation(0);
-    } else if (location > 1000) {
-      setLocation(1200);
+    } else if (location > 1900) {
+      setLocation(1900);
     }
     ref.current.scrollTo({ left: location, behavior: 'smooth' });
   }, [location]);
@@ -83,30 +99,35 @@ function RegionSection({ region }) {
   }, []);
 
   console.log(locationData);
-
   return (
     <Container>
-      <Title>{region}</Title>
-      <CardBox ref={ref}>
-        {locationData === null ? (
-          <div style={{ fontSize: '35px' }}>Loading...</div>
-        ) : (
-          locationData.map(ele => {
-            if (region === ele.location) {
-              return <CourseCard key={ele.courseId} ele={ele} />;
-            }
-            return '';
-          })
-        )}
-      </CardBox>
-      <ButtonBox>
-        <Button>
-          <ArrowImg src={leftImg} onClick={leftHandler} />
-        </Button>
-        <Button>
-          <ArrowImg src={rightImg} onClick={rightHandler} />
-        </Button>
-      </ButtonBox>
+      {bgLink.map(el =>
+        id === el.id ? (
+          <BgImgBox key={el.id} bg={el.imgLink}>
+            <Title>{region}</Title>
+            <CardBox ref={ref}>
+              {locationData === null ? (
+                <div style={{ fontSize: '35px' }}>Loading...</div>
+              ) : (
+                locationData.map(ele => {
+                  if (region === ele.location) {
+                    return <CourseCard key={ele.courseId} ele={ele} />;
+                  }
+                  return '';
+                })
+              )}
+            </CardBox>
+            <ButtonBox>
+              <Button>
+                <ArrowImg src={leftImg} onClick={leftHandler} />
+              </Button>
+              <Button>
+                <ArrowImg src={rightImg} onClick={rightHandler} />
+              </Button>
+            </ButtonBox>
+          </BgImgBox>
+        ) : null,
+      )}
     </Container>
   );
 }

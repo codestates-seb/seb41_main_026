@@ -11,8 +11,8 @@ const Container = styled.div`
 function HomePage() {
   return (
     <Container>
-      <RegionSection region="seoul" />
-      <RegionSection region="Busan" />
+      <RegionSection id={0} region="seoul" />
+      <RegionSection id={1} region="Busan" />
     </Container>
   );
 }

@@ -154,7 +154,7 @@ function Header() {
               >
                 취소
               </button>
-              <button type="button" className="btn btn-outline-danger" onClick={handleLogOut}>
+              <button className="btn btn-outline-danger" onClick={handleLogOut}>
                 예, 로그아웃 합니다.
               </button>
             </div>

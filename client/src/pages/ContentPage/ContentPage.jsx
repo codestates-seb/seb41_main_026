@@ -589,14 +589,14 @@ function ContentPage() {
     },
   ];
 
-  const tag = [
-    { id: 1, tag: '파주' },
-    { id: 2, tag: '봄' },
-    { id: 3, tag: '여름' },
-    { id: 4, tag: '가울' },
-    { id: 5, tag: '겨울' },
-    { id: 6, tag: '최진우' },
-  ];
+  // const tag = [
+  //   { id: 1, tag: '파주' },
+  //   { id: 2, tag: '봄' },
+  //   { id: 3, tag: '여름' },
+  //   { id: 4, tag: '가울' },
+  //   { id: 5, tag: '겨울' },
+  //   { id: 6, tag: '최진우' },
+  // ];
 
   const data = [
     {
@@ -711,14 +711,25 @@ function ContentPage() {
   return (
     <div className="container">
       <TitleBox>
-        <Title>DMZ 투어</Title>
-        <Des>|</Des>
-        <Des>파주</Des>
-        <Des>|</Des>
-        <Des>봄, 여름, 가을, 겨울</Des>
-        <Des>|</Des>
-        <Des>최진우 가이드</Des>
-        <Des>|</Des>
+        <Title>
+          {courseData !== null ? (
+            courseData.courseName
+          ) : (
+            <span>Loading...</span>
+          )}
+        </Title>
+        {courseData !== null
+          ? courseData.tag.map(ele => {
+              return (
+                <>
+                  <Des>|</Des>
+                  <Des>{ele}</Des>
+                  <Des>|</Des>
+                </>
+              );
+            })
+          : null}
+
         <Des>좋아요</Des>
         <HeartBox>
           {heartState ? (
@@ -955,9 +966,11 @@ function ContentPage() {
           <TagWrap>
             <TagTitle>태그</TagTitle>
             <TagBox>
-              {tag.map(ele => {
-                return <Tag key={ele.id}>{ele.tag}</Tag>;
-              })}
+              {courseData !== null
+                ? courseData.tag.map(ele => {
+                    return <Tag>{ele}</Tag>;
+                  })
+                : null}
             </TagBox>
           </TagWrap>
           <GuideWrap>
