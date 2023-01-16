@@ -103,58 +103,11 @@ public class CourseLikeService {
             }
         }
 
-
-//        if (!courseLikeRepository.existsById(courseId)) {
-//            courseLike.setCourseLikeStatus(1);
-//            courseLike.addCourse(courseService.verifiedCourse(courseId));
-//            courseLike.addUser(userService.verifiedUser(userId));
-//            courseLikeRepository.save(courseLike);
-////            System.out.println("courseLike3 : " + courseLike);
-//        } else {
-//            CourseLike findCourseLike = verifiedCourseLike(courseLike.getCourseLikeId());
-//            System.out.println("findCourseLike : "+findCourseLike);
-////            if (userId != courseId) {
-////                CourseLike courseLike1 = new CourseLike();
-////                courseLike1.setCourseLikeStatus(1);
-////                courseLike1.addCourse(courseService.verifiedCourse(courseId));
-////                courseLike1.addUser(userService.verifiedUser(userId));
-////                courseLikeRepository.save(courseLike1);
-////                System.out.println("findCourseLike1 : "+courseLike1);
-////            } else {
-//                if (findCourseLike.getCourseLikeStatus() == 0) {
-////                    CourseLike findCourseLike = verifiedCourseLike(userId);
-//                    System.out.println("courseLike=0 : " + findCourseLike);
-//                    findCourseLike.addCourse(courseService.verifiedCourse(courseId));
-//                    findCourseLike.addUser(userService.verifiedUser(userId));
-//                    findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() + 1);
-//                    courseLikeRepository.save(findCourseLike);
-//                } else if (findCourseLike.getCourseLikeStatus() == 1) {
-////                    CourseLike findCourseLike = verifiedCourseLike(userId);
-//                    System.out.println("courseLike=1 : " + findCourseLike);
-//                    findCourseLike.addCourse(courseService.verifiedCourse(courseId));
-//                    findCourseLike.addUser(userService.verifiedUser(userId));
-//                    findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus() - 1);
-//                    courseLikeRepository.save(findCourseLike);
-//
-//                }
-//            }
-////        }
         return verifiedCourseLike(idtoLong);
     }
 
 
 
-
-
-    public CourseLike postdown(CourseLike courseLike, Long courseId, Long userId) {
-            User user = userService.verifiedUser(userId);
-            Course course = courseService.verifiedCourse(courseId);
-
-            courseLike.addCourse(course);
-            courseLike.addUser(user);
-
-        return courseLike;
-    }
 
 
 
@@ -177,22 +130,5 @@ public class CourseLikeService {
         return courseLikes;
     }
 
-    public CourseLike patch(CourseLike courseLike ,Long courseLikeId, CourseLikePatchDto courseLikePatchDto) {
 
-        User user = userService.verifiedUser(courseLikePatchDto.getUserId());
-//            Course course = courseService.verifiedCourse(courseLikePatchDto.getCourseId());
-        CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
-//            findCourseLike.addCourse(course);
-        findCourseLike.addUser(user);
-        if(findCourseLike.getCourseLikeStatus().equals(0)){
-            findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus()+1);
-            courseLikeRepository.save(findCourseLike);
-        } else if (findCourseLike.getCourseLikeStatus().equals(1)) {
-            findCourseLike.setCourseLikeStatus(findCourseLike.getCourseLikeStatus()-1);
-            courseLikeRepository.save(findCourseLike);
-        }
-
-        return findCourseLike;
-
-    }
 }
