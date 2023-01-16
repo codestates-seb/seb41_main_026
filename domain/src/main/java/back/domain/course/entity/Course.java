@@ -55,7 +55,7 @@ public class Course {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
-//    @JsonBackReference
+    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
 //    @ManyToOne(optional=true,fetch = FetchType.LAZY)
@@ -66,7 +66,7 @@ public class Course {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
-//    @JsonBackReference
+    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
 
