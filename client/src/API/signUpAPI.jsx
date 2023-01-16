@@ -9,6 +9,7 @@ const signUpAPI = async (name, email, password) => {
         email,
         password,
       },
+      // { withCredentials: true },
     )
     .then(res => {
       console.log(res);

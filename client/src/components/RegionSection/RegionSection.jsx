@@ -46,6 +46,7 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 15px;
+  background-color: white;
 `;
 
 const ArrowImg = styled.img`
