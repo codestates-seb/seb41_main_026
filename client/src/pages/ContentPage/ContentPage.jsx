@@ -22,6 +22,9 @@ const TitleBox = styled.div`
   width: 1200px;
   border-bottom: 1px solid #b2d3be;
   margin-top: 70px;
+  position: fixed;
+  top: 35px;
+  z-index: 100;
 `;
 
 const Title = styled.span`
@@ -30,7 +33,7 @@ const Title = styled.span`
   font-weight: 400;
   font-size: 32px;
   line-height: 38px;
-  color: #212529;
+  color: white;
   margin-left: 20px;
 `;
 
@@ -40,7 +43,7 @@ const Des = styled.span`
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #89a3b2;
+  color: #35b8d6;
   margin-left: 20px;
 `;
 
@@ -77,7 +80,7 @@ const ShortsText = styled.span`
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
-  color: #111111;
+  color: white;
 `;
 
 const CommentBox = styled.div`
@@ -91,7 +94,7 @@ const CommentTitle = styled.div`
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #212529;
+  color: white;
   margin-bottom: 20px;
 `;
 
@@ -384,7 +387,7 @@ const RouteTitle = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
-  color: #313131;
+  color: white;
   margin-bottom: 10px;
 `;
 
@@ -392,7 +395,7 @@ const RouteDes = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #828282;
+  color: #9c9c9c;
 `;
 
 const GuideWrap = styled.div`
@@ -448,7 +451,7 @@ const GuideName = styled.div`
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #212529;
+  color: white;
 `;
 
 const GuideText = styled.div`
@@ -456,7 +459,7 @@ const GuideText = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 110%;
-  color: #828282;
+  color: #9c9c9c;
 `;
 
 const HeartBox = styled.span`
