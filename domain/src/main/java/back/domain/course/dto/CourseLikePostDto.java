@@ -9,8 +9,5 @@ import lombok.*;
 @Setter
 @ToString
 public class CourseLikePostDto {
-
     private Long userId;
-    private String courseLikeStatus;
-
 }

@@ -11,8 +11,6 @@ import lombok.*;
 public class CourseLikeResponseDto {
 
     private Long courseLikeId;
-
-    private CourseLikeStatus courseLikeStatus;
-
-//    private int courseLikeCount;
+    private Long courseId;
+    private Integer courseLikeStatus;
 }

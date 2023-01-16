@@ -1,12 +1,13 @@
 package back.domain.course.controller;
 
 
-import back.domain.course.dto.CourseLikePatchDto;
 import back.domain.course.dto.CourseLikePostDto;
 import back.domain.course.dto.CourseLikeResponseDto;
 import back.domain.course.entity.CourseLike;
 import back.domain.course.mapper.CourseLikeMapper;
 import back.domain.course.service.CourseLikeService;
+import back.domain.user.entity.User;
+import back.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 @RestController
@@ -23,19 +26,23 @@ public class CourseLikeController {
 
     private final CourseLikeService courseLikeService;
     private final CourseLikeMapper courseLikeMapper;
+    private final UserService userService;
 
 
     /* 코스 추천 생성 (좋아요 누른 것)  */
-//    @PostMapping("/{courseId}")
-//    public ResponseEntity courseLikePost(@PathVariable Long courseId, @RequestBody CourseLikePostDto courseLikePostDto){
-//
-//        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
-//        CourseLike save = courseLikeService.post(courseLike, courseId, courseLikePostDto.getUserId());
-//        CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
-//
-//        return new ResponseEntity(
-//                courseEntityToResponseDto, HttpStatus.OK);
-//    }
+    @PostMapping("/{courseId}")
+    public ResponseEntity courseLikePost(@PathVariable Long courseId,
+                                         @RequestBody CourseLikePostDto courseLikePostDto){
+
+
+        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
+        System.out.println("courseLike : "+ courseLike);
+        CourseLike save = courseLikeService.post(courseLike,courseId,courseLikePostDto.getUserId());
+        CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
+
+        return new ResponseEntity(
+                courseEntityToResponseDto, HttpStatus.OK);
+    }
 
     /* 코스 추천 단건 조회 */
     @GetMapping("/course/{courseLikeId}")
@@ -57,17 +64,5 @@ public class CourseLikeController {
 
         return new ResponseEntity(
                courseEntityToResponseDtos, HttpStatus.OK);
-    }
-
-    /* 코스 추천 수정 */
-    @PatchMapping("/course/{courseLikeId}")
-    public ResponseEntity courseLikePatch(@PathVariable Long courseLikeId,
-                                          @RequestBody CourseLikePatchDto courseLikePatchDto){
-        CourseLike courseLike = courseLikeMapper.CourseLikePatchDtoToEntity(courseLikePatchDto);
-        CourseLike patched = courseLikeService.patch(courseLike, courseLikeId, courseLikePatchDto);
-        CourseLikeResponseDto courseLikeResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(patched);
-
-        return new ResponseEntity(
-                courseLikeResponseDto, HttpStatus.OK);
     }
 }

@@ -12,7 +12,13 @@ import java.util.List;
 public interface CourseLikeMapper {
 
     CourseLike CourseLikePostDtoToEntity(CourseLikePostDto courseLikePostDto);
-    CourseLikeResponseDto CourseLikeEntityToResponseDto(CourseLike courseLike);
+    default CourseLikeResponseDto CourseLikeEntityToResponseDto(CourseLike courseLike){
+        CourseLikeResponseDto courseLikeResponseDto = new CourseLikeResponseDto();
+        courseLikeResponseDto.setCourseLikeId(courseLike.getCourseLikeId());
+        courseLikeResponseDto.setCourseLikeStatus(courseLike.getCourseLikeStatus());
+        courseLikeResponseDto.setCourseId(courseLike.getCourse().getCourseId());
+        return courseLikeResponseDto;
+    };
     CourseLike CourseLikePatchDtoToEntity(CourseLikePatchDto courseLikePatchDto);
     List<CourseLikeResponseDto> CourseLikeEntityToResponseDto(List<CourseLike> courseLikes);
 }

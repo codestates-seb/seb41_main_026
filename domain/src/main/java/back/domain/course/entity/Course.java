@@ -4,6 +4,7 @@ package back.domain.course.entity;
 import back.domain.comment.entity.Comment;
 import back.domain.enums.Tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,21 +47,19 @@ public class Course {
     private int viewCount; // 조회수
 
     @Setter
-    @Column(nullable = true)
-    private int likeCount; // 좋아요 수
-
-    @Setter
     @Column(nullable = false)
     private String location;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @Setter
+    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @Setter
+    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
     public void addCourseLike(CourseLike courseLike) {
@@ -71,11 +70,4 @@ public class Course {
         comments.add(comment);
     }
 
-    public void increaseLikeCount() {
-        this.likeCount += 1;
-    }
-
-    public void decreaseLikeCount() {
-        this.likeCount -= 1;
-    }
 }
