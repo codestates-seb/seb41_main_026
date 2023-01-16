@@ -1,25 +1,21 @@
 package back.domain.course.controller;
 
 
-import back.domain.course.dto.CourseLikePatchDto;
+
 import back.domain.course.dto.CourseLikePostDto;
 import back.domain.course.dto.CourseLikeResponseDto;
 import back.domain.course.entity.CourseLike;
 import back.domain.course.mapper.CourseLikeMapper;
-import back.domain.course.mapper.CourseMapper;
-import back.domain.course.repository.CourseLikeRepository;
-import back.domain.course.service.CourseLikeService;
-import back.domain.course.service.CourseService;
 
-import back.domain.user.entity.User;
+import back.domain.course.service.CourseLikeService;
+
 import back.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 
@@ -50,18 +46,6 @@ public class CourseLikeController {
                 courseEntityToResponseDto, HttpStatus.OK);
     }
 
-    @PostMapping("/{courseId}/down")
-    public ResponseEntity courseLikePost1(@PathVariable Long courseId,
-                                         @RequestBody CourseLikePostDto courseLikePostDto){
-
-        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
-        CourseLike save = courseLikeService.postdown(courseLike,courseId,courseLikePostDto.getUserId());
-        CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
-
-        return new ResponseEntity(
-                courseEntityToResponseDto, HttpStatus.OK);
-    }
-
 
     /* 코스 추천 단건 조회 */
     @GetMapping("/course/{courseLikeId}")
@@ -83,19 +67,6 @@ public class CourseLikeController {
                 courseEntityToResponseDtos, HttpStatus.OK);
     }
 
-    /* 코스 추천 수정 */
-    @PatchMapping("/course/{courseLikeId}")
-    public ResponseEntity courseLikePatch(@PathVariable Long courseLikeId,
-                                          @RequestBody CourseLikePatchDto courseLikePatchDto){
-
-
-        CourseLike courseLike = courseLikeMapper.CourseLikePatchDtoToEntity(courseLikePatchDto);
-        CourseLike patched = courseLikeService.patch(courseLike,courseLikeId,courseLikePatchDto);
-        CourseLikeResponseDto courseLikeResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(patched);
-
-        return new ResponseEntity(
-                courseLikeResponseDto, HttpStatus.OK);
-    }
 
 
 
