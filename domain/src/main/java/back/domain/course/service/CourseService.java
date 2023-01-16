@@ -3,6 +3,7 @@ package back.domain.course.service;
 
 import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
+import back.domain.course.entity.CourseLike;
 import back.domain.course.repository.CourseLikeRepository;
 import back.domain.course.repository.CourseRepository;
 import back.domain.exception.BusinessException;
@@ -29,6 +30,11 @@ public class CourseService {
     public Course get(Long courseId) {
         Course course = verifiedCourse(courseId);
         course.setViewCount(course.getViewCount() +1);
+        Integer count = course.getCourseLikes().stream()
+                .map(CourseLike::getCourseLikeStatus)
+                .mapToInt(i -> i)
+                .sum();
+        course.setLikeCount(count);
         courseRepository.save(course);
         return course;
     }

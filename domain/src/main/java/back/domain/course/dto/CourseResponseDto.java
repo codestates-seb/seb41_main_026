@@ -20,6 +20,7 @@ public class CourseResponseDto {
     private String location;
     private List<String> tag;
     private int viewCount;
+    private int likeCount;
     private List<Comment> comments;
     private List<CourseLike> courseLikes;
 }

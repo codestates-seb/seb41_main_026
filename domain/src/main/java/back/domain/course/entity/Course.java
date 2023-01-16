@@ -48,6 +48,10 @@ public class Course {
 
     @Setter
     @Column(nullable = false)
+    private int likeCount; // 좋아요 수
+
+    @Setter
+    @Column(nullable = false)
     private String location;
 
     @ToString.Exclude
