@@ -42,8 +42,8 @@ public class CourseLike {
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @Setter
-    @JsonIgnore
-//    @JsonManagedReference
+//    @JsonIgnore
+    @JsonManagedReference
     private Course course;
 
     public void addUser(User user){
