@@ -57,8 +57,8 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Setter
-    @JsonIgnore
-//    @JsonManagedReference
+//    @JsonIgnore
+    @JsonManagedReference
     private Course course;
 
 
