@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import ModalConfirmEdit from '../Modal/ModalConfirmEdit';
 import Sidebar from './Sidebar';
 
 function MyPageInfo() {
-  const navigate = useNavigate();
   const url =
     'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user/4';
   const [name, setName] = useState('');
@@ -25,8 +23,8 @@ function MyPageInfo() {
         name,
         password,
       })
-      .then(() => {
-        navigate.push('/mypage/edit');
+      .then(res => {
+        console.log(res);
       });
   };
 
@@ -40,7 +38,7 @@ function MyPageInfo() {
             <h1 className="mb-3 fs-2 fw-bold">회원 정보 변경</h1>
 
             <form className="pt-3 container">
-              <div className="mb-3">
+              <div className="mb-3 mt-3">
                 <label htmlFor="inputPassword5" className="form-label">
                   이름
                 </label>
@@ -58,7 +56,7 @@ function MyPageInfo() {
                 <div id="passwordHelpBlock" className="form-text" />
               </div>
               <fieldset disabled>
-                <div className="mb-3">
+                <div className="mb-3 mt-3">
                   <label htmlFor="disabledTextInput" className="form-label">
                     이메일
                   </label>
@@ -71,11 +69,12 @@ function MyPageInfo() {
                       setEmail(e.target.value);
                     }}
                     value={email}
+                    disabled
                   />
                 </div>
               </fieldset>
 
-              <div className="mb-3">
+              <div className="mb-3 mt-3">
                 <label htmlFor="inputPassword5" className="form-label">
                   새로운 비밀번호
                 </label>
@@ -90,7 +89,7 @@ function MyPageInfo() {
                   }}
                   value={password}
                 />
-                <div id="passwordHelpBlock" className="form-text">
+                <div id="passwordHelpBlock" className="form-text ">
                   8-20 글자 사이의 비밀번호
                 </div>
               </div>
