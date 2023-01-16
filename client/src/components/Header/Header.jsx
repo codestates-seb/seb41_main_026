@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -6,6 +7,11 @@ import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
+  const [removeCookie] = useCookies(['hj']);
+  function handleLogOut() {
+    removeCookie('hj');
+    window.location.reload();
+  }
   useEffect(() => {
     setIsLogin(console.log(isLogin));
   });
@@ -55,7 +61,7 @@ function Header() {
             </button>
           </form>
 
-          {isLogin ? (
+          {!isLogin ? (
             <div className="dropdown">
               <a
                 href="/mypage"
@@ -149,7 +155,11 @@ function Header() {
               >
                 취소
               </button>
-              <button type="button" className="btn btn-outline-danger">
+              <button
+                type="button"
+                className="btn btn-outline-danger"
+                onClick={handleLogOut}
+              >
                 예, 로그아웃 합니다.
               </button>
             </div>

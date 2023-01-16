@@ -8,6 +8,7 @@ const logInAPI = async (email, password) => {
         email,
         password,
       },
+      // { withCredentials: true },
     )
     .then(res => {
       console.log(res);
