@@ -17,6 +17,7 @@ const CardBox = styled.div`
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin-right: 9px;
+  background-color: white;
 `;
 
 const CardImg = styled.img`
