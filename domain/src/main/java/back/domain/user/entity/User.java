@@ -57,10 +57,6 @@ public class User {
 
     @Setter
     @Column(nullable = false, length = 1000)
-    private int courseLike;
-
-    @Setter
-    @Column(nullable = false, length = 1000)
     private String userImage;
 
     @Setter
