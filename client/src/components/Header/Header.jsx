@@ -75,7 +75,11 @@ function Header() {
             </button>
           </form>
 
+<<<<<<< HEAD
           {isLogin ? (
+=======
+          {!isLogin ? (
+>>>>>>> c23564fa731e2a84ef83a53be280f688a0ba261f
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
@@ -154,11 +158,7 @@ function Header() {
               >
                 취소
               </button>
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                onClick={handleLogOut}
-              >
+              <button className="btn btn-outline-danger" onClick={handleLogOut}>
                 예, 로그아웃 합니다.
               </button>
             </div>
