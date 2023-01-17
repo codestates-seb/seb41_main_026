@@ -13,11 +13,16 @@ import MainShorts from './pages/HomePage/MainShorts';
 import MainSeason from './pages/HomePage/MainSeason';
 import MainGuide from './pages/HomePage/MainGuide';
 import MainSearch from './pages/HomePage/MainSearch';
+import MainPage from './pages/HomePage/MainPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/main',
+    element: <MainPage />,
   },
   {
     path: '/shorts',
