@@ -1,8 +1,10 @@
 package back.domain.advice;
 
+
+import back.domain.exception.ErrorCode;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -11,57 +13,71 @@ import java.util.stream.Collectors;
 
 @Getter
 public class ErrorResponse {
-    private List<FieldError> fieldErrors; // (1)
-    private List<ConstraintViolationError> violationErrors;  // (2)
+    private int status;
+    private String message;
+    private List<FieldError> fieldErrors;
+    private List<ConstraintViolationError> violationErrors;
 
-    // (3)
-    ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors) {
+    private ErrorResponse(int status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+    private ErrorResponse(List<FieldError> fieldErrors,
+                          List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
 
-    // (4) BindingResult에 대한 ErrorResponse 객체 생성
     public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult), null);
+        return new ErrorResponse(FieldError.of(bindingResult),null);
     }
 
-    // (5) Set<ConstraintViolation<?>> 객체에 대한 ErrorResponse 객체 생성
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
-    // (6) Field Error 가공
-    @Getter
-    public static class FieldError {
+
+    public static ErrorResponse of(ErrorCode errorCode) {
+        return new ErrorResponse(errorCode.getStatus(), errorCode.getMessage());
+    }
+
+    public static ErrorResponse of(HttpStatus status) {
+        return new ErrorResponse(status.value(), status.getReasonPhrase());
+    }
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
+    }
+
+    private static class FieldError {
         private String field;
         private Object rejectedValue;
         private String reason;
-
-        FieldError(String field, Object rejectedValue, String reason) {
+        private FieldError(String field, Object rejectedValue, String reason) {
             this.field = field;
             this.rejectedValue = rejectedValue;
             this.reason = reason;
         }
 
         public static List<FieldError> of(BindingResult bindingResult) {
-            final List<org.springframework.validation.FieldError> fieldErrors =
+            List<org.springframework.validation.FieldError> fieldErrorList =
                     bindingResult.getFieldErrors();
-            return fieldErrors.stream()
-                    .map(error -> new FieldError(
-                            error.getField(),
-                            error.getRejectedValue() == null ?
-                                    "" : error.getRejectedValue().toString(),
-                            error.getDefaultMessage()))
-                    .collect(Collectors.toList());
+            return fieldErrorList.stream()
+                    .map(error ->
+                            new FieldError(
+                                    error.getField(),
+                                    error.getRejectedValue() ==null?
+                                            "" : error.getRejectedValue().toString(),
+                                    error.getDefaultMessage()
+                            )).collect(Collectors.toList());
         }
     }
-    // (7) ConstraintViolation Error 가공
-    @Getter
-    public static class ConstraintViolationError {
+
+    private static class ConstraintViolationError {
         private String propertyPath;
         private Object rejectedValue;
         private String reason;
 
-        private ConstraintViolationError(String propertyPath, Object rejectedValue,
+        private ConstraintViolationError(String propertyPath,
+                                         Object rejectedValue,
                                          String reason) {
             this.propertyPath = propertyPath;
             this.rejectedValue = rejectedValue;
@@ -69,13 +85,15 @@ public class ErrorResponse {
         }
 
         public static List<ConstraintViolationError> of(
-                Set<ConstraintViolation<?>> constraintViolations) {
+                Set<ConstraintViolation<?>> constraintViolations
+        ) {
             return constraintViolations.stream()
-                    .map(constraintViolation -> new ConstraintViolationError(
-                            constraintViolation.getPropertyPath().toString(),
-                            constraintViolation.getInvalidValue().toString(),
-                            constraintViolation.getMessage()
-                    )).collect(Collectors.toList());
+                    .map(constraintViolation ->
+                            new ConstraintViolationError(
+                                    constraintViolation.getPropertyPath().toString(),
+                                    constraintViolation.getInvalidValue().toString(),
+                                    constraintViolation.getMessage()
+                            )).collect(Collectors.toList());
         }
     }
 }
