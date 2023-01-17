@@ -1,6 +1,7 @@
 package back.domain.advice;
 
 
+import back.domain.dto.ErrorResponse;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
@@ -19,21 +20,21 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse methodArgumentNotValidHandle(
-            MethodArgumentNotValidException e
-    ) {
-        return ErrorResponse.of(e.getBindingResult());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse constraintViolationExceptionHandler(
-            ConstraintViolationException e
-    ) {
-        return ErrorResponse.of(e.getConstraintViolations());
-    }
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ErrorResponse methodArgumentNotValidHandle(
+//            MethodArgumentNotValidException e
+//    ) {
+//        return ErrorResponse.of(e.getBindingResult());
+//    }
+//
+//    @ExceptionHandler
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ErrorResponse constraintViolationExceptionHandler(
+//            ConstraintViolationException e
+//    ) {
+//        return ErrorResponse.of(e.getConstraintViolations());
+//    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -72,6 +73,24 @@ public class ExceptionAdvice {
         return new ResponseEntity<>(
                 ErrorResponse.of(e.getErrorCode()),
                 HttpStatus.valueOf(e.getErrorCode().getStatus()));
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
+
+        return response;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstraintViolationException(
+            ConstraintViolationException e) {
+        final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
+
+        return response;
     }
 }
 
