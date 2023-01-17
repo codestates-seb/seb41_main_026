@@ -7,9 +7,9 @@ import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
-  const [removeCookie] = useCookies(['hj']);
+  const [removeCookie] = useCookies(['cookies']);
   function handleLogOut() {
-    removeCookie('hj');
+    removeCookie('cookies');
     window.location.reload();
   }
   useEffect(() => {
@@ -75,7 +75,11 @@ function Header() {
             </button>
           </form>
 
+<<<<<<< HEAD
+          {isLogin ? (
+=======
           {!isLogin ? (
+>>>>>>> c23564fa731e2a84ef83a53be280f688a0ba261f
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
