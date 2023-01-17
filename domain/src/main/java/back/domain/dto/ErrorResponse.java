@@ -1,4 +1,4 @@
-package back.domain.advice;
+package back.domain.dto;
 
 
 import back.domain.exception.ErrorCode;
@@ -22,35 +22,39 @@ public class ErrorResponse {
         this.status = status;
         this.message = message;
     }
-    private ErrorResponse(List<FieldError> fieldErrors,
-                          List<ConstraintViolationError> violationErrors) {
+
+    private ErrorResponse(final List<FieldError> fieldErrors,
+                          final List<ConstraintViolationError> violationErrors) {
         this.fieldErrors = fieldErrors;
         this.violationErrors = violationErrors;
     }
 
     public static ErrorResponse of(BindingResult bindingResult) {
-        return new ErrorResponse(FieldError.of(bindingResult),null);
+        return new ErrorResponse(FieldError.of(bindingResult), null);
     }
 
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
 
-    public static ErrorResponse of(ErrorCode errorCode) {
-        return new ErrorResponse(errorCode.getStatus(), errorCode.getMessage());
+    public static ErrorResponse of(ErrorCode exceptionCode) {
+        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
     }
 
-    public static ErrorResponse of(HttpStatus status) {
-        return new ErrorResponse(status.value(), status.getReasonPhrase());
+    public static ErrorResponse of(HttpStatus httpStatus) {
+        return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
+
     public static ErrorResponse of(HttpStatus httpStatus, String message) {
         return new ErrorResponse(httpStatus.value(), message);
     }
 
-    private static class FieldError {
+    @Getter
+    public static class FieldError {
         private String field;
         private Object rejectedValue;
         private String reason;
+
         private FieldError(String field, Object rejectedValue, String reason) {
             this.field = field;
             this.rejectedValue = rejectedValue;
@@ -58,26 +62,25 @@ public class ErrorResponse {
         }
 
         public static List<FieldError> of(BindingResult bindingResult) {
-            List<org.springframework.validation.FieldError> fieldErrorList =
+            final List<org.springframework.validation.FieldError> fieldErrors =
                     bindingResult.getFieldErrors();
-            return fieldErrorList.stream()
-                    .map(error ->
-                            new FieldError(
-                                    error.getField(),
-                                    error.getRejectedValue() ==null?
-                                            "" : error.getRejectedValue().toString(),
-                                    error.getDefaultMessage()
-                            )).collect(Collectors.toList());
+            return fieldErrors.stream()
+                    .map(error -> new FieldError(
+                            error.getField(),
+                            error.getRejectedValue() == null ?
+                                    "" : error.getRejectedValue().toString(),
+                            error.getDefaultMessage()))
+                    .collect(Collectors.toList());
         }
     }
 
-    private static class ConstraintViolationError {
+    @Getter
+    public static class ConstraintViolationError {
         private String propertyPath;
         private Object rejectedValue;
         private String reason;
 
-        private ConstraintViolationError(String propertyPath,
-                                         Object rejectedValue,
+        private ConstraintViolationError(String propertyPath, Object rejectedValue,
                                          String reason) {
             this.propertyPath = propertyPath;
             this.rejectedValue = rejectedValue;
@@ -85,15 +88,13 @@ public class ErrorResponse {
         }
 
         public static List<ConstraintViolationError> of(
-                Set<ConstraintViolation<?>> constraintViolations
-        ) {
+                Set<ConstraintViolation<?>> constraintViolations) {
             return constraintViolations.stream()
-                    .map(constraintViolation ->
-                            new ConstraintViolationError(
-                                    constraintViolation.getPropertyPath().toString(),
-                                    constraintViolation.getInvalidValue().toString(),
-                                    constraintViolation.getMessage()
-                            )).collect(Collectors.toList());
+                    .map(constraintViolation -> new ConstraintViolationError(
+                            constraintViolation.getPropertyPath().toString(),
+                            constraintViolation.getInvalidValue().toString(),
+                            constraintViolation.getMessage()
+                    )).collect(Collectors.toList());
         }
     }
 }

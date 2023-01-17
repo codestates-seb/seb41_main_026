@@ -53,6 +53,10 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Setter
+    private List<String> roles = new ArrayList<>();
+
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate

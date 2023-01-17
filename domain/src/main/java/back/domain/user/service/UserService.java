@@ -7,18 +7,28 @@ import back.domain.exception.ErrorCode;
 import back.domain.user.dto.UserPostDto;
 import back.domain.user.entity.User;
 import back.domain.user.repository.UserRepository;
+import back.domain.utils.JwtAuthorityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import back.domain.course.entity.CourseLike;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
+    @Value("${ADMIN_EMAIL}")
+    private String adminEmail;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    private final JwtAuthorityUtils jwtAuthorityUtils;
 
     public User post(User user, UserPostDto userPostDto) {
         // 이미 등록된 이메일인지 확인
@@ -28,7 +38,15 @@ public class UserService {
         user.setName(userPostDto.getName());
         user.setUserImage("basic");
         user.setUserStatus(UserStatus.ACTIVITY);
-        user.setPassword(userPostDto.getPassword());
+
+        // password 암호화
+        String encode = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encode);
+
+        // DB에 User Role 저장
+        List<String> roles = jwtAuthorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+
         user.setLikeCount(0);
         User save = userRepository.save(user);
 
