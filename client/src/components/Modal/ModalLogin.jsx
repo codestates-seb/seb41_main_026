@@ -1,69 +1,55 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useCookies } from 'react-cookie';
-import { regEmail } from '../../util/regStore';
+import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
-// import logInAPI from '../../API/loginAPI';
-// import { setTOKEN, setUser } from '../../util/tokenStore';
+
+const Buttons = styled.button`
+  background-color: rgba(20, 40, 80, 1);
+  color: white;
+  &:hover {
+    background-color: rgba(39, 73, 109, 1);
+  }
+`;
+
+const SocialButtons = styled.button`
+  border-radius: 20px;
+  width: 80px;
+  margin-left: 10px;
+  margin-top: 20px;
+  &:hover {
+    background-color: rgb(0, 168, 204);
+  }
+`;
 
 function ModalLogin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
 
-  const [setCookie] = useCookies(['hj']);
+  const [setCookie] = useCookies(['cookies']);
 
-  const onChangeEmail = e => {
-    setEmail(e.target.value);
-  };
-  const onChangePassword = e => {
-    setPassword(e.target.value);
+  const handleInputValue = key => e => {
+    setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
   // eslint-disable-next-line consistent-return
   const handleLogIn = e => {
     e.preventDefault();
-    if (email.length === 0) {
-      alert('이메일이 비어있습니다.');
-      return false;
-    }
-    if (!regEmail.test(email)) {
+    const { email, password } = loginInfo;
+    if (email.length === 0 || !regEmail.test(email)) {
       alert('이메일이 타당하지 않습니다.');
       return false;
     }
-    if (password.length === 0) {
-      alert('비밀번호가 비어있습니다.');
+    if (password.length === 0 || !regPassword.test(password)) {
+      alert(
+        '최소 6자 최대 12자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.',
+      );
       return false;
     }
-    // if (!regPassword.test(password)) {
-    //   alert('최소 8자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.');
-    // }
-    // logInAPI(email, password).then(res => {
-    //   setTOKEN(res.headers.authorization);
-    //   axios
-    //     .get('ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user')
-    //     .then(response => {
-    //       const { data } = response;
-    //       setUser(data);
-    //     })
-    //     .catch(err => {
-    //       let errorText;
-    //       const { message } = err;
-    //       const code = Number(message.slice(-3));
-    //       switch (code) {
-    //         case 401:
-    //         case 404:
-    //         case 500:
-    //         default:
-    //           errorText = message;
-    //       }
-    //       return alert(errorText);
-    //     });
-    // });
     axios
       .post(
-        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user`,
+        `${process.env.REACT_APP_API_URL}/user/login`,
         {
           email,
           password,
@@ -75,8 +61,8 @@ function ModalLogin() {
           id: res.data.id,
           token: res.headers.authorization,
         });
-        const expires = moment().add('40', 'm').toDate();
-        setCookie('hj', data, { expires });
+        const expires = dayjs().add('40', 'm').toDate();
+        setCookie('cookies', data, { expires });
         window.location.reload();
       })
       .catch(err => {
@@ -131,10 +117,9 @@ function ModalLogin() {
                 <input
                   type="email"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="email"
                   placeholder="이메일을 적으세요"
-                  onChange={onChangeEmail}
-                  value={email}
+                  onChange={handleInputValue('email')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -154,10 +139,9 @@ function ModalLogin() {
                 <input
                   type="password"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="password"
                   placeholder="비밀번호를 적으세요"
-                  onChange={onChangePassword}
-                  value={password}
+                  onChange={handleInputValue('password')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -181,16 +165,7 @@ function ModalLogin() {
             </div>
             <div className="p-5">
               <div className="modal-body border-top d-flex gap-4 m-auto">
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/github.svg`}
                     alt="github icon"
@@ -198,20 +173,11 @@ function ModalLogin() {
                     height="20"
                     className="bi bi-envelope"
                     style={{
-                      marginBottom: '-5px',
+                      marginBottom: '-3px',
                     }}
                   />
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                </SocialButtons>
+                <SocialButtons type="button" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/google.svg`}
                     alt="google icon"
@@ -219,20 +185,11 @@ function ModalLogin() {
                     height="19"
                     className="bi bi-envelope"
                     style={{
-                      marginBottom: '-5px',
+                      marginBottom: '-3px',
                     }}
                   />
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                </SocialButtons>
+                <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={whiteNaver}
                     alt="logo"
@@ -242,7 +199,7 @@ function ModalLogin() {
                       marginBottom: '-6px',
                     }}
                   />
-                </button>
+                </SocialButtons>
               </div>
             </div>
             <div className="pe-5 ps-5">
@@ -310,7 +267,7 @@ function ModalLogin() {
                 <input
                   type="email"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="email"
                   placeholder="이메일을 적으세요"
                   style={{
                     borderRadius: '0',
@@ -367,11 +324,3 @@ function ModalLogin() {
 }
 
 export default ModalLogin;
-
-const Buttons = styled.button`
-  background-color: rgba(20, 40, 80, 1);
-  color: white;
-  &:hover {
-    background-color: rgba(39, 73, 109, 1);
-  }
-`;

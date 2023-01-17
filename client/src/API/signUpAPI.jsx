@@ -3,7 +3,7 @@ import axios from 'axios';
 const signUpAPI = async (name, email, password) => {
   await axios
     .post(
-      'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user',
+      `${process.env.REACT_APP_API_URL}/user`,
       {
         name,
         email,

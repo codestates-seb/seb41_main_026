@@ -1,113 +1,118 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useCookies } from 'react-cookie';
-import axios from 'axios';
-import moment from 'moment';
+// import { useCookies } from 'react-cookie';
+// import axios from 'axios';
+// import dayjs from 'dayjs';
 // import { useNavigate } from 'react-router-dom';
-// import signUpAPI from '../../API/signUpAPI';
-import { regEmail } from '../../util/regStore';
+import signUpAPI from '../../API/signUpAPI';
+import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 
-function ModalSignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Buttons = styled.button`
+  background-color: rgba(20, 40, 80, 1);
+  color: white;
+  &:hover {
+    background-color: rgba(39, 73, 109, 1);
+  }
+`;
 
-  const [setCookie] = useCookies(['hj']);
+const SocialButtons = styled.button`
+  border-radius: 20px;
+  width: 80px;
+  margin-left: 10px;
+  margin-top: 20px;
+  &:hover {
+    background-color: rgb(0, 168, 204);
+  }
+`;
+
+function ModalSignUp() {
+  const [signUpInfo, setsignUpInfo] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
   const [setMsg] = useState(false);
 
+  // const [setCookie] = useCookies(['cookies']);
   // const naviagte = useNavigate();
 
-  const onChangeName = e => {
-    setName(e.target.value);
-  };
-  const onChangeEmail = e => {
-    setEmail(e.target.value);
-  };
-  const onChangePassword = e => {
-    setPassword(e.target.value);
+  const handleInputValue = key => e => {
+    setsignUpInfo({ ...signUpInfo, [key]: e.target.value });
   };
 
   // eslint-disable-next-line consistent-return
   const handleSignUp = e => {
     e.preventDefault();
-    if (name.length === 0) {
-      alert('이름이 비어있습니다.');
+    const { name, email, password } = signUpInfo;
+    if (name.length === 0 || !regName.test(name)) {
+      alert('이름은 한글, 숫자, 영어만 가능합니다.');
       return false;
     }
     if (name.length < 2 || name.length > 15) {
       alert('이름을 최소 2글자 이상 15글자 이하로 적어주세요.');
       return false;
     }
-    // if (!regName.test(name)) {
-    //   alert('이름은 숫자나 영어만 가능합니다.');
-    //   return false;
-    // }
-    if (email.length === 0) {
-      alert('이메일이 비어있습니다.');
-      return false;
-    }
-    if (!regEmail.test(email)) {
+    if (email.length === 0 || !regEmail.test(email)) {
       alert('이메일이 타당하지 않습니다.');
       return false;
     }
-    if (password.length === 0) {
-      alert('비밀번호가 비어있습니다.');
+    if (password.length === 0 || !regPassword.test(password)) {
+      alert(
+        '최소 6자 최대 12자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.',
+      );
       return false;
     }
-    // if (!regPassword.test(password)) {
-    //   alert('최소 8자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.');
-    // }
 
-    // signUpAPI(name, email, password).then(res => {
-    //   if (res !== '') {
-    //     window.alert('회원가입 성공!');
-    //     console.log(res.data);
-    //     setName('');
-    //     setEmail('');
-    //     setPassword('');
-    //   } else {
-    //     alert('회원가입 실패');
-    //   }
-    // });
-    axios(
-      {
-        method: 'post',
-        url: `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user`,
-        data: {
-          name,
-          email,
-          password,
-        },
-      },
-      { withCredentials: true },
-    ).then(res => {
-      axios
-        .post(
-          `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/user`,
-          {
-            email,
-            password,
-          },
-          { withCredentials: true },
-          console.log(res),
-        )
-        // eslint-disable-next-line no-shadow
-        .then(res => {
-          const data = JSON.stringify({
-            id: res.data.id,
-            token: res.headers.authorization,
-          });
-          const expires = moment().add('40', 'm').toDate();
-          setCookie('hj', data, { expires });
-          setMsg(true);
-          setTimeout(() => {
-            setMsg(false);
-            window.location.reload();
-          }, 4000);
-        })
-        .catch(() => console.log('회원가입'));
+    signUpAPI(name, email, password).then(res => {
+      if (res !== '') {
+        window.alert('회원가입 성공!');
+        setsignUpInfo('');
+        setMsg(true);
+        // naviagte('/');
+      } else {
+        alert('회원가입 실패');
+      }
     });
+    // 회원가입 후 자동 로그인
+    // axios(
+    //   {
+    //     method: 'post',
+    //     url: `${process.env.REACT_APP_API_URL}/user`,
+    //     data: {
+    //       name,
+    //       email,
+    //       password,
+    //     },
+    //   },
+    //   { withCredentials: true },
+    // ).then(res => {
+    //   axios
+    //     .post(
+    //       `${process.env.REACT_APP_API_URL}/user/login`,
+    //       {
+    //         email,
+    //         password,
+    //       },
+    //       { withCredentials: true },
+    //       console.log(res),
+    //     )
+    //     // eslint-disable-next-line no-shadow
+    //     .then(res => {
+    //       const data = JSON.stringify({
+    //         id: res.data.id,
+    //         token: res.headers.authorization,
+    //       });
+    //       const expires = dayjs().add('40', 'm').toDate();
+    //       setCookie('cookies', data, { expires });
+    //       setMsg(true);
+    //       setTimeout(() => {
+    //         setMsg(false);
+    //         window.location.reload(true);
+    //       }, 4000);
+    //     })
+    //     .catch(err => console.log(err, '회원가입'));
+    // });
   };
 
   return (
@@ -158,10 +163,9 @@ function ModalSignUp() {
                 <input
                   type="name"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="name"
                   placeholder="이름을 적으세요"
-                  onChange={onChangeName}
-                  value={name}
+                  onChange={handleInputValue('name')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -179,12 +183,11 @@ function ModalSignUp() {
                   className="bi bi-envelope"
                 />
                 <input
-                  type="name"
+                  type="email"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="email"
                   placeholder="이메일을 적으세요"
-                  onChange={onChangeEmail}
-                  value={email}
+                  onChange={handleInputValue('email')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -204,10 +207,9 @@ function ModalSignUp() {
                 <input
                   type="password"
                   className="form-control border-0 border-bottom ms-3"
-                  id="floatingInput"
+                  id="password"
                   placeholder="비밀번호를 적으세요"
-                  onChange={onChangePassword}
-                  value={password}
+                  onChange={handleInputValue('password')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -231,16 +233,7 @@ function ModalSignUp() {
             </div>
             <div className="p-5">
               <div className="modal-body border-top d-flex gap-4 m-auto">
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/github.svg`}
                     alt="github icon"
@@ -248,20 +241,11 @@ function ModalSignUp() {
                     height="20"
                     className="bi bi-envelope"
                     style={{
-                      marginBottom: '-5px',
+                      marginBottom: '-4px',
                     }}
                   />
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                </SocialButtons>
+                <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/google.svg`}
                     alt="google icon"
@@ -269,20 +253,11 @@ function ModalSignUp() {
                     height="19"
                     className="bi bi-envelope"
                     style={{
-                      marginBottom: '-5px',
+                      marginBottom: '-4px',
                     }}
                   />
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-outline-light"
-                  style={{
-                    borderRadius: '20px',
-                    width: '80px',
-                    marginLeft: '10px',
-                    marginTop: '20px',
-                  }}
-                >
+                </SocialButtons>
+                <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={whiteNaver}
                     alt="logo"
@@ -292,7 +267,7 @@ function ModalSignUp() {
                       marginBottom: '-6px',
                     }}
                   />
-                </button>
+                </SocialButtons>
               </div>
             </div>
             <div
@@ -319,11 +294,3 @@ function ModalSignUp() {
 }
 
 export default ModalSignUp;
-
-const Buttons = styled.button`
-  background-color: rgba(20, 40, 80, 1);
-  color: white;
-  &:hover {
-    background-color: rgba(39, 73, 109, 1);
-  }
-`;

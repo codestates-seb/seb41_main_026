@@ -8,11 +8,9 @@ import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
-  const [search, setSearch] = useState('');
-  const [removeCookie] = useCookies(['hj']);
-
+  const [removeCookie] = useCookies(['cookies']);
   function handleLogOut() {
-    removeCookie('hj');
+    removeCookie('cookies');
     window.location.reload();
   }
   useEffect(() => {
@@ -81,8 +79,8 @@ function Header() {
               type="search"
               placeholder="검색하기"
               aria-label="Search"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
+              // value={search}
+              // onChange={e => setSearch(e.target.value)}
               onSubmit={onSearch}
             />
             <button className="btn btn-outline-secondary" type="submit">
@@ -90,7 +88,7 @@ function Header() {
             </button>
           </form>
 
-          {isLogin ? (
+          {!isLogin ? (
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
@@ -169,6 +167,7 @@ function Header() {
               >
                 취소
               </button>
+
               <button
                 type="button"
                 className="btn btn-outline-danger"
