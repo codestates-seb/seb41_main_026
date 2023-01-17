@@ -570,22 +570,26 @@ function ContentPage() {
     {
       id: 1,
       name: '숙소1',
-      position: { lat: 37.4512141, lng: 126.9882024 },
+      lat: 37.4512141,
+      lng: 126.9882024,
     },
     {
       id: 2,
       name: '숙소2',
-      position: { lat: 37.639235, lng: 126.99025 },
+      lat: 37.639235,
+      lng: 126.99025,
     },
     {
       id: 3,
       name: '숙소3',
-      position: { lat: 37.062235, lng: 126.243683 },
+      lat: 37.062235,
+      lng: 126.243683,
     },
     {
       id: 4,
       name: '숙소4',
-      position: { lat: 37.538235, lng: 126.59125 },
+      lat: 37.538235,
+      lng: 126.59125,
     },
   ];
 
@@ -812,20 +816,13 @@ function ContentPage() {
 
             {marker === 'eatSpot' &&
               eatSpot.map(ele => {
-                return (
-                  <MarkerF key={ele.id} position={ele.position}>
-                    {ele.name}
-                  </MarkerF>
-                );
+                return <MarkerF key={ele.id} position={ele.position} />;
               })}
 
             {marker === 'sleepSpot' &&
               sleepSpot.map(ele => {
-                return (
-                  <MarkerF key={ele.id} position={ele.position}>
-                    {ele.name}
-                  </MarkerF>
-                );
+                const position = { lat: ele.lat, lng: ele.lng };
+                return <MarkerF key={ele.id} position={position} />;
               })}
             <Category>
               <Spot focus={travelFocus} onClick={spot1Handler}>

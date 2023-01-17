@@ -85,10 +85,12 @@ function RegionSection({ region }) {
   };
 
   useEffect(() => {
-    if (location < 0) {
-      setLocation(0);
-    } else if (location > 1900) {
-      setLocation(1900);
+    if (locationData !== null) {
+      if (location < 0) {
+        setLocation(0);
+      } else if (location > 290 * locationData.length) {
+        setLocation(290 * locationData.length);
+      }
     }
     ref.current.scrollTo({ left: location, behavior: 'smooth' });
   }, [location]);
@@ -98,10 +100,17 @@ function RegionSection({ region }) {
       .get(
         'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
       )
-      .then(res => setLocationData(res?.data));
+      .then(res =>
+        setLocationData(
+          res?.data.filter(ele => {
+            return ele.location === region;
+          }),
+        ),
+      );
   }, []);
 
   console.log(locationData);
+  console.log(locationData !== null && locationData.length);
   return (
     <Container>
       {bgLink.map(el =>
@@ -113,10 +122,7 @@ function RegionSection({ region }) {
                 <div style={{ fontSize: '35px' }}>Loading...</div>
               ) : (
                 locationData.map(ele => {
-                  if (region === ele.location) {
-                    return <CourseCard key={ele.courseId} ele={ele} />;
-                  }
-                  return '';
+                  return <CourseCard key={ele.courseId} ele={ele} />;
                 })
               )}
             </CardBox>
