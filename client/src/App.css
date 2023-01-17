@@ -85,6 +85,10 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  font-family: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Pretendard Variable', Pretendard, Roboto, 'Noto Sans KR', 'Segoe UI',
+    'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -102,6 +106,11 @@ section {
 }
 body {
   line-height: 1;
+  background-color: #27496d;
+  color: aliceblue;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 ol,
 ul {
