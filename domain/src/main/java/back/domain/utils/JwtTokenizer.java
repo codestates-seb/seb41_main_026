@@ -76,7 +76,7 @@ public class JwtTokenizer {
     public Token delegateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", user.getEmail());
-//        claims.put("roles", user.getRoles());
+        claims.put("roles", user.getRoles());
 
         String subject = user.getEmail();
 
