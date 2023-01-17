@@ -8,6 +8,7 @@ import rightImg from '../../img/rightImg.png';
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
+  position: relative;
 `;
 
 const BgImgBox = styled.div`
@@ -24,7 +25,7 @@ const BgImgBox = styled.div`
 const Title = styled.div`
   width: 1200px;
   text-align: center;
-  margin: 50px 0px;
+  margin-bottom: 60px;
   font-weight: 400;
   font-size: 40px;
   line-height: 100%;
@@ -38,6 +39,7 @@ const CardBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  margin-bottom: 30px;
 `;
 
 const ButtonBox = styled.div`
@@ -64,14 +66,15 @@ const ArrowImg = styled.img`
   width: 20px;
 `;
 
-function RegionSection({ region, id }) {
+const bgLink = [
+  { id: 0, region: 'seoul', imgLink: '/img/seoulBg.jpg' },
+  { id: 1, region: 'Busan', imgLink: '/img/busanBg.jpg' },
+];
+
+function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
   const [locationData, setLocationData] = useState(null);
-  const bgLink = [
-    { id: 0, imgLink: '/img/seoulBg.jpg' },
-    { id: 1, imgLink: '/img/busanBg.jpg' },
-  ];
 
   const rightHandler = () => {
     setLocation(prev => prev + 1000);
@@ -95,14 +98,14 @@ function RegionSection({ region, id }) {
       .get(
         'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
       )
-      .then(res => setLocationData(res.data));
+      .then(res => setLocationData(res?.data));
   }, []);
 
   console.log(locationData);
   return (
     <Container>
       {bgLink.map(el =>
-        id === el.id ? (
+        region === el.region ? (
           <BgImgBox key={el.id} bg={el.imgLink}>
             <Title>{region}</Title>
             <CardBox ref={ref}>
