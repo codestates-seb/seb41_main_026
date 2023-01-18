@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SeasonSection from '../../components/SeasonSection/SeasonSection';
+import Layout from '../../components/Common/Layout';
 
 const Wrapper = styled.body`
   overflow: hidden;
@@ -79,84 +80,86 @@ function MainSeason() {
   });
 
   return (
-    <Wrapper>
-      <nav id="navbar" className="navbar container-fluid">
-        <ul className="d-flex">
-          <li>
-            <a className="nav-link scrollto active" href="#spring">
-              봄
-            </a>
-          </li>
-          <li>
-            <a className="nav-link scrollto" href="#summer">
-              여름
-            </a>
-          </li>
-          <li>
-            <a className="nav-link scrollto" href="#autumn">
-              가을
-            </a>
-          </li>
-          <li>
-            <a className="nav-link scrollto" href="#winter">
-              겨울
-            </a>
-          </li>
-        </ul>
-        <i className="bi bi-list mobile-nav-toggle" />
-      </nav>
-      <section id="spring" className="hidden">
-        <BgImg
-          style={{
-            backgroundSize: 'cover',
-            backgroundImage: 'url(/bgSpring.jpg)',
-            backgroundPositionY: position / 2,
-          }}
-        >
-          <h1 className="text-black">봄</h1>
-        </BgImg>
-        <SeasonSection season="봄" />
-      </section>
+    <Layout header footer>
+      <Wrapper>
+        <nav id="navbar" className="navbar container-fluid">
+          <ul className="d-flex">
+            <li>
+              <a className="nav-link scrollto active" href="#spring">
+                봄
+              </a>
+            </li>
+            <li>
+              <a className="nav-link scrollto" href="#summer">
+                여름
+              </a>
+            </li>
+            <li>
+              <a className="nav-link scrollto" href="#autumn">
+                가을
+              </a>
+            </li>
+            <li>
+              <a className="nav-link scrollto" href="#winter">
+                겨울
+              </a>
+            </li>
+          </ul>
+          <i className="bi bi-list mobile-nav-toggle" />
+        </nav>
+        <section id="spring" className="hidden">
+          <BgImg
+            style={{
+              backgroundSize: 'cover',
+              backgroundImage: 'url(/bgSpring.jpg)',
+              backgroundPositionY: position / 2,
+            }}
+          >
+            <h1 className="text-black">봄</h1>
+          </BgImg>
+          <SeasonSection season="봄" />
+        </section>
 
-      <section id="summer" className="hidden">
-        <BgImg
-          style={{
-            backgroundSize: 'cover',
-            backgroundImage: 'url(/bgSummer.jpg)',
-            backgroundAttachment: 'fixed',
-          }}
-        >
-          <h1 className="text-info">여름</h1>
-        </BgImg>
-        <SeasonSection season="여름" />
-      </section>
+        <section id="summer" className="hidden">
+          <BgImg
+            style={{
+              backgroundSize: 'cover',
+              backgroundImage: 'url(/bgSummer.jpg)',
+              backgroundAttachment: 'fixed',
+            }}
+          >
+            <h1 className="text-info">여름</h1>
+          </BgImg>
+          <SeasonSection season="여름" />
+        </section>
 
-      <section id="autumn" className="hidden">
-        <BgImg
-          style={{
-            backgroundSize: 'cover',
-            backgroundImage: 'url(/bgAutumn.jpg)',
-            backgroundAttachment: 'fixed',
-          }}
-        >
-          <h1 className="text-warning">가을</h1>
-        </BgImg>
-        <SeasonSection season="가을" />
-      </section>
+        <section id="autumn" className="hidden">
+          <BgImg
+            style={{
+              backgroundSize: 'cover',
+              backgroundImage: 'url(/bgAutumn.jpg)',
+              backgroundAttachment: 'fixed',
+            }}
+          >
+            <h1 className="text-warning">가을</h1>
+          </BgImg>
+          <SeasonSection season="가을" />
+        </section>
 
-      <section id="winter" className="hidden">
-        <BgImg
-          style={{
-            backgroundSize: 'cover',
-            backgroundImage: 'url(/bgWinter.jpg)',
-            backgroundAttachment: 'fixed',
-          }}
-        >
-          <h1>겨울</h1>
-        </BgImg>
-        <SeasonSection season="겨울" />
-      </section>
-    </Wrapper>
+        <section id="winter" className="hidden">
+          <BgImg
+            style={{
+              backgroundSize: 'cover',
+              backgroundImage: 'url(/bgWinter.jpg)',
+              backgroundAttachment: 'fixed',
+            }}
+          >
+            <h1>겨울</h1>
+          </BgImg>
+          <SeasonSection season="겨울" />
+        </section>
+      </Wrapper>
+    </Layout>
   );
 }
 
