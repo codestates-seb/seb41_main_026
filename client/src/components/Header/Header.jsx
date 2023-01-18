@@ -75,11 +75,7 @@ function Header() {
             </button>
           </form>
 
-<<<<<<< HEAD
-          {isLogin ? (
-=======
           {!isLogin ? (
->>>>>>> c23564fa731e2a84ef83a53be280f688a0ba261f
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
