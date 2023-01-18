@@ -19,7 +19,6 @@ import javax.swing.text.html.Option;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "COURSELIKE")
 @NoArgsConstructor
 public class CourseLike {
 
