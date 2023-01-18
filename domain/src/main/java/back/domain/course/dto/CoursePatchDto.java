@@ -16,5 +16,7 @@ public class CoursePatchDto {
     private String content;
     private String tag;
     private String location;
+    private String guideName;
+    private String guideText;
 
 }
