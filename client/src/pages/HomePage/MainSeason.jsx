@@ -1,7 +1,57 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import SeasonSection from '../../components/SeasonSection/SeasonSection';
+
+const Wrapper = styled.body`
+  overflow: hidden;
+  min-height: 100vh;
+  nav {
+    display: flex;
+    position: fixed;
+    z-index: 100;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    li {
+      margin: 0 10px;
+      a {
+        font-size: 16px;
+      }
+      a:hover {
+        color: #00a8cc;
+      }
+    }
+  }
+  .hidden {
+    opacity: 0;
+    filter: blur(5px);
+    transition: all 1s;
+  }
+  .show {
+    opacity: 1;
+    filter: blur(0);
+  }
+`;
+
+const BgImg = styled.div`
+  height: 500px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+
+  h1 {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 40px 120px;
+    font-size: 50px;
+  }
+`;
 
 function MainSeason() {
   const [position, setPosition] = useState(0);
+
   function onScroll() {
     setPosition(window.scrollY);
   }
@@ -12,77 +62,101 @@ function MainSeason() {
     };
   }, []);
 
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      console.log(entry);
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
+  });
+
+  const hiddenElements = document.querySelectorAll('.hidden');
+  hiddenElements.forEach(el => {
+    observer.observe(el);
+  });
+
   return (
-    <div className="wrapper">
-      <div
-        className="bg"
-        style={{
-          backgroundImage: 'url(/bgSpring.jpg)',
-          backgroundPositionY: position / 2,
-        }}
-      >
-        <div>SPRING</div>
-      </div>
-      <div
-        className="bg bg2"
-        style={{
-          backgroundPositionY: position / -3,
-        }}
-      >
-        <div>Happy New Year</div>
-      </div>
-      <p
-        className="desc"
-        style={{
-          transform: `translateX(${-position}px)`,
-        }}
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-      <p
-        className="desc2"
-        style={{
-          transform: `translateX(${position}px)`,
-        }}
-      >
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-      <p
-        className="desc3"
-        style={{
-          opacity: (position - 700) / 50,
-        }}
-      >
-        Duis aute irure dolor
-      </p>
-      <p
-        className="desc3"
-        style={{
-          opacity: (position - 830) / 50,
-        }}
-      >
-        Lorem ipsum dolor sit amet
-      </p>
-      <p
-        className="desc3"
-        style={{
-          opacity: (position - 960) / 50,
-        }}
-      >
-        Excepteur sint occaecat
-      </p>
-      <p
-        className="desc3"
-        style={{
-          opacity: (position - 1090) / 50,
-        }}
-      >
-        sunt in culpa qui officia deserunt
-      </p>
-    </div>
+    <Wrapper>
+      <nav id="navbar" className="navbar container-fluid">
+        <ul className="d-flex">
+          <li>
+            <a className="nav-link scrollto active" href="#spring">
+              봄
+            </a>
+          </li>
+          <li>
+            <a className="nav-link scrollto" href="#summer">
+              여름
+            </a>
+          </li>
+          <li>
+            <a className="nav-link scrollto" href="#autumn">
+              가을
+            </a>
+          </li>
+          <li>
+            <a className="nav-link scrollto" href="#winter">
+              겨울
+            </a>
+          </li>
+        </ul>
+        <i className="bi bi-list mobile-nav-toggle" />
+      </nav>
+      <section id="spring" className="hidden">
+        <BgImg
+          style={{
+            backgroundSize: 'cover',
+            backgroundImage: 'url(/bgSpring.jpg)',
+            backgroundPositionY: position / 2,
+          }}
+        >
+          <h1 className="text-black">봄</h1>
+        </BgImg>
+        <SeasonSection season="봄" />
+      </section>
+
+      <section id="summer" className="hidden">
+        <BgImg
+          style={{
+            backgroundSize: 'cover',
+            backgroundImage: 'url(/bgSummer.jpg)',
+            backgroundAttachment: 'fixed',
+          }}
+        >
+          <h1 className="text-info">여름</h1>
+        </BgImg>
+        <SeasonSection season="여름" />
+      </section>
+
+      <section id="autumn" className="hidden">
+        <BgImg
+          style={{
+            backgroundSize: 'cover',
+            backgroundImage: 'url(/bgAutumn.jpg)',
+            backgroundAttachment: 'fixed',
+          }}
+        >
+          <h1 className="text-warning">가을</h1>
+        </BgImg>
+        <SeasonSection season="가을" />
+      </section>
+
+      <section id="winter" className="hidden">
+        <BgImg
+          style={{
+            backgroundSize: 'cover',
+            backgroundImage: 'url(/bgWinter.jpg)',
+            backgroundAttachment: 'fixed',
+          }}
+        >
+          <h1>겨울</h1>
+        </BgImg>
+        <SeasonSection season="겨울" />
+      </section>
+    </Wrapper>
   );
 }
 
