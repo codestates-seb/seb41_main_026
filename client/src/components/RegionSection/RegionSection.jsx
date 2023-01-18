@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import CourseCard from '../Card/CoruseCard';
 import leftImg from '../../img/leftImg.png';
 import rightImg from '../../img/rightImg.png';
+import useAxios from '../../util/useAxios';
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  position: relative;
 `;
 
 const BgImgBox = styled.div`
@@ -74,7 +73,9 @@ const bgLink = [
 function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
-  const [locationData, setLocationData] = useState(null);
+  const [DataChange, setDataChange] = useState(false); // eslint-disable-line no-unused-vars
+  const locationData = useAxios(`${process.env.REACT_APP_API_URL}/course`);
+  let filteredData = null;
 
   const rightHandler = () => {
     setLocation(prev => prev + 1000);
@@ -95,22 +96,12 @@ function RegionSection({ region }) {
     ref.current.scrollTo({ left: location, behavior: 'smooth' });
   }, [location]);
 
-  useEffect(() => {
-    axios
-      .get(
-        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course',
-      )
-      .then(res =>
-        setLocationData(
-          res?.data.filter(ele => {
-            return ele.location === region;
-          }),
-        ),
-      );
-  }, []);
+  if (locationData !== null) {
+    filteredData = locationData.filter(ele => {
+      return ele.location === region;
+    });
+  }
 
-  console.log(locationData);
-  console.log(locationData !== null && locationData.length);
   return (
     <Container>
       {bgLink.map(el =>
@@ -118,10 +109,10 @@ function RegionSection({ region }) {
           <BgImgBox key={el.id} bg={el.imgLink}>
             <Title>{region}</Title>
             <CardBox ref={ref}>
-              {locationData === null ? (
-                <div style={{ fontSize: '35px' }}>Loading...</div>
+              {filteredData === null ? (
+                <div style={{ fontSize: '35px' }} />
               ) : (
-                locationData.map(ele => {
+                filteredData.map(ele => {
                   return <CourseCard key={ele.courseId} ele={ele} />;
                 })
               )}
