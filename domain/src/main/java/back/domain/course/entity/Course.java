@@ -3,6 +3,7 @@ package back.domain.course.entity;
 
 import back.domain.comment.entity.Comment;
 import back.domain.enums.Tag;
+import back.domain.travelspot.entity.TravelSpot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -66,12 +67,22 @@ public class Course {
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    @Setter
+//    @JsonBackReference
+    private List<TravelSpot> travelSpots = new ArrayList<>();
+
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);
     }
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    public void addTravel(TravelSpot travelSpot) {
+        travelSpots.add(travelSpot);
     }
 
 }

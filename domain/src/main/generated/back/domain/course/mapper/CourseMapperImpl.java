@@ -6,6 +6,7 @@ import back.domain.course.dto.CoursePostDto;
 import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
+import back.domain.travelspot.entity.TravelSpot;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-17T16:16:23+0900",
+    date = "2023-01-17T21:26:15+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -63,6 +64,10 @@ public class CourseMapperImpl implements CourseMapper {
         List<CourseLike> list2 = save.getCourseLikes();
         if ( list2 != null ) {
             courseResponseDto.setCourseLikes( new ArrayList<CourseLike>( list2 ) );
+        }
+        List<TravelSpot> list3 = save.getTravelSpots();
+        if ( list3 != null ) {
+            courseResponseDto.setTravelSpots( new ArrayList<TravelSpot>( list3 ) );
         }
 
         return courseResponseDto;
