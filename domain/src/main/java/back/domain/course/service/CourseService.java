@@ -64,8 +64,6 @@ public class CourseService {
 
        Optional.ofNullable(course.getCourseName())
                .ifPresent(name -> findCourse.setCourseName(name));
-       Optional.ofNullable(course.getContent())
-               .ifPresent(content -> findCourse.setContent(content));
        Optional.ofNullable(course.getTag())
                 .ifPresent(tag -> findCourse.setTag(tag));
        Optional.ofNullable(course.getLocation())
