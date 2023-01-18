@@ -2,6 +2,7 @@ package back.domain.course.entity;
 
 
 import back.domain.comment.entity.Comment;
+import back.domain.eatspot.entity.Eat;
 import back.domain.enums.Tag;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -74,4 +75,9 @@ public class Course {
         comments.add(comment);
     }
 
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    private List<Eat> eats = new ArrayList<>();
+    public void addEat(Eat eat){
+        eats.add(eat);
+    }
 }

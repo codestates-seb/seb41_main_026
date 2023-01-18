@@ -1,5 +1,7 @@
 package back.domain.eatspot.entity;
 
+import back.domain.course.entity.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,13 +21,23 @@ public class Eat {
 
     @Column(nullable = false)
     @Setter
-    private String Name;
+    private String name;
 
     @Column(nullable = false)
     @Setter
-    private String Iat;
+    private String lat;
 
     @Column(nullable = false)
     @Setter
-    private String Ing;
+    private String lng;
+
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    @Setter
+    @JsonIgnore
+    private Course course;
+
+    public void addCourse(Course course){
+        this.course = course;
+        course.addEat(this);
+    }
 }

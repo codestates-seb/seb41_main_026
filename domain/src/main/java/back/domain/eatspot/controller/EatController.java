@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/eat")
 public class EatController {
 
     private final EatMapper eatMapper;
@@ -22,8 +23,8 @@ public class EatController {
 
     @PostMapping
     public ResponseEntity post(@RequestBody EatPostDto eatPostDto){
-        Eat eat = eatMapper.SleepPostDtoToEntity(eatPostDto);
-        Eat saved = eatService.save(eat);
+        Eat eat = eatMapper.EatPostDtoToEntity(eatPostDto);
+        Eat saved = eatService.save(eat,eatPostDto.getCourseId());
         EatResponseDto eatResponseDto = eatMapper.EatEntityToResponseDto(saved);
 
         return new ResponseEntity<>(eatResponseDto, HttpStatus.CREATED);
@@ -41,12 +42,12 @@ public class EatController {
     @GetMapping
     public ResponseEntity gets(){
         List<Eat> eats = eatService.gets();
-        List<EatResponseDto> eatResponseDtos = eatMapper.EatEntityToResponseDto(eats);
+        List<EatResponseDto> eatResponseDtos = eatMapper.eatResponse(eats);
 
         return new ResponseEntity<>(eatResponseDtos, HttpStatus.OK);
     }
 
-    @PatchMapping
+    @PatchMapping("/{eatId}")
     public ResponseEntity patch(@RequestBody EatPatchDto eatPatchDto,
                                 @PathVariable Long eatId){
         Eat eat = eatMapper.EatPatchDtoToEntity(eatPatchDto);

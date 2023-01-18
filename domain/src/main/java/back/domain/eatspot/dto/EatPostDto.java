@@ -10,7 +10,9 @@ import lombok.*;
 public class EatPostDto {
 
     private String name;
-    private String iat;
-    private String ing;
+    private String lat;
+    private String lng;
+
+    private Long courseId;
 
 }

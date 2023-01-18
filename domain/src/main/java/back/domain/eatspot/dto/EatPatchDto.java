@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class EatPatchDto {
 
-    private String Name;
-    private String Iat;
-    private String Ing;
+    private String name;
+    private String lat;
+    private String lng;
 }

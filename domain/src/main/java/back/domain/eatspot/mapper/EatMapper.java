@@ -14,6 +14,8 @@ public interface EatMapper {
     Eat EatPostDtoToEntity(EatPostDto eatPostDto);
 
     EatResponseDto EatEntityToResponseDto(Eat saved);
-    List<EatResponseDto> EatEntityToResponseDtos(List<Eat> eats);
+    
     Eat EatPatchDtoToEntity(EatPatchDto eatPatchDto);
+
+    List<EatResponseDto> eatResponse(List<Eat> eats);
 }

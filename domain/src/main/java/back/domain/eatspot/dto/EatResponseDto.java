@@ -10,8 +10,8 @@ import lombok.*;
 public class EatResponseDto {
 
     private Long eatId;
-    private String Name;
-    private String Iat;
-    private String Ing;
+    private String name;
+    private String lat;
+    private String lng;
 
 }
