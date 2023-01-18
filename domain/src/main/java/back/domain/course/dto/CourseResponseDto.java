@@ -4,6 +4,7 @@ package back.domain.course.dto;
 import back.domain.comment.entity.Comment;
 //import back.domain.course.entity.CourseLike;
 import back.domain.course.entity.CourseLike;
+import back.domain.sleepspot.entity.Sleep;
 import lombok.*;
 
 import java.util.List;
@@ -21,10 +22,11 @@ public class CourseResponseDto {
     private String tag;
     private String location;
     private int viewCount;
-//    private Integer courseLike;
+    private String guideName;
+    private String guideText;
     private List<Comment> comments;
-    // todo 좋아요 수가 나오도록 수정
     private List<CourseLike> courseLikes;
+    private List<Sleep> sleeps;
 
 
 }
