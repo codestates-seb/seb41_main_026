@@ -25,75 +25,70 @@ const List = styled.li`
 function Sidebar() {
   const { pathname } = useLocation();
   return (
-    <>
-      <div
-        className="col-sm-3  d-flex align-items-stretch"
-        style={{ position: 'fixed' }}
+    <aside className="col-sm-3 p-2">
+      <nav
+        className="border border-2 rounded mt-2 justify-content-around"
+        style={{ top: '100px', position: 'sticky' }}
       >
-        <div className="d-flex flex-column p-3">
-          <div className="border border-2 rounded mt-5 p-3">
-            <ul className="nav nav-pills flex-column mb-auto">
-              <List selected={pathname === '/mypage'} className="nav-item mb-2">
-                <Link to="/mypage" className="nav-link text-white">
-                  <span>나의 정보</span>
-                </Link>
-              </List>
-              <hr />
-              <List
-                selected={pathname === '/mypage/like'}
-                className="nav-item mb-2"
-              >
-                <Link
-                  to="/mypage/like"
-                  className="nav-link d-flex align-items-bottom "
-                  aria-current="page"
-                >
-                  <img
-                    src={`${process.env.PUBLIC_URL}/icon-like.svg`}
-                    alt="like icon"
-                    width="18"
-                    height="18"
-                    className="me-2 "
-                  />
-                  좋아요
-                </Link>
-              </List>
-              <List selected={pathname === '/mypage/comment'} className="mb-2">
-                <Link
-                  to="/mypage/comment"
-                  className="nav-link text-white d-flex align-items-bottom"
-                >
-                  <img
-                    src={`${process.env.PUBLIC_URL}/icon-comment.svg`}
-                    alt="like icon"
-                    width="18"
-                    height="18"
-                    className="me-2 "
-                  />
-                  댓글
-                </Link>
-              </List>
-              <List selected={pathname === '/mypage/edit'} className="mb-2">
-                <Link
-                  to="/mypage/edit"
-                  className="nav-link text-white d-flex align-items-bottom"
-                >
-                  <img
-                    src={`${process.env.PUBLIC_URL}/icon-user-edit.svg`}
-                    alt="like icon"
-                    width="18"
-                    height="18"
-                    className="me-2 "
-                  />
-                  회원 정보 변경
-                </Link>
-              </List>
-            </ul>
-          </div>
+        <div className="nav nav-pills p-1  d-flex flex-column">
+          <List selected={pathname === '/mypage'} className="nav-item my-2">
+            <Link to="/mypage" className="nav-link text-white">
+              <span>나의 정보</span>
+            </Link>
+          </List>
+          <hr />
+          <List
+            selected={pathname === '/mypage/like'}
+            className="nav-item my-2"
+          >
+            <Link
+              to="/mypage/like"
+              className="nav-link d-flex align-items-bottom "
+              aria-current="page"
+            >
+              <img
+                src={`${process.env.PUBLIC_URL}/icon-like.svg`}
+                alt="like icon"
+                width="18"
+                height="18"
+                className="me-2 "
+              />
+              좋아요
+            </Link>
+          </List>
+          <List selected={pathname === '/mypage/comment'} className="my-2">
+            <Link
+              to="/mypage/comment"
+              className="nav-link text-white d-flex align-items-bottom"
+            >
+              <img
+                src={`${process.env.PUBLIC_URL}/icon-comment.svg`}
+                alt="like icon"
+                width="18"
+                height="18"
+                className="me-2 "
+              />
+              댓글
+            </Link>
+          </List>
+          <List selected={pathname === '/mypage/edit'} className="my-2">
+            <Link
+              to="/mypage/edit"
+              className="nav-link text-white d-flex align-items-bottom"
+            >
+              <img
+                src={`${process.env.PUBLIC_URL}/icon-user-edit.svg`}
+                alt="like icon"
+                width="18"
+                height="18"
+                className="me-2 "
+              />
+              회원 정보 변경
+            </Link>
+          </List>
         </div>
-      </div>
-      <div className="col-sm-9" style={{ position: 'fixed' }} />
-    </>
+      </nav>
+    </aside>
   );
 }
 

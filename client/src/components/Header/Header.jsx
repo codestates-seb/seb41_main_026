@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -13,20 +14,29 @@ function Header() {
     window.location.reload();
   }
   useEffect(() => {
-    setIsLogin(console.log(isLogin));
+    setIsLogin(isLogin);
   });
+
+  const onSearch = e => {
+    if (e.key === 'Enter') {
+      <Link to="/search" />;
+    }
+  };
+
   return (
     <nav
-      className="navbar  navbar-expand-lg sticky-top"
+      className="navbar navbar-expand-lg sticky-top navbar-dark"
       data-bs-theme="dark"
-      style={{ backgroundColor: '#142850' }}
+      style={{
+        backgroundColor: '#142850',
+      }}
     >
       <div className="container">
         <a className="navbar-brand me-3" href="/">
           <img src={logo} alt="logo" height="40px" />
         </a>
         <button
-          className="navbar-toggler border-secondary border-2 "
+          className="navbar-toggler border-secondary border-2 btn btn-info"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -34,27 +44,27 @@ function Header() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon " />
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <a className="nav-link px-2 text-white" href="/">
+          <ul className="navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li className="nav-item">
+              <a className="nav-link px-2" href="/">
                 쇼츠
               </a>
             </li>
-            <li>
-              <a className="nav-link px-2 text-white" href="/destination">
+            <li className="nav-item">
+              <a className="nav-link px-2 " href="/destination">
                 지역
               </a>
             </li>
-            <li>
-              <a className="nav-link px-2 text-white" href="/season">
+            <li className="nav-item">
+              <a className="nav-link px-2 " href="/season">
                 계절
               </a>
             </li>
-            <li>
-              <a className="nav-link px-2 text-white" href="/guide">
+            <li className="nav-item">
+              <a className="nav-link px-2 " href="/guide">
                 가이드
               </a>
             </li>
@@ -69,17 +79,16 @@ function Header() {
               type="search"
               placeholder="검색하기"
               aria-label="Search"
+              // value={search}
+              // onChange={e => setSearch(e.target.value)}
+              onSubmit={onSearch}
             />
             <button className="btn btn-outline-secondary" type="submit">
               Search
             </button>
           </form>
 
-<<<<<<< HEAD
-          {isLogin ? (
-=======
           {!isLogin ? (
->>>>>>> c23564fa731e2a84ef83a53be280f688a0ba261f
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
@@ -158,7 +167,12 @@ function Header() {
               >
                 취소
               </button>
-              <button className="btn btn-outline-danger" onClick={handleLogOut}>
+
+              <button
+                type="button"
+                className="btn btn-outline-danger"
+                onClick={handleLogOut}
+              >
                 예, 로그아웃 합니다.
               </button>
             </div>
