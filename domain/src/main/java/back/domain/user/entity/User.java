@@ -33,6 +33,9 @@ public class User {
     @Setter
     private Long userId;
 
+    @Column
+    private String provider;
+
     @Setter
     @Column(length = 50, nullable = false)
     private String name;
@@ -42,15 +45,15 @@ public class User {
     private String email;
 
     @Setter
-    @Column(nullable = false, length = 1000)
+    @Column(length = 1000)
     private String password;
 
     @Setter
-    @Column(nullable = false, length = 1000)
+    @Column(length = 1000)
     private String userImage;
 
     @Setter
-    @Column(nullable = false)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
 
@@ -81,9 +84,9 @@ public class User {
 //    @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column
     @Setter
-    private Integer likeCount;
+    private Integer likeCount=0;
 
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);
@@ -91,5 +94,9 @@ public class User {
 
     public void addComment(Comment comment) {
         comments.add(comment);
+    }
+
+    public User(String user) {
+        this.email = email;
     }
 }

@@ -39,5 +39,4 @@ public class JwtAuthorityUtils {
         }
         return USER_ROLES_STRING;
     }
-
 }

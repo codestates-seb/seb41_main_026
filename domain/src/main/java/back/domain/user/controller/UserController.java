@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity userPost(@Valid @RequestBody UserPostDto userPostDto){
         User user = userMapper.UserPostDtoToEntity(userPostDto);
-        User save = userService.post(user, userPostDto);
+        User save = userService.post(user);
         UserResponseDto userResponseDto = userMapper.UserEntityToResponseDto(save);
 
         return new ResponseEntity<>(

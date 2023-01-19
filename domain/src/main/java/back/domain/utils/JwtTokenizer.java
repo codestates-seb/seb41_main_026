@@ -71,7 +71,31 @@ public class JwtTokenizer {
                         .compact());
 
     }
+    public String generateAccessToken(Map<String, Object> claims,
+                                      String subject,
+                                      Date expiration,
+                                      String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedSecretKey(base64EncodedSecretKey);
 
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
+    }
+
+    public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedSecretKey(base64EncodedSecretKey);
+
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
+    }
     /* user 매개변수를 받아 jwt 토큰을 생성 */
     public Token delegateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
@@ -178,5 +202,4 @@ public class JwtTokenizer {
                 .getBody()
                 .getSubject();
     }
-
 }

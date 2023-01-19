@@ -30,12 +30,12 @@ public class UserService {
 
     private final JwtAuthorityUtils jwtAuthorityUtils;
 
-    public User post(User user, UserPostDto userPostDto) {
+    public User post(User user) {
         // 이미 등록된 이메일인지 확인
         verifyExistEmail(user.getEmail());
 
-        user.setEmail(userPostDto.getEmail());
-        user.setName(userPostDto.getName());
+        user.setEmail(user.getEmail());
+        user.setName(user.getName());
         user.setUserImage("basic");
         user.setUserStatus(UserStatus.ACTIVITY);
 
@@ -47,7 +47,7 @@ public class UserService {
         List<String> roles = jwtAuthorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
 
-        user.setLikeCount(0);
+//        user.setLikeCount(0);
         User save = userRepository.save(user);
 
         return save;
