@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   GoogleMap,
@@ -17,6 +17,25 @@ import github from '../../img/vector.png';
 import jinwoo from '../../img/jinwoo.png';
 import heart from '../../img/heart.png';
 import heartFill from '../../img/heart_fill.png';
+
+const HeartWrap = styled.div`
+  width: 70px;
+  height: 140px;
+  border-radius: 30px;
+  background-color: white;
+  position: fixed;
+  left: 25px;
+  top: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HeartDes = styled.div`
+  color: black;
+  margin-bottom: 10px;
+`;
 
 const TitleBox = styled.div`
   width: 1200px;
@@ -108,7 +127,7 @@ const CommentList = styled.div`
   background: #b2d3be;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0px 0px;
-  overflow: auto;
+  overflow-y: auto;
 `;
 
 const CommentInputSection = styled.div`
@@ -472,6 +491,7 @@ const Heart = styled.img`
   width: 22px;
   position: relative;
   top: 5px;
+  right: 4px;
 `;
 
 function ContentPage() {
@@ -479,36 +499,31 @@ function ContentPage() {
   const [courseData, setCourseData] = useState(null);
   const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
   const [marker, setMarker] = useState('travelSpot');
-  const [travelFocus, setTravelFocus] = useState(false);
+  const [travelFocus, setTravelFocus] = useState(true);
   const [eatFocus, setEatFocus] = useState(false);
   const [sleepFocus, setSleepFocus] = useState(false);
   const [pathCoordinates, setPathCoordinates] = useState([
     {
       id: 1,
-      route: [
-        { lat: 37.5512141, lng: 126.9882024 },
-        { lat: 37.739235, lng: 126.99025 },
-      ],
+      route1: [37.5512141, 126.9882024],
+      route2: [37.739235, 126.99025],
     },
     {
       id: 2,
-      route: [
-        { lat: 37.739235, lng: 126.99025 },
-        { lat: 37.052235, lng: 126.243683 },
-      ],
+      route1: [37.739235, 126.99025],
+      route2: [37.052235, 126.243683],
     },
     {
       id: 3,
-      route: [
-        { lat: 37.052235, lng: 126.243683 },
-        { lat: 37.712776, lng: 126.005974 },
-      ],
+      route1: [37.052235, 126.243683],
+      route2: [37.712776, 126.005974],
     },
   ]);
+  const [heartData, setHeartData] = useState(null);
+  // const [likeCount, setLikeCount] = useState(null);
   const [heartState, setHeartState] = useState(false);
-  const [heartAllCount, setHeartAllCount] = useState(0);
-  const [heartMyCount, setHeartMyCount] = useState(0);
   const [comment, setComment] = useState('');
+  const commentRef = useRef(0);
 
   useEffect(() => {
     axios
@@ -517,8 +532,6 @@ function ContentPage() {
       )
       .then(res => setCourseData(res.data));
   }, []);
-
-  console.log(courseData);
 
   const travelSpot = [
     {
@@ -630,17 +643,35 @@ function ContentPage() {
   };
 
   const postHandler = () => {
-    axios
-      .post(
-        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
-        {
-          content: comment,
-          userId: 4,
-          courseId: parseInt(id, 10),
-        },
-      )
-      .then(() => window.location.reload());
+    if (comment.replace(/^\s+|\s+$/g, '') === '') {
+      setComment('');
+    } else if (comment.length > 0) {
+      axios
+        .post(
+          'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
+          {
+            content: comment,
+            userId: 4,
+            courseId: parseInt(id, 10),
+          },
+        )
+        .then(() => window.location.reload());
+    }
   };
+
+  const enterHandler = e => {
+    if (e.keyCode === 13) {
+      postHandler();
+    }
+  };
+
+  const scrollToBottom = () => {
+    commentRef.current?.scrollTo({ top: 100000, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [courseData]);
 
   const locationHandler = idValue => {
     setCenter(travelSpot[idValue - 1].position);
@@ -651,24 +682,18 @@ function ContentPage() {
     setPathCoordinates([
       {
         id: 1,
-        route: [
-          { lat: 37.5512141, lng: 126.9882024 },
-          { lat: 37.739235, lng: 126.99025 },
-        ],
+        route1: [37.5512141, 126.9882024],
+        route2: [37.739235, 126.99025],
       },
       {
         id: 2,
-        route: [
-          { lat: 37.739235, lng: 126.99025 },
-          { lat: 37.052235, lng: 126.243683 },
-        ],
+        route1: [37.739235, 126.99025],
+        route2: [37.052235, 126.243683],
       },
       {
         id: 3,
-        route: [
-          { lat: 37.052235, lng: 126.243683 },
-          { lat: 37.712776, lng: 126.005974 },
-        ],
+        route1: [37.052235, 126.243683],
+        route2: [37.712776, 126.005974],
       },
     ]);
     setTravelFocus(true);
@@ -693,27 +718,56 @@ function ContentPage() {
   };
 
   const heartHandler = () => {
-    setHeartState(!heartState);
+    axios
+      .post(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/courselike/${id}`,
+        {
+          userId: 5,
+        },
+      )
+      .then(res => setHeartData(res?.data))
+      .then(() => setHeartState(!heartState));
   };
+  console.log(heartData);
 
+  // useEffect(() => {
+  //   setLikeCount(courseData.likeCount);
+  // }, [courseData]);
+  // console.log(likeCount);
   useEffect(() => {
-    if (heartState === true) {
-      setHeartMyCount(1);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartMyCount(-1);
-    }
+    axios
+      .get(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${id}`,
+      )
+      .then(res => setCourseData(res.data));
   }, [heartState]);
 
-  useEffect(() => {
-    if (heartState === true) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    }
-  }, [heartMyCount]);
+  // useEffect(() => {
+  //   // if (heartState === true) {
+  //   //   setHeartAllCount(heartAllCount + heartMyCount);
+  //   // } else if (heartState === false && heartAllCount > 0) {
+  //   //   setHeartAllCount(heartAllCount + heartMyCount);
+  //   // }
+  //   console.log(heartData);
+  // }, [heartState]);
 
+  console.log(courseData);
   return (
     <div className="container">
+      <HeartWrap>
+        <HeartDes>좋아요</HeartDes>
+        <HeartBox>
+          {heartData !== null && heartData.courseLikeStatus === 1 ? (
+            <Heart src={heartFill} onClick={heartHandler} />
+          ) : (
+            <Heart src={heart} onClick={heartHandler} />
+          )}
+        </HeartBox>
+        <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
+          {courseData !== null && courseData.likeCount}
+          {/* {courseData !== null && heartState === false ? likeCount} */}
+        </HeartDes>
+      </HeartWrap>
       <TitleBox>
         <Title>
           {courseData !== null ? (
@@ -728,21 +782,10 @@ function ContentPage() {
                 <>
                   <Des>|</Des>
                   <Des>{ele}</Des>
-                  <Des>|</Des>
                 </>
               );
             })
           : null}
-
-        <Des>좋아요</Des>
-        <HeartBox>
-          {heartState ? (
-            <Heart src={heartFill} onClick={heartHandler} />
-          ) : (
-            <Heart src={heart} onClick={heartHandler} />
-          )}
-        </HeartBox>
-        <Des>{heartAllCount}</Des>
       </TitleBox>
       <MainBox>
         <ShortsBox>
@@ -754,12 +797,12 @@ function ContentPage() {
         </ShortsBox>
         <CommentBox>
           <CommentTitle>댓글 목록</CommentTitle>
-          <CommentList>
+          <CommentList ref={commentRef}>
             {courseData !== null
               ? courseData.comments.map(ele => {
                   return (
-                    <>
-                      <Comment key={ele.commentId}>
+                    <div key={ele.commentId}>
+                      <Comment>
                         {ele.content}
                         <Triangle />
                       </Comment>
@@ -768,13 +811,18 @@ function ContentPage() {
                         &ensp;
                         {ele.createdAt.slice(-8, -3)}
                       </CommentDate>
-                    </>
+                    </div>
                   );
                 })
               : null}
           </CommentList>
           <CommentInputSection>
-            <CommentInput placeholder="댓글 달기" onChange={commentHandler} />
+            <CommentInput
+              value={comment}
+              placeholder="댓글 달기"
+              onChange={commentHandler}
+              onKeyUp={enterHandler}
+            />
             <CommentButton onClick={postHandler}>게시</CommentButton>
           </CommentInputSection>
         </CommentBox>
@@ -801,10 +849,14 @@ function ContentPage() {
 
             {marker === 'travelSpot' &&
               pathCoordinates.map(ele => {
+                const routeSpot = [
+                  { lat: ele.route1[0], lng: ele.route1[1] },
+                  { lat: ele.route2[0], lng: ele.route2[1] },
+                ];
                 return (
                   <Polyline
                     key={ele.id}
-                    path={ele.route}
+                    path={routeSpot}
                     options={{
                       strokeColor: 'black',
                       strokeOpacity: 1,

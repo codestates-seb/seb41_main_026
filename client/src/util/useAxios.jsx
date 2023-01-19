@@ -10,8 +10,6 @@ function useAxios(url) {
     });
   }, []);
 
-  console.log(data);
-
   return data;
 }
 
