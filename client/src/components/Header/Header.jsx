@@ -7,9 +7,14 @@ import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(true);
-  const [removeCookie] = useCookies(['cookies']);
+  // eslint-disable-next-line no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([
+    'accessToken',
+    'refreshToken',
+  ]);
   function handleLogOut() {
-    removeCookie('cookies');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
     window.location.reload();
   }
   useEffect(() => {

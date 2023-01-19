@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-// import { useCookies } from 'react-cookie';
-// import axios from 'axios';
-// import dayjs from 'dayjs';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
+import dayjs from 'dayjs';
 // import { useNavigate } from 'react-router-dom';
-import signUpAPI from '../../API/signUpAPI';
+// import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
+import {
+  handleEmail,
+  handleName,
+  handleNameL,
+  handlePassword,
+} from '../../util/alertStore';
 
 const Buttons = styled.button`
   background-color: rgba(20, 40, 80, 1);
@@ -27,18 +33,21 @@ const SocialButtons = styled.button`
 `;
 
 function ModalSignUp() {
-  const [signUpInfo, setsignUpInfo] = useState({
+  const [signUpInfo, setSignUpInfo] = useState({
     name: '',
     email: '',
     password: '',
   });
-  const [setMsg] = useState(false);
 
-  // const [setCookie] = useCookies(['cookies']);
+  // eslint-disable-next-line no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([
+    'accessToken',
+    'refreshToken',
+  ]);
   // const naviagte = useNavigate();
 
   const handleInputValue = key => e => {
-    setsignUpInfo({ ...signUpInfo, [key]: e.target.value });
+    setSignUpInfo({ ...signUpInfo, [key]: e.target.value });
   };
 
   // eslint-disable-next-line consistent-return
@@ -46,73 +55,70 @@ function ModalSignUp() {
     e.preventDefault();
     const { name, email, password } = signUpInfo;
     if (name.length === 0 || !regName.test(name)) {
-      alert('이름은 한글, 숫자, 영어만 가능합니다.');
+      handleName();
       return false;
     }
     if (name.length < 2 || name.length > 15) {
-      alert('이름을 최소 2글자 이상 15글자 이하로 적어주세요.');
+      handleNameL();
       return false;
     }
     if (email.length === 0 || !regEmail.test(email)) {
-      alert('이메일이 타당하지 않습니다.');
+      handleEmail();
       return false;
     }
     if (password.length === 0 || !regPassword.test(password)) {
-      alert(
-        '최소 6자 최대 12자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.',
-      );
+      handlePassword();
       return false;
     }
 
-    signUpAPI(name, email, password).then(res => {
-      if (res !== '') {
-        window.alert('회원가입 성공!');
-        setsignUpInfo('');
-        setMsg(true);
-        // naviagte('/');
-      } else {
-        alert('회원가입 실패');
-      }
-    });
-    // 회원가입 후 자동 로그인
-    // axios(
-    //   {
-    //     method: 'post',
-    //     url: `${process.env.REACT_APP_API_URL}/user`,
-    //     data: {
-    //       name,
-    //       email,
-    //       password,
-    //     },
-    //   },
-    //   { withCredentials: true },
-    // ).then(res => {
-    //   axios
-    //     .post(
-    //       `${process.env.REACT_APP_API_URL}/user/login`,
-    //       {
-    //         email,
-    //         password,
-    //       },
-    //       { withCredentials: true },
-    //       console.log(res),
-    //     )
-    //     // eslint-disable-next-line no-shadow
-    //     .then(res => {
-    //       const data = JSON.stringify({
-    //         id: res.data.id,
-    //         token: res.headers.authorization,
-    //       });
-    //       const expires = dayjs().add('40', 'm').toDate();
-    //       setCookie('cookies', data, { expires });
-    //       setMsg(true);
-    //       setTimeout(() => {
-    //         setMsg(false);
-    //         window.location.reload(true);
-    //       }, 4000);
-    //     })
-    //     .catch(err => console.log(err, '회원가입'));
+    // signUpAPI(name, email, password).then(res => {
+    //   if (res !== '') {
+    //     window.alert('회원가입 성공!');
+    //     setsignUpInfo('');
+    //     setMsg(true);
+    //     // naviagte('/');
+    //   } else {
+    //     alert('회원가입 실패');
+    //   }
     // });
+    // 회원가입 후 자동 로그인
+    axios(
+      {
+        method: 'post',
+        url: `${process.env.REACT_APP_API_URL}/user`,
+        data: {
+          name,
+          email,
+          password,
+        },
+      },
+      // { withCredentials: true },
+    ).then(res => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/auth/login`,
+          {
+            email,
+            password,
+          },
+          // { withCredentials: true },
+          console.log(res),
+        )
+        // eslint-disable-next-line no-shadow
+        .then(res => {
+          const data = JSON.stringify({
+            id: res.data.id,
+            token: res.headers.authorization,
+          });
+          const expires = dayjs().add('40', 'm').toDate();
+          setCookie('accessToken', data, { expires });
+          setCookie('refreshToken', res.data.data.refreshToken);
+          setTimeout(() => {
+            window.location.reload(true);
+          }, 2000);
+        })
+        .catch(err => console.log(err, '회원가입'));
+    });
   };
 
   return (
@@ -137,9 +143,8 @@ function ModalSignUp() {
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-3"
+                  className="modal-title fs-3 text-black"
                   id="exampleModalLabel"
-                  style={{ fontFamily: 'Heebo', color: 'black' }}
                 >
                   Sign Up
                 </h1>
