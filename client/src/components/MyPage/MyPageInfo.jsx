@@ -3,6 +3,7 @@ import axios from 'axios';
 import Sidebar from './Sidebar';
 import { regName, regPassword } from '../../util/regStore';
 import Layout from '../Common/Layout';
+import NotFound from './NotFound';
 
 const userId = sessionStorage.getItem('user_Id');
 
@@ -65,103 +66,107 @@ function MyPageInfo() {
   return (
     <Layout header footer>
       <div className="container">
-        <div className="row ">
+        <div className="row min-vh-100 flex-column flex-md-row">
           <Sidebar />
-          <main className="col-sm-9 px-0 flex-grow-1">
-            <div className="container py-3">
-              <article>
-                <div>
-                  <h1 className="mb-3 fs-2 px-3 py-2 fw-bold">
-                    회원 정보 변경
-                  </h1>
+          {sessionStorage.getItem('access_Token') ? (
+            <main className="col-sm-9 px-0 flex-grow-1">
+              <div className="container py-3">
+                <article>
+                  <div>
+                    <h1 className="mb-3 fs-2 px-3 py-2 fw-bold">
+                      회원 정보 변경
+                    </h1>
 
-                  <form className="pt-3 container">
-                    <div className="mb-3 mt-3">
-                      <label
-                        htmlFor="inputPassword5"
-                        className="form-label text-info"
-                      >
-                        이름
-                      </label>
-                      <input
-                        type="name"
-                        id="inputPassword5"
-                        className="form-control"
-                        placeholder="김개똥"
-                        aria-describedby="passwordHelpBlock"
-                        onChange={e => {
-                          setName(e.target.value);
-                        }}
-                        value={name}
-                      />
-                      <div
-                        id="passwordHelpBlock"
-                        className="text-secondary py-2 "
-                      >
-                        최소 2자 이상 15자 이하의 한글, 숫자, 영어
-                      </div>
-                    </div>
-                    <fieldset disabled>
+                    <form className="pt-3 container">
                       <div className="mb-3 mt-3">
                         <label
-                          htmlFor="disabledTextInput"
-                          className="form-label"
+                          htmlFor="inputPassword5"
+                          className="form-label text-info"
                         >
-                          이메일
+                          이름
                         </label>
                         <input
-                          type="text"
-                          id="disabledTextInput"
-                          className="form-control text-secondary"
-                          placeholder="김개똥@gmail.com"
+                          type="name"
+                          id="inputPassword5"
+                          className="form-control"
+                          placeholder="김개똥"
+                          aria-describedby="passwordHelpBlock"
                           onChange={e => {
-                            setEmail(e.target.value);
+                            setName(e.target.value);
                           }}
-                          value={email}
-                          disabled
+                          value={name}
                         />
+                        <div
+                          id="passwordHelpBlock"
+                          className="text-secondary py-2 "
+                        >
+                          최소 2자 이상 15자 이하의 한글, 숫자, 영어
+                        </div>
                       </div>
-                    </fieldset>
+                      <fieldset disabled>
+                        <div className="mb-3 mt-3">
+                          <label
+                            htmlFor="disabledTextInput"
+                            className="form-label"
+                          >
+                            이메일
+                          </label>
+                          <input
+                            type="text"
+                            id="disabledTextInput"
+                            className="form-control text-secondary"
+                            placeholder="김개똥@gmail.com"
+                            onChange={e => {
+                              setEmail(e.target.value);
+                            }}
+                            value={email}
+                            disabled
+                          />
+                        </div>
+                      </fieldset>
 
-                    <div className="mb-3 mt-5">
-                      <label
-                        htmlFor="inputPassword5"
-                        className="form-label text-info"
-                      >
-                        새로운 비밀번호
-                      </label>
-                      <input
-                        type="password"
-                        id="inputPassword5"
-                        className="form-control"
-                        placeholder="새로운 비밀번호를 입력해주세요"
-                        aria-describedby="passwordHelpBlock"
-                        onChange={e => {
-                          setPassword(e.target.value);
-                        }}
-                        value={password}
-                      />
-                      <div
-                        id="passwordHelpBlock"
-                        className="text-secondary py-2 "
-                      >
-                        최소 6자 최대 12자, 하나 이상의 문자와 숫자
+                      <div className="mb-3 mt-5">
+                        <label
+                          htmlFor="inputPassword5"
+                          className="form-label text-info"
+                        >
+                          새로운 비밀번호
+                        </label>
+                        <input
+                          type="password"
+                          id="inputPassword5"
+                          className="form-control"
+                          placeholder="새로운 비밀번호를 입력해주세요"
+                          aria-describedby="passwordHelpBlock"
+                          onChange={e => {
+                            setPassword(e.target.value);
+                          }}
+                          value={password}
+                        />
+                        <div
+                          id="passwordHelpBlock"
+                          className="text-secondary py-2 "
+                        >
+                          최소 6자 최대 12자, 하나 이상의 문자와 숫자
+                        </div>
                       </div>
-                    </div>
 
-                    <button
-                      type="button"
-                      className="btn btn-outline-info"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal5"
-                    >
-                      수정 사항 변경
-                    </button>
-                  </form>
-                </div>
-              </article>
-            </div>
-          </main>
+                      <button
+                        type="button"
+                        className="btn btn-outline-info"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal5"
+                      >
+                        수정 사항 변경
+                      </button>
+                    </form>
+                  </div>
+                </article>
+              </div>
+            </main>
+          ) : (
+            <NotFound />
+          )}
         </div>
         <div
           className="modal"
