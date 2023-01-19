@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 
@@ -60,7 +61,7 @@ public class CommentController {
                                        @RequestBody CommentPatchDto commentPatchDto){
 
         Comment comment = commentMapper.CommentPatchDtoToEntity(commentPatchDto);
-        Comment patched = commentService.patch(comment,commentId,commentPatchDto);
+        Comment patched = commentService.patch(commentId,commentPatchDto,commentPatchDto.getUserId());
         CommentResponseDto commentResponseDto = commentMapper.CommentEntityToResponseDto(patched);
 
         return new ResponseEntity<>(
@@ -69,9 +70,9 @@ public class CommentController {
 
     /* comment 삭제 */
     @DeleteMapping("/{commentId}")
-    public ResponseEntity commentDelete(@PathVariable Long commentId){
+    public ResponseEntity commentDelete(@PathVariable("commentId") @Positive long commentId) {
         commentService.delete(commentId);
 
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

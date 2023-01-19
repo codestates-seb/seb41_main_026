@@ -13,8 +13,9 @@ import java.util.List;
 public class CoursePatchDto {
 
     private String courseName;
-    private String content;
     private String tag;
     private String location;
+    private String guideName;
+    private String guideText;
 
 }

@@ -10,12 +10,10 @@ import lombok.*;
 @ToString
 public class CourseLikeResponseDto {
 
-
-
     private Long courseLikeId;
 
-    private CourseLikeStatus courseLikeStatus;
+    private Integer courseLikeStatus;
 
-
+    private Long courseId;
 
 }

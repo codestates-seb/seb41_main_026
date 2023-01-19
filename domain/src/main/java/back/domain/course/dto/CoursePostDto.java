@@ -12,8 +12,10 @@ import java.util.List;
 @ToString
 public class CoursePostDto {
 
+
     private String courseName;
-    private String content;
     private String tag;
     private String location;
+    private String guideName;
+    private String guideText;
 }

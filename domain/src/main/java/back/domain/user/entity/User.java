@@ -3,6 +3,7 @@ package back.domain.user.entity;
 
 import back.domain.comment.entity.Comment;
 import back.domain.course.entity.Course;
+//import back.domain.course.entity.CourseLike;
 import back.domain.course.entity.CourseLike;
 import back.domain.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @Getter
-@ToString
+//@ToString
 @Table(indexes = {
         @Index(columnList = "createdAt"),
         @Index(columnList = "modifiedAt")
@@ -56,15 +57,11 @@ public class User {
 
     @Setter
     @Column(nullable = false, length = 1000)
-    private int courseLike;
-
-    @Setter
-    @Column(nullable = false, length = 1000)
     private String userImage;
 
     @Setter
     @Column(nullable = false)
-    private int likeCount = 0;
+    private int likeCount;
 
     @Setter
     @Column(nullable = false)
@@ -89,6 +86,10 @@ public class User {
 //    @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+////    @JsonBackReference
+//    private List<Course> courses = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
 //    @JsonBackReference
@@ -98,9 +99,13 @@ public class User {
         courseLikes.add(courseLike);
     }
 
+
+
     public void addComment(Comment comment){
         comments.add(comment);
     }
-
+//    public void addCourse(Course Course){
+//        courses.add(Course);
+//    }
 
 }

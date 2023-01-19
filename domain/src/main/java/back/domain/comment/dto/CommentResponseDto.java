@@ -17,9 +17,10 @@ public class CommentResponseDto {
 
         private String content;
 
-        private LocalDateTime createAt;
+        private LocalDateTime createdAt;
 
         private LocalDateTime modifiedAt;
 
+        private Long userId;
 
 }

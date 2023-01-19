@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @CrossOrigin(origins = "http://localhost:8080/", allowedHeaders = "*")
 @RestController
@@ -24,7 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity userPost(@RequestBody UserPostDto userPostDto){
+    public ResponseEntity userPost(@Valid @RequestBody UserPostDto userPostDto){
         User user = userMapper.UserPostDtoToEntity(userPostDto);
         User save = userService.post(user,userPostDto);
         UserResponseDto userResponseDto = userMapper.UserEntityToResponseDto(save);
@@ -51,7 +53,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public ResponseEntity userPatch(@PathVariable Long userId,
-                                    @RequestBody UserPatchDto userPatchDto){
+                                    @Valid @RequestBody UserPatchDto userPatchDto){
 
         User user = userMapper.UserPatchDtoToEntity(userPatchDto);
         User patched = userService.patch(user,userId);

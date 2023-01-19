@@ -19,19 +19,17 @@ import javax.swing.text.html.Option;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "COURSELIKE")
 @NoArgsConstructor
 public class CourseLike {
 
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseLikeId;
 
     @Column(nullable = false)
     @Setter
-    private CourseLikeStatus courseLikeStatus;
-
-
+    private Integer courseLikeStatus;
 
 
     @ManyToOne(optional=true,fetch = FetchType.LAZY)
@@ -43,8 +41,8 @@ public class CourseLike {
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     @Setter
-    @JsonIgnore
-//    @JsonManagedReference
+//    @JsonIgnore
+    @JsonManagedReference
     private Course course;
 
     public void addUser(User user){

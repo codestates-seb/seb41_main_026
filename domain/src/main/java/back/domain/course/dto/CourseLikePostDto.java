@@ -11,6 +11,6 @@ import lombok.*;
 public class CourseLikePostDto {
 
     private Long userId;
-    private String courseLikeStatus;
+
 
 }
