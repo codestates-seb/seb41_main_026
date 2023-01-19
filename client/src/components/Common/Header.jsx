@@ -30,6 +30,7 @@ function Header() {
       data-bs-theme="dark"
       style={{
         backgroundColor: '#142850',
+        width: '100vw',
       }}
     >
       <div className="container">
