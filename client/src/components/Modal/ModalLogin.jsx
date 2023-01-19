@@ -74,7 +74,7 @@ function ModalLogin() {
       })
       .catch(err => {
         console.log(err);
-        window.alert('실패!');
+        window.alert('로그인 실패!');
       });
   };
   return (
