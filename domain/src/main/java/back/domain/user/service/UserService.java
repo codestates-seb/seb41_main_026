@@ -9,6 +9,7 @@ import back.domain.user.entity.User;
 import back.domain.user.repository.UserRepository;
 import back.domain.utils.JwtAuthorityUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,12 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     @Value("${ADMIN_EMAIL}")
     private String adminEmail;
@@ -73,7 +76,7 @@ public class UserService {
         return user;
     }
 
-    public User patch(User user, Long userId) {
+    public User patch(User user, Long userId) throws BusinessException {
         User findUser = verifiedUser(userId);
 
         Optional.ofNullable(user.getName())
@@ -85,7 +88,26 @@ public class UserService {
 
         findUser.setModifiedAt(LocalDateTime.now());
 
-        return userRepository.save(findUser);
+        //password 에 empty 값 들어왔을 때 : 기존 패스워드 그대로 유지
+        if (user.getPassword().trim().isEmpty()) {
+            log.info("비밀번호 변경 없음");
+        }
+        //password 변경있을 경우 :
+        else if (!user.getPassword().isEmpty()) {
+            //일반회원 - 유효성 검증 통과시 패스워드 변경
+            if (findUser.getPassword() != null) {
+                if (Pattern.matches("^[A-Za-z0-9]{6,12}$", user.getPassword())) {
+                    String newPassword = passwordEncoder.encode(user.getPassword());
+                    findUser.setPassword(newPassword);
+                } else throw new BusinessException(ErrorCode.INVALID_PASSWORD);
+            }
+            //소셜 회원 - 패스워드 변경 불가
+            else if(findUser.getPassword() == null){
+                throw new BusinessException(ErrorCode.ACCESS_FORBIDDEN);
+            }
+        }
+
+        return (User) userRepository.save(findUser);
     }
 
     public void delete(Long userId) {
