@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import dayjs from 'dayjs';
+// import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
@@ -33,6 +34,7 @@ function ModalLogin() {
     'accessToken',
     'refreshToken',
   ]);
+  // const navigate = useNavigate();
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -61,15 +63,16 @@ function ModalLogin() {
         // { withCredentials: true },
       )
       .then(res => {
-        const data = JSON.stringify({
-          id: res.data.id,
-          token: res.headers.authorization,
-        });
-        console.log(res);
         const expires = dayjs().add('40', 'm').toDate();
-        setCookie('accessToken', data, { expires });
+        setCookie('accessToken', res.data.data.accessToken, { expires });
         setCookie('refreshToken', res.data.data.refreshToken);
-        window.location.reload();
+        sessionStorage.setItem(
+          'access_Token',
+          res.headers.get('authorization'),
+        );
+        sessionStorage.setItem('user_Id', res.headers.get('userId'));
+        // navigate('/');
+        // window.location.reload();
         window.alert('로그인 성공!');
       })
       .catch(err => {

@@ -1,27 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
 import profileImg from '../../img/jinwoo.png';
 
 function Header() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
+  const navigate = useNavigate();
 
   function handleLogOut() {
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    sessionStorage.removeItem('access_Token');
+    sessionStorage.removeItem('user_Id');
+    navigate('/');
+    window.alert('로그아웃 되었습니다.');
     window.location.reload();
   }
 
+  const checkLoginState = () => {
+    if (cookie.accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  };
+
   useEffect(() => {
-    setIsLogin(isLogin);
+    checkLoginState();
   });
 
   return (
@@ -91,7 +105,7 @@ function Header() {
             <span className="ms-2 me-5">검색하기</span>
           </button>
 
-          {!isLogin ? (
+          {isLogin ? (
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a

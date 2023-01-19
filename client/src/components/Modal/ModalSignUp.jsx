@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import dayjs from 'dayjs';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
@@ -44,7 +44,7 @@ function ModalSignUp() {
     'accessToken',
     'refreshToken',
   ]);
-  // const naviagte = useNavigate();
+  const naviagte = useNavigate();
 
   const handleInputValue = key => e => {
     setSignUpInfo({ ...signUpInfo, [key]: e.target.value });
@@ -106,18 +106,20 @@ function ModalSignUp() {
         )
         // eslint-disable-next-line no-shadow
         .then(res => {
-          const data = JSON.stringify({
-            id: res.data.id,
-            token: res.headers.authorization,
-          });
           const expires = dayjs().add('40', 'm').toDate();
-          setCookie('accessToken', data, { expires });
+          setCookie('accessToken', res.data.data.accessToken, { expires });
           setCookie('refreshToken', res.data.data.refreshToken);
+          sessionStorage.setItem(
+            'access_Token',
+            res.headers.get('authorization'),
+          );
+          sessionStorage.setItem('user_Id', res.headers.get('userId'));
+          naviagte('/');
           setTimeout(() => {
             window.location.reload(true);
           }, 2000);
         })
-        .catch(err => console.log(err, '회원가입'));
+        .catch(err => console.log(err, '회원가입 실패!'));
     });
   };
 
