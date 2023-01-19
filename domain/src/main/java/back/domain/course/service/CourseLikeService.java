@@ -98,11 +98,6 @@ public class CourseLikeService {
         return verifiedCourseLike(courseLikeid);
     }
 
-
-
-
-
-
     public CourseLike get(Long courseLikeId) {
         CourseLike courseLike  = verifiedCourseLike(courseLikeId);
         return courseLike;
