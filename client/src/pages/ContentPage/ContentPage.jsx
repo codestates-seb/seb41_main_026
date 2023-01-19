@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   GoogleMap,
@@ -17,12 +17,24 @@ import github from '../../img/vector.png';
 import jinwoo from '../../img/jinwoo.png';
 import heart from '../../img/heart.png';
 import heartFill from '../../img/heart_fill.png';
-import Layout from '../../components/Common/Layout';
 
-const Container = styled.div`
+const HeartWrap = styled.div`
+  width: 70px;
+  height: 140px;
+  border-radius: 30px;
+  background-color: white;
+  position: fixed;
+  left: 25px;
+  top: 450px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const HeartDes = styled.div`
+  color: black;
+  margin-bottom: 10px;
 `;
 
 const TitleBox = styled.div`
@@ -115,7 +127,7 @@ const CommentList = styled.div`
   background: #b2d3be;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0px 0px;
-  overflow: auto;
+  overflow-y: auto;
 `;
 
 const CommentInputSection = styled.div`
@@ -479,6 +491,7 @@ const Heart = styled.img`
   width: 22px;
   position: relative;
   top: 5px;
+  right: 4px;
 `;
 
 function ContentPage() {
@@ -486,36 +499,31 @@ function ContentPage() {
   const [courseData, setCourseData] = useState(null);
   const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
   const [marker, setMarker] = useState('travelSpot');
-  const [travelFocus, setTravelFocus] = useState(false);
+  const [travelFocus, setTravelFocus] = useState(true);
   const [eatFocus, setEatFocus] = useState(false);
   const [sleepFocus, setSleepFocus] = useState(false);
   const [pathCoordinates, setPathCoordinates] = useState([
     {
       id: 1,
-      route: [
-        { lat: 37.5512141, lng: 126.9882024 },
-        { lat: 37.739235, lng: 126.99025 },
-      ],
+      route1: [37.5512141, 126.9882024],
+      route2: [37.739235, 126.99025],
     },
     {
       id: 2,
-      route: [
-        { lat: 37.739235, lng: 126.99025 },
-        { lat: 37.052235, lng: 126.243683 },
-      ],
+      route1: [37.739235, 126.99025],
+      route2: [37.052235, 126.243683],
     },
     {
       id: 3,
-      route: [
-        { lat: 37.052235, lng: 126.243683 },
-        { lat: 37.712776, lng: 126.005974 },
-      ],
+      route1: [37.052235, 126.243683],
+      route2: [37.712776, 126.005974],
     },
   ]);
+  const [heartData, setHeartData] = useState(null);
+  // const [likeCount, setLikeCount] = useState(null);
   const [heartState, setHeartState] = useState(false);
-  const [heartAllCount, setHeartAllCount] = useState(0);
-  const [heartMyCount, setHeartMyCount] = useState(0);
   const [comment, setComment] = useState('');
+  const commentRef = useRef(0);
 
   useEffect(() => {
     axios
@@ -524,8 +532,6 @@ function ContentPage() {
       )
       .then(res => setCourseData(res.data));
   }, []);
-
-  console.log(courseData);
 
   const travelSpot = [
     {
@@ -637,17 +643,35 @@ function ContentPage() {
   };
 
   const postHandler = () => {
-    axios
-      .post(
-        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
-        {
-          content: comment,
-          userId: 4,
-          courseId: parseInt(id, 10),
-        },
-      )
-      .then(() => window.location.reload());
+    if (comment.replace(/^\s+|\s+$/g, '') === '') {
+      setComment('');
+    } else if (comment.length > 0) {
+      axios
+        .post(
+          'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
+          {
+            content: comment,
+            userId: 4,
+            courseId: parseInt(id, 10),
+          },
+        )
+        .then(() => window.location.reload());
+    }
   };
+
+  const enterHandler = e => {
+    if (e.keyCode === 13) {
+      postHandler();
+    }
+  };
+
+  const scrollToBottom = () => {
+    commentRef.current?.scrollTo({ top: 100000, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [courseData]);
 
   const locationHandler = idValue => {
     setCenter(travelSpot[idValue - 1].position);
@@ -658,24 +682,18 @@ function ContentPage() {
     setPathCoordinates([
       {
         id: 1,
-        route: [
-          { lat: 37.5512141, lng: 126.9882024 },
-          { lat: 37.739235, lng: 126.99025 },
-        ],
+        route1: [37.5512141, 126.9882024],
+        route2: [37.739235, 126.99025],
       },
       {
         id: 2,
-        route: [
-          { lat: 37.739235, lng: 126.99025 },
-          { lat: 37.052235, lng: 126.243683 },
-        ],
+        route1: [37.739235, 126.99025],
+        route2: [37.052235, 126.243683],
       },
       {
         id: 3,
-        route: [
-          { lat: 37.052235, lng: 126.243683 },
-          { lat: 37.712776, lng: 126.005974 },
-        ],
+        route1: [37.052235, 126.243683],
+        route2: [37.712776, 126.005974],
       },
     ]);
     setTravelFocus(true);
@@ -700,324 +718,327 @@ function ContentPage() {
   };
 
   const heartHandler = () => {
-    setHeartState(!heartState);
+    axios
+      .post(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/courselike/${id}`,
+        {
+          userId: 5,
+        },
+      )
+      .then(res => setHeartData(res?.data))
+      .then(() => setHeartState(!heartState));
   };
+  console.log(heartData);
 
+  // useEffect(() => {
+  //   setLikeCount(courseData.likeCount);
+  // }, [courseData]);
+  // console.log(likeCount);
   useEffect(() => {
-    if (heartState === true) {
-      setHeartMyCount(1);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartMyCount(-1);
-    }
+    axios
+      .get(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${id}`,
+      )
+      .then(res => setCourseData(res.data));
   }, [heartState]);
 
-  useEffect(() => {
-    if (heartState === true) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    }
-  }, [heartMyCount]);
+  // useEffect(() => {
+  //   // if (heartState === true) {
+  //   //   setHeartAllCount(heartAllCount + heartMyCount);
+  //   // } else if (heartState === false && heartAllCount > 0) {
+  //   //   setHeartAllCount(heartAllCount + heartMyCount);
+  //   // }
+  //   console.log(heartData);
+  // }, [heartState]);
 
+  console.log(courseData);
   return (
-    <Layout header footer>
-      <Container>
-        <div className="container">
-          <TitleBox>
-            <Title>
-              {courseData !== null ? (
-                courseData.courseName
-              ) : (
-                <span>Loading...</span>
-              )}
-            </Title>
+    <div className="container">
+      <HeartWrap>
+        <HeartDes>좋아요</HeartDes>
+        <HeartBox>
+          {heartData !== null && heartData.courseLikeStatus === 1 ? (
+            <Heart src={heartFill} onClick={heartHandler} />
+          ) : (
+            <Heart src={heart} onClick={heartHandler} />
+          )}
+        </HeartBox>
+        <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
+          {courseData !== null && courseData.likeCount}
+          {/* {courseData !== null && heartState === false ? likeCount} */}
+        </HeartDes>
+      </HeartWrap>
+      <TitleBox>
+        <Title>
+          {courseData !== null ? (
+            courseData.courseName
+          ) : (
+            <span>Loading...</span>
+          )}
+        </Title>
+        {courseData !== null
+          ? courseData.tag.map(ele => {
+              return (
+                <>
+                  <Des>|</Des>
+                  <Des>{ele}</Des>
+                </>
+              );
+            })
+          : null}
+      </TitleBox>
+      <MainBox>
+        <ShortsBox>
+          <ShortsTitle>
+            <UnionImg src={union} />
+            <PolyGonImg src={polygon} />
+            <ShortsText>Shorts</ShortsText>
+          </ShortsTitle>
+        </ShortsBox>
+        <CommentBox>
+          <CommentTitle>댓글 목록</CommentTitle>
+          <CommentList ref={commentRef}>
             {courseData !== null
-              ? courseData.tag.map(ele => {
+              ? courseData.comments.map(ele => {
                   return (
-                    <>
-                      <Des>|</Des>
-                      <Des>{ele}</Des>
-                      <Des>|</Des>
-                    </>
+                    <div key={ele.commentId}>
+                      <Comment>
+                        {ele.content}
+                        <Triangle />
+                      </Comment>
+                      <CommentDate>
+                        {ele.createdAt.slice(2, 10)}
+                        &ensp;
+                        {ele.createdAt.slice(-8, -3)}
+                      </CommentDate>
+                    </div>
                   );
                 })
               : null}
+          </CommentList>
+          <CommentInputSection>
+            <CommentInput
+              value={comment}
+              placeholder="댓글 달기"
+              onChange={commentHandler}
+              onKeyUp={enterHandler}
+            />
+            <CommentButton onClick={postHandler}>게시</CommentButton>
+          </CommentInputSection>
+        </CommentBox>
+      </MainBox>
 
-            <Des>좋아요</Des>
-            <HeartBox>
-              {heartState ? (
-                <Heart src={heartFill} onClick={heartHandler} />
-              ) : (
-                <Heart src={heart} onClick={heartHandler} />
-              )}
-            </HeartBox>
-            <Des>{heartAllCount}</Des>
-          </TitleBox>
-          <MainBox>
-            <ShortsBox>
-              <ShortsTitle>
-                <UnionImg src={union} />
-                <PolyGonImg src={polygon} />
-                <ShortsText>Shorts</ShortsText>
-              </ShortsTitle>
-            </ShortsBox>
-            <CommentBox>
-              <CommentTitle>댓글 목록</CommentTitle>
-              <CommentList>
-                {courseData !== null
-                  ? courseData.comments.map(ele => {
-                      return (
-                        <>
-                          <Comment key={ele.commentId}>
-                            {ele.content}
-                            <Triangle />
-                          </Comment>
-                          <CommentDate>
-                            {ele.createdAt.slice(2, 10)}
-                            &ensp;
-                            {ele.createdAt.slice(-8, -3)}
-                          </CommentDate>
-                        </>
-                      );
-                    })
-                  : null}
-              </CommentList>
-              <CommentInputSection>
-                <CommentInput
-                  placeholder="댓글 달기"
-                  onChange={commentHandler}
-                />
-                <CommentButton onClick={postHandler}>게시</CommentButton>
-              </CommentInputSection>
-            </CommentBox>
-          </MainBox>
+      <MapBox>
+        <LoadScriptNext googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM">
+          <GoogleMap
+            style={{ width: '600px', height: '600px', position: 'relative' }}
+            zoom={13}
+            center={center}
+            mapContainerClassName="map-container"
+          >
+            {marker === 'travelSpot' &&
+              travelSpot.map(ele => {
+                return (
+                  <MarkerF
+                    key={ele.id}
+                    position={ele.position}
+                    label={String(ele.id)}
+                  />
+                );
+              })}
 
-          <MapBox>
-            <LoadScriptNext googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM">
-              <GoogleMap
-                style={{
-                  width: '600px',
-                  height: '600px',
-                  position: 'relative',
-                }}
-                zoom={13}
-                center={center}
-                mapContainerClassName="map-container"
-              >
-                {marker === 'travelSpot' &&
-                  travelSpot.map(ele => {
-                    return (
-                      <MarkerF
-                        key={ele.id}
-                        position={ele.position}
-                        label={String(ele.id)}
+            {marker === 'travelSpot' &&
+              pathCoordinates.map(ele => {
+                const routeSpot = [
+                  { lat: ele.route1[0], lng: ele.route1[1] },
+                  { lat: ele.route2[0], lng: ele.route2[1] },
+                ];
+                return (
+                  <Polyline
+                    key={ele.id}
+                    path={routeSpot}
+                    options={{
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      strokeWeight: 2,
+                    }}
+                  />
+                );
+              })}
+
+            {marker === 'eatSpot' &&
+              eatSpot.map(ele => {
+                return <MarkerF key={ele.id} position={ele.position} />;
+              })}
+
+            {marker === 'sleepSpot' &&
+              sleepSpot.map(ele => {
+                const position = { lat: ele.lat, lng: ele.lng };
+                return <MarkerF key={ele.id} position={position} />;
+              })}
+            <Category>
+              <Spot focus={travelFocus} onClick={spot1Handler}>
+                주요 명소
+              </Spot>
+              <Spot focus={eatFocus} onClick={spot2Handler}>
+                맛집
+              </Spot>
+              <Spot focus={sleepFocus} onClick={spot3Handler}>
+                숙박
+              </Spot>
+            </Category>
+          </GoogleMap>
+        </LoadScriptNext>
+        <LocationBox>
+          {marker === 'travelSpot' &&
+            travelSpot.map(ele => {
+              return (
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
+                  <LocationImg src={sampleImg} alt="기본" />
+                  <LocationText>{ele.name}</LocationText>
+                </Location>
+              );
+            })}
+
+          {marker === 'eatSpot' &&
+            eatSpot.map(ele => {
+              return (
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
+                  <LocationImg src={sampleImg} alt="기본" />
+                  <LocationText>{ele.name}</LocationText>
+                </Location>
+              );
+            })}
+
+          {marker === 'sleepSpot' &&
+            sleepSpot.map(ele => {
+              return (
+                <Location key={ele.id} onClick={() => locationHandler(ele.id)}>
+                  <LocationImg src={sampleImg} alt="기본" />
+                  <LocationText>{ele.name}</LocationText>
+                </Location>
+              );
+            })}
+        </LocationBox>
+      </MapBox>
+      <RouteContainer>
+        <nav>
+          <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
+            <button
+              className="nav-link active"
+              id="nav-home-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-home"
+              type="button"
+              role="tab"
+              aria-controls="nav-home"
+              aria-selected="true"
+            >
+              코스소개
+            </button>
+            <button
+              className="nav-link"
+              id="nav-profile-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-profile"
+              type="button"
+              role="tab"
+              aria-controls="nav-profile"
+              aria-selected="false"
+            >
+              일정
+            </button>
+          </div>
+          <div
+            className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
+            id="nav-tabContent"
+          >
+            <RouteBox
+              className="tab-pane active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+              tabindex="0"
+            >
+              {data.map(ele => {
+                return (
+                  <RouteCard key={ele.id}>
+                    <RouteImg src={sampleImg} />
+                    <RouteText>
+                      <RouteTitle>{ele.title}</RouteTitle>
+                      <RouteDes>{ele.text}</RouteDes>
+                    </RouteText>
+                  </RouteCard>
+                );
+              })}
+            </RouteBox>
+            <div
+              className="tab-pane"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+              tabIndex="0"
+            >
+              <InfoContainer>
+                <InfoBox>
+                  <CourseBox1>
+                    <CourseTitle>
+                      <img
+                        style={{ width: '20px', marginRight: '5px' }}
+                        src={route}
+                        alt="코스"
                       />
-                    );
-                  })}
-
-                {marker === 'travelSpot' &&
-                  pathCoordinates.map(ele => {
-                    return (
-                      <Polyline
-                        key={ele.id}
-                        path={ele.route}
-                        options={{
-                          strokeColor: 'black',
-                          strokeOpacity: 1,
-                          strokeWeight: 2,
-                        }}
+                      도보코스
+                    </CourseTitle>
+                    <CourseTitle>
+                      <img
+                        style={{ width: '20px', marginRight: '5px' }}
+                        src={time}
+                        alt="시간"
                       />
-                    );
-                  })}
-
-                {marker === 'eatSpot' &&
-                  eatSpot.map(ele => {
-                    return <MarkerF key={ele.id} position={ele.position} />;
-                  })}
-
-                {marker === 'sleepSpot' &&
-                  sleepSpot.map(ele => {
-                    const position = { lat: ele.lat, lng: ele.lng };
-                    return <MarkerF key={ele.id} position={position} />;
-                  })}
-                <Category>
-                  <Spot focus={travelFocus} onClick={spot1Handler}>
-                    주요 명소
-                  </Spot>
-                  <Spot focus={eatFocus} onClick={spot2Handler}>
-                    맛집
-                  </Spot>
-                  <Spot focus={sleepFocus} onClick={spot3Handler}>
-                    숙박
-                  </Spot>
-                </Category>
-              </GoogleMap>
-            </LoadScriptNext>
-            <LocationBox>
-              {marker === 'travelSpot' &&
-                travelSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-
-              {marker === 'eatSpot' &&
-                eatSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-
-              {marker === 'sleepSpot' &&
-                sleepSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-            </LocationBox>
-          </MapBox>
-          <RouteContainer>
-            <nav>
-              <div
-                className="nav nav-pills tabCustom"
-                id="nav-tab"
-                role="tablist"
-              >
-                <button
-                  className="nav-link active"
-                  id="nav-home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-home"
-                  aria-selected="true"
-                >
-                  코스소개
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  일정
-                </button>
-              </div>
-              <div
-                className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
-                id="nav-tabContent"
-              >
-                <RouteBox
-                  className="tab-pane active"
-                  id="nav-home"
-                  role="tabpanel"
-                  aria-labelledby="nav-home-tab"
-                  tabindex="0"
-                >
-                  {data.map(ele => {
-                    return (
-                      <RouteCard key={ele.id}>
-                        <RouteImg src={sampleImg} />
-                        <RouteText>
-                          <RouteTitle>{ele.title}</RouteTitle>
-                          <RouteDes>{ele.text}</RouteDes>
-                        </RouteText>
-                      </RouteCard>
-                    );
-                  })}
-                </RouteBox>
-                <div
-                  className="tab-pane"
-                  id="nav-profile"
-                  role="tabpanel"
-                  aria-labelledby="nav-profile-tab"
-                  tabIndex="0"
-                >
-                  <InfoContainer>
-                    <InfoBox>
-                      <CourseBox1>
-                        <CourseTitle>
-                          <img
-                            style={{ width: '20px', marginRight: '5px' }}
-                            src={route}
-                            alt="코스"
-                          />
-                          도보코스
-                        </CourseTitle>
-                        <CourseTitle>
-                          <img
-                            style={{ width: '20px', marginRight: '5px' }}
-                            src={time}
-                            alt="시간"
-                          />
-                          소요시간
-                        </CourseTitle>
-                      </CourseBox1>
-                      <CourseBox2>
-                        <Course>
-                          임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 -
-                          도라전망대 - 통일촌
-                        </Course>
-                        <Course>3시간</Course>
-                      </CourseBox2>
-                    </InfoBox>
-                  </InfoContainer>
-                </div>
-              </div>
-            </nav>
-            <div>
-              <TagWrap>
-                <TagTitle>태그</TagTitle>
-                <TagBox>
-                  {courseData !== null
-                    ? courseData.tag.map(ele => {
-                        return <Tag>{ele}</Tag>;
-                      })
-                    : null}
-                </TagBox>
-              </TagWrap>
-              <GuideWrap>
-                <GuideTitle>가이드</GuideTitle>
-                <GuideBox>
-                  <Guideline />
-                  <GuideImg src={jinwoo} />
-                  <GithubImg src={github} />
-                  <GuideName>최진우</GuideName>
-                  <GuideText>
-                    여행은 자고로 즐거워야한다!
-                    <br />
-                    오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
-                  </GuideText>
-                </GuideBox>
-              </GuideWrap>
+                      소요시간
+                    </CourseTitle>
+                  </CourseBox1>
+                  <CourseBox2>
+                    <Course>
+                      임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대
+                      - 통일촌
+                    </Course>
+                    <Course>3시간</Course>
+                  </CourseBox2>
+                </InfoBox>
+              </InfoContainer>
             </div>
-          </RouteContainer>
+          </div>
+        </nav>
+        <div>
+          <TagWrap>
+            <TagTitle>태그</TagTitle>
+            <TagBox>
+              {courseData !== null
+                ? courseData.tag.map(ele => {
+                    return <Tag>{ele}</Tag>;
+                  })
+                : null}
+            </TagBox>
+          </TagWrap>
+          <GuideWrap>
+            <GuideTitle>가이드</GuideTitle>
+            <GuideBox>
+              <Guideline />
+              <GuideImg src={jinwoo} />
+              <GithubImg src={github} />
+              <GuideName>최진우</GuideName>
+              <GuideText>
+                여행은 자고로 즐거워야한다!
+                <br />
+                오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
+              </GuideText>
+            </GuideBox>
+          </GuideWrap>
         </div>
-      </Container>
-    </Layout>
+      </RouteContainer>
+    </div>
   );
 }
 
