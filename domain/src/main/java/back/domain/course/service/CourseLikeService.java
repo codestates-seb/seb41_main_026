@@ -33,10 +33,8 @@ public class CourseLikeService {
         courseLike.addCourse(courseService.verifiedCourse(courseId));
         courseLike.addUser(userService.verifiedUser(userId));
 
-
         String courseIdToString = String.valueOf(courseId);
         String userIdToString = String.valueOf(userId);
-
 
         List<String> value= Arrays.asList(courseIdToString,userIdToString);
 
