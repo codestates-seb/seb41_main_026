@@ -8,8 +8,6 @@ import {
 } from '@react-google-maps/api';
 import styled from 'styled-components';
 import axios from 'axios';
-import union from '../../img/union.png';
-import polygon from '../../img/Polygon.png';
 import sampleImg from '../../img/sampleImg.jpg';
 import time from '../../img/time.png';
 import route from '../../img/route.png';
@@ -38,6 +36,7 @@ const HeartWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 `;
 
 const HeartDes = styled.div`
@@ -46,11 +45,15 @@ const HeartDes = styled.div`
 `;
 
 const TitleBox = styled.div`
-  width: 1200px;
-  border-bottom: 1px solid #b2d3be;
-  margin-top: 70px;
+width: 100%;
+  display: flex;
   position: fixed;
-  top: 35px;
+  margin: 10px 10px;
+  padding: 5px 0;
+  justify-content: center;
+  align-items: flex-end; bottom;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 67px;
   z-index: 100;
 `;
 
@@ -88,17 +91,6 @@ const ShortsTitle = styled.div`
   position: relative;
 `;
 
-const UnionImg = styled.img`
-  width: 16px;
-  margin-left: 20px;
-`;
-const PolyGonImg = styled.img`
-  width: 5.45px;
-  position: absolute;
-  left: 25px;
-  top: 7px;
-`;
-
 const ShortsText = styled.span`
   margin-left: 10px;
   width: 59px;
@@ -131,8 +123,8 @@ const CommentList = styled.div`
   align-items: flex-end;
   padding: 20px 16px 5px;
   width: 433px;
-  height: 415px;
-  background: #b2d3be;
+  height: 444px;
+  background: #0c7b93;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px 20px 0px 0px;
   overflow-y: auto;
@@ -145,7 +137,7 @@ const CommentInputSection = styled.div`
   padding: 16px;
   width: 433px;
   height: 62px;
-  background: #89a3b2;
+  background: #142850;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0px 0px 20px 20px;
 `;
@@ -154,8 +146,9 @@ const CommentInput = styled.input`
   padding: 0px 12px;
   width: 353px;
   height: 30px;
-  background: #ffffff;
-  border: 1px solid #cfd4d9;
+  background-color: #ffffff;
+  border: 0;
+  outline: none;
   box-shadow: 0px 0px 0px #cbdafc;
   border-radius: 4px 0px 0px 4px;
 `;
@@ -172,9 +165,13 @@ const CommentButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #6c757d;
+  background: #00a8cc;
   border-radius: 0px 4px 4px 0px;
   padding: 0px 12px;
+  :hover {
+    cursor: pointer;
+    background: #0c7b93;
+  }
 `;
 
 const Comment = styled.div`
@@ -187,11 +184,13 @@ const Comment = styled.div`
   color: #000000;
   position: relative;
   margin-top: 13px;
+  border-radius: 10px;
 `;
 
 const CommentDate = styled.div`
   font-size: 12px;
   margin-top: 8px;
+  text-align: end;
 `;
 
 const Triangle = styled.div`
@@ -500,7 +499,11 @@ const Heart = styled.img`
   position: relative;
   top: 5px;
   right: 4px;
+  :hover {
+    cursor: pointer;
+  }
 `;
+const sessionUserId = sessionStorage.getItem('user_Id');
 
 function ContentPage() {
   const { id } = useParams();
@@ -659,8 +662,13 @@ function ContentPage() {
           'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
           {
             content: comment,
-            userId: 5,
+            userId: sessionUserId,
             courseId: parseInt(id, 10),
+          },
+          {
+            headers: {
+              authorization: sessionStorage.getItem('access_Token'),
+            },
           },
         )
         .then(() => window.location.reload());
@@ -730,7 +738,12 @@ function ContentPage() {
       .post(
         `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/courselike/${id}`,
         {
-          userId: 4,
+          userId: sessionUserId,
+        },
+        {
+          headers: {
+            authorization: sessionStorage.getItem('access_Token'),
+          },
         },
       )
       .then(res => setHeartData(res?.data))
@@ -800,9 +813,12 @@ function ContentPage() {
         <MainBox>
           <ShortsBox>
             <ShortsTitle>
-              <UnionImg src={union} />
-              <PolyGonImg src={polygon} />
-              <ShortsText>Shorts</ShortsText>
+              <ShortsText>관련 영상</ShortsText>
+              <iframe
+                title="taggbox"
+                src="https://widget.taggbox.com/119414"
+                style={{ width: '100%', height: '700px', border: 'none' }}
+              />
             </ShortsTitle>
           </ShortsBox>
           <CommentBox>
