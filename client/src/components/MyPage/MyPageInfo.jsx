@@ -42,14 +42,16 @@ function MyPageInfo() {
       );
     }
 
-    axios({
-      method: 'patch',
-      url: `${process.env.REACT_APP_API_URL}/user/${userId}`,
-      data: userDataModified,
-      headers: {
-        authorization: sessionStorage.getItem('access_Token'),
-      },
-    })
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/user/${userId}`,
+        userDataModified,
+        {
+          headers: {
+            authorization: sessionStorage.getItem('access_Token'),
+          },
+        },
+      )
       .then(() => {
         alert('회원 정보 변경을 완료하였습니다.');
         window.location.reload();
