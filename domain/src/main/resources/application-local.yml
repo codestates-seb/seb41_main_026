@@ -18,13 +18,23 @@ spring:
           format_sql: true
           dialect: org.hibernate.dialect.Mysql8Dialect
           # Fetch size 설정 1+N 문제 임시 해결
-#          default_batch_fetch_size: 1000
+          #          default_batch_fetch_size: 1000
           # Entity에 예약어가 있다면 '' 자동 추가
   #        auto_quote_keyword: true
   sql:
     init:
-#      data-locations: resources/static/db/data.sql
+      #      data-locations: resources/static/db/data.sql
       mode: always
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 310173299533-c1rqhqcqedkb14r6u5qfjivisb7i56n6.apps.googleusercontent.com
+            clientSecret: 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
+            scope:
+              - email
+              - profile
 
 
   jackson:
@@ -41,4 +51,10 @@ logging.level:
     springframework:
       web.servlet: debug
 
+ADMIN_EMAIL: admin@test.com
+
+jwt:
+ key: 8ABF4FB1F827EB0EA8B44A0096F95AD48CB0ABC1BB9088180BDBB5325702905E
+ACCESS_TOKEN_EXPIRATION_MINUTES: 20
+REFRESH_TOKEN_EXPIRATION_MINUTES: 18000
 
