@@ -2,8 +2,6 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import styled from 'styled-components';
 import HomePage from './pages/HomePage/HomePage';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
 import ContentPage from './pages/ContentPage/ContentPage';
 import MyPage from './pages/MyPage/MyPage';
 import MyPageLike from './components/MyPage/MyPageLike';
@@ -13,16 +11,11 @@ import MainShorts from './pages/HomePage/MainShorts';
 import MainSeason from './pages/HomePage/MainSeason';
 import MainGuide from './pages/HomePage/MainGuide';
 import MainSearch from './pages/HomePage/MainSearch';
-import MainPage from './pages/HomePage/MainPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
-  },
-  {
-    path: '/main',
-    element: <MainPage />,
   },
   {
     path: '/shorts',
@@ -78,13 +71,9 @@ function Main({ children }) {
 
 function App() {
   return (
-    <>
-      <Header />
-      <Main>
-        <RouterProvider router={router} />
-      </Main>
-      <Footer />
-    </>
+    <Main>
+      <RouterProvider router={router} />
+    </Main>
   );
 }
 
