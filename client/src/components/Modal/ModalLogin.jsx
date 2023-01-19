@@ -38,6 +38,23 @@ function ModalLogin() {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
+  // const getUserInfo = () => {
+  //   axios
+  //     .get(
+  //       `${process.env.REACT_APP_API_URL}/user/${sessionStorage.getItem(
+  //         'userId',
+  //       )}`,
+  //       {
+  //         headers: {
+  //           authorization: sessionStorage.getItem('accessTk'),
+  //         },
+  //       },
+  //     )
+  //     .then(res => {
+  //       console.log(res);
+  //     });
+  // };
+
   // eslint-disable-next-line consistent-return
   const handleLogIn = e => {
     e.preventDefault();
@@ -61,14 +78,15 @@ function ModalLogin() {
         // { withCredentials: true },
       )
       .then(res => {
-        const data = JSON.stringify({
-          id: res.data.id,
-          token: res.headers.authorization,
-        });
         console.log(res);
         const expires = dayjs().add('40', 'm').toDate();
-        setCookie('accessToken', data, { expires });
+        setCookie('accessToken', res.data.data.accessToken, { expires });
         setCookie('refreshToken', res.data.data.refreshToken);
+        sessionStorage.setItem(
+          'access_Token',
+          res.headers.get('authorization'),
+        );
+        sessionStorage.setItem('user_Id', res.headers.get('userId'));
         window.location.reload();
         window.alert('로그인 성공!');
       })
@@ -77,6 +95,7 @@ function ModalLogin() {
         window.alert('로그인 실패!');
       });
   };
+
   return (
     <>
       <button

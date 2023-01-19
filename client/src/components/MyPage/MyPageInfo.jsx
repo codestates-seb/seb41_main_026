@@ -4,6 +4,8 @@ import Sidebar from './Sidebar';
 import { regName, regPassword } from '../../util/regStore';
 import Layout from '../Common/Layout';
 
+const userId = sessionStorage.getItem('user_Id');
+
 function MyPageInfo() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,7 +14,11 @@ function MyPageInfo() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/user/1`)
+      .get(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+        headers: {
+          authorization: sessionStorage.getItem('access_Token'),
+        },
+      })
       .then(res => {
         setName(res.data.name);
         setEmail(res.data.email);
@@ -36,8 +42,14 @@ function MyPageInfo() {
       );
     }
 
-    axios
-      .patch(`${process.env.REACT_APP_API_URL}/user/1`, userDataModified)
+    axios({
+      method: 'patch',
+      url: `${process.env.REACT_APP_API_URL}/user/${userId}`,
+      data: userDataModified,
+      headers: {
+        authorization: sessionStorage.getItem('access_Token'),
+      },
+    })
       .then(() => {
         alert('회원 정보 변경을 완료하였습니다.');
         window.location.reload();
