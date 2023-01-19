@@ -20,7 +20,16 @@ spring:
   sql:
     init:
       mode: always
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_SECRET}
+            scope:
+              - email
+              - profile
 
   jackson:
     serialization:
@@ -36,11 +45,10 @@ logging.level:
     springframework:
       web.servlet: debug
 
-mail:
-  address:
-    admin: ${ADMIN_EMAIL}
+ADMIN_EMAIL: "${ADMIN_EMAIL}"
+
 jwt:
- key: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드한다.
-access-token-expiration-minutes: 100
-refresh-token-expiration-minutes: 420
+  key: ${JWT_SECRET_KEY}
+ACCESS_TOKEN_EXPIRATION_MINUTES: 20
+REFRESH_TOKEN_EXPIRATION_MINUTES: 18000
 
