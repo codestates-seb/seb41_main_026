@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useCookies } from 'react-cookie';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
+import { handleEmail, handlePassword } from '../../util/alertStore';
 
 const Buttons = styled.button`
   background-color: rgba(20, 40, 80, 1);
@@ -27,7 +28,11 @@ const SocialButtons = styled.button`
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
 
-  const [setCookie] = useCookies(['cookies']);
+  // eslint-disable-next-line no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies([
+    'accessToken',
+    'refreshToken',
+  ]);
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -36,15 +41,14 @@ function ModalLogin() {
   // eslint-disable-next-line consistent-return
   const handleLogIn = e => {
     e.preventDefault();
+    // eslint-disable-next-line no-unused-vars
     const { email, password } = loginInfo;
     if (email.length === 0 || !regEmail.test(email)) {
-      alert('이메일이 타당하지 않습니다.');
+      handleEmail();
       return false;
     }
     if (password.length === 0 || !regPassword.test(password)) {
-      alert(
-        '최소 6자 최대 12자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.',
-      );
+      handlePassword();
       return false;
     }
     axios
@@ -54,19 +58,23 @@ function ModalLogin() {
           email,
           password,
         },
-        { withCredentials: true },
+        // { withCredentials: true },
       )
       .then(res => {
         const data = JSON.stringify({
           id: res.data.id,
           token: res.headers.authorization,
         });
+        console.log(res);
         const expires = dayjs().add('40', 'm').toDate();
-        setCookie('cookies', data, { expires });
+        setCookie('accessToken', data, { expires });
+        setCookie('refreshToken', res.data.data.refreshToken);
         window.location.reload();
+        window.alert('로그인 성공!');
       })
       .catch(err => {
-        console.log(err, 'login error!!');
+        console.log(err);
+        window.alert('로그인 실패!');
       });
   };
   return (
@@ -91,9 +99,8 @@ function ModalLogin() {
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-3"
+                  className="modal-title fs-3 text-black"
                   id="exampleModalLabel"
-                  style={{ fontFamily: 'Heebo', color: 'black' }}
                 >
                   Log In
                 </h1>
