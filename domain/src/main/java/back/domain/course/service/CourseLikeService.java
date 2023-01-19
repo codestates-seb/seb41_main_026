@@ -25,7 +25,9 @@ public class CourseLikeService {
     private final CourseService courseService;
     private final CourseLikeRepository courseLikeRepository;
 
+
     List<List<String>> valueList = new ArrayList<>();
+
 
     public CourseLike post(CourseLike courseLike, Long courseId, Long userId) {
         User user = userService.verifiedUser(userId);
@@ -44,6 +46,8 @@ public class CourseLikeService {
         int index= valueList.indexOf(value);
         index=index+1;
         Long courseLikeid = Long.valueOf(index);
+
+
 
         if(userId == courseId){
             courseLike.setCourseLikeId(courseLikeid);
