@@ -13,7 +13,8 @@ import java.util.List;
 public class CoursePostDto {
 
     private String courseName;
-    private String content;
     private String location;
     private List<String> tag;
+    private String guideName;
+    private String guideText;
 }

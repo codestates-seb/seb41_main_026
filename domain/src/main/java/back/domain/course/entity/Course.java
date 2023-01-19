@@ -2,7 +2,10 @@ package back.domain.course.entity;
 
 
 import back.domain.comment.entity.Comment;
+import back.domain.coursedata.entity.CourseData;
+import back.domain.eat.entity.Eat;
 import back.domain.enums.Tag;
+import back.domain.sleep.entity.Sleep;
 import back.domain.travelspot.entity.TravelSpot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,10 +37,6 @@ public class Course {
     private String courseName;
 
     @Setter
-    @Column(nullable = false, unique = true)
-    private String content;
-
-    @Setter
     @Column(nullable = false)
 //    @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
@@ -50,6 +49,14 @@ public class Course {
     @Setter
     @Column(nullable = false)
     private int likeCount; // 좋아요 수
+
+    @Setter
+    @Column(nullable = false)
+    private String guideName;
+
+    @Setter
+    @Column(nullable = false)
+    private String guideText;
 
     @Setter
     @Column(nullable = false)
@@ -73,6 +80,17 @@ public class Course {
 //    @JsonBackReference
     private List<TravelSpot> travelSpots = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    private List<Sleep> sleeps = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    private List<Eat> eats = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<CourseData> courseDatas = new ArrayList<>();
+
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);
     }
@@ -85,4 +103,15 @@ public class Course {
         travelSpots.add(travelSpot);
     }
 
+    public void addSleep(Sleep sleep) {
+        sleeps.add(sleep);
+    }
+
+    public void addEat(Eat eat){
+        eats.add(eat);
+    }
+
+    public void addCourseData(CourseData courseData){
+        courseDatas.add(courseData);
+    }
 }
