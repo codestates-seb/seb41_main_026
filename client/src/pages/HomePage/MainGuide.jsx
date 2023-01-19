@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Layout from '../../components/Common/Layout';
 
 const Container = styled.div`
   width: 100vw;
@@ -169,39 +170,41 @@ function MainGuide() {
   };
 
   return (
-    <Container>
-      <GuideBox>
-        <GuideImg src="/img/dk.png" onClick={dkHandler} />
-        <GuideImg src="img/yun.png" onClick={yunHandler} />
-        <GuideImg src="/img/dh.png" onClick={dhHandler} />
-        <GuideImg src="/img/jinwoo.png" onClick={jinHandler} />
-        <GuideImg src="/img/seong.png" onClick={seongHandler} />
-        <GuideImg src="/img/wondo.png" onClick={wonHandler} />
-      </GuideBox>
-      <GuideTitle>저희가 여행을 안내합니다!</GuideTitle>
-      <GuideInfoBox>
-        <GuideInfo>
-          <GuideImg
-            style={{ marginTop: '50px', marginLeft: '8px' }}
-            src={guideData.imgLink}
-          />
-          <GuideName>{guideData.name}</GuideName>
-          <GuideAlias>{guideData.alias}</GuideAlias>
-          <GuideText>
-            {guideData.text.split('\n').map(ele => {
-              return (
-                <div>
-                  {ele}
-                  <br />
-                </div>
-              );
-            })}
-          </GuideText>
-        </GuideInfo>
-        <GuideAnimationBox />
-        <GuideDefalutBox />
-      </GuideInfoBox>
-    </Container>
+    <Layout header footer>
+      <Container>
+        <GuideBox>
+          <GuideImg src="/img/dk.png" onClick={dkHandler} />
+          <GuideImg src="img/yun.png" onClick={yunHandler} />
+          <GuideImg src="/img/dh.png" onClick={dhHandler} />
+          <GuideImg src="/img/jinwoo.png" onClick={jinHandler} />
+          <GuideImg src="/img/seong.png" onClick={seongHandler} />
+          <GuideImg src="/img/wondo.png" onClick={wonHandler} />
+        </GuideBox>
+        <GuideTitle>저희가 여행을 안내합니다!</GuideTitle>
+        <GuideInfoBox>
+          <GuideInfo>
+            <GuideImg
+              style={{ marginTop: '50px', marginLeft: '8px' }}
+              src={guideData.imgLink}
+            />
+            <GuideName>{guideData.name}</GuideName>
+            <GuideAlias>{guideData.alias}</GuideAlias>
+            <GuideText>
+              {guideData.text.split('\n').map(ele => {
+                return (
+                  <div>
+                    {ele}
+                    <br />
+                  </div>
+                );
+              })}
+            </GuideText>
+          </GuideInfo>
+          <GuideAnimationBox />
+          <GuideDefalutBox />
+        </GuideInfoBox>
+      </Container>
+    </Layout>
   );
 }
 
