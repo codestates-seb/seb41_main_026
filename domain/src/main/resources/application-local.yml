@@ -30,8 +30,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 310173299533-c1rqhqcqedkb14r6u5qfjivisb7i56n6.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_SECRET}
             scope:
               - email
               - profile
@@ -51,10 +51,10 @@ logging.level:
     springframework:
       web.servlet: debug
 
-ADMIN_EMAIL: admin@test.com
+ADMIN_EMAIL: "${ADMIN_EMAIL}"
 
 jwt:
- key: 8ABF4FB1F827EB0EA8B44A0096F95AD48CB0ABC1BB9088180BDBB5325702905E
+ key: ${JWT_SECRET_KEY}
 ACCESS_TOKEN_EXPIRATION_MINUTES: 20
 REFRESH_TOKEN_EXPIRATION_MINUTES: 18000
 
