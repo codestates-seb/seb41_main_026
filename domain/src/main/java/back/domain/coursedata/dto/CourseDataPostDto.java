@@ -1,0 +1,15 @@
+package back.domain.coursedata.dto;
+
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class CourseDataPostDto {
+
+    private Long courseId;
+    private String title;
+    private String text;
+}
