@@ -80,7 +80,7 @@ const GuideTitle = styled.div`
 
 const GuideBox = styled.div`
   width: 100%;
-  height: 350px;
+  height: 360px;
   border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
@@ -100,6 +100,7 @@ const Guideline = styled.div`
 const GuideImg = styled.img`
   width: 100px;
   border-radius: 50%;
+  margin-top: 20px;
 `;
 const GithubImg = styled.img`
   width: 25px;
