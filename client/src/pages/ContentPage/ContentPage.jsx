@@ -125,19 +125,21 @@ function ContentPage() {
     <Layout header footer>
       <TitleBox courseData={courseData} />
       <div className="container">
-        <HeartWrap>
-          <HeartDes>좋아요</HeartDes>
-          <HeartBox>
-            {heartData !== null && heartData.courseLikeStatus === 1 ? (
-              <Heart src={heartFill} onClick={heartHandler} />
-            ) : (
-              <Heart src={heart} onClick={heartHandler} />
-            )}
-          </HeartBox>
-          <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
-            {courseData !== null && courseData.likeCount}
-          </HeartDes>
-        </HeartWrap>
+        {sessionUserId && (
+          <HeartWrap>
+            <HeartDes>좋아요</HeartDes>
+            <HeartBox>
+              {heartData !== null && heartData.courseLikeStatus === 1 ? (
+                <Heart src={heartFill} onClick={heartHandler} />
+              ) : (
+                <Heart src={heart} onClick={heartHandler} />
+              )}
+            </HeartBox>
+            <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
+              {courseData !== null && courseData.likeCount}
+            </HeartDes>
+          </HeartWrap>
+        )}
         <MainBox
           courseData={courseData}
           id={id}
