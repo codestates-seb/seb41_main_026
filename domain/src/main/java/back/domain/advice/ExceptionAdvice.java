@@ -20,21 +20,23 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ErrorResponse methodArgumentNotValidHandle(
-//            MethodArgumentNotValidException e
-//    ) {
-//        return ErrorResponse.of(e.getBindingResult());
-//    }
-//
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ErrorResponse constraintViolationExceptionHandler(
-//            ConstraintViolationException e
-//    ) {
-//        return ErrorResponse.of(e.getConstraintViolations());
-//    }
+/*
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse methodArgumentNotValidHandle(
+            MethodArgumentNotValidException e
+    ) {
+        return ErrorResponse.of(e.getBindingResult());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse constraintViolationExceptionHandler(
+            ConstraintViolationException e
+    ) {
+        return ErrorResponse.of(e.getConstraintViolations());
+    }
+*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
