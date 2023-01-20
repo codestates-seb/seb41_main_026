@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
-import dayjs from 'dayjs';
-// import { useNavigate } from 'react-router-dom';
+// import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { setUserInfo, getAccessToken, getUserId } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 import { handleEmail, handlePassword } from '../../util/alertStore';
@@ -29,12 +31,16 @@ const SocialButtons = styled.button`
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
 
+  const dispatch = useDispatch();
+  const findUserId = useSelector(getUserId);
+  const findAccessToken = useSelector(getAccessToken);
+
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -80,14 +86,21 @@ function ModalLogin() {
         // { withCredentials: true },
       )
       .then(res => {
-        const expires = dayjs().add('40', 'm').toDate();
-        setCookie('accessToken', res.data.data.accessToken, { expires });
-        setCookie('refreshToken', res.data.data.refreshToken);
+        // const expires = dayjs().add('40', 'm').toDate();
+        const { authorization, refresh } = res.headers;
+        const userId = res.headers.get('userId');
+        setCookie('accessToken', authorization);
+        setCookie('refreshToken', refresh);
         sessionStorage.setItem(
           'access_Token',
           res.headers.get('authorization'),
         );
-        sessionStorage.setItem('user_Id', res.headers.get('userId'));
+        sessionStorage.setItem('user_Id', userId);
+        navigate('/');
+        window.location.reload();
+
+        dispatch(setUserInfo({ userId, authorization })); // userSlice에 유저 정보 저장
+        console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
         window.alert('로그인 성공!');
       })
       .catch(err => {
