@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 @Component
@@ -38,7 +39,7 @@ public class UserCustomDetailsService implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
+            return Collections.emptyList();
         }
 
         @Override
@@ -66,5 +67,5 @@ public class UserCustomDetailsService implements UserDetailsService {
             return true;
         }
     }
-
 }
+

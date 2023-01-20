@@ -35,8 +35,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         var oAuth2User = (OAuth2User) authentication.getPrincipal();
-//        String email = String.valueOf(oAuth2User.getAttributes().get("email"));
-//        List<String> authorities = jwtAuthorityUtils.createRoles(email);
+/*
+        String email = String.valueOf(oAuth2User.getAttributes().get("email"));
+        List<String> authorities = jwtAuthorityUtils.createRoles(email);
+*/
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = null;
         String userImage = null;
@@ -75,9 +77,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
 
         // 이미 가입된 회원인 경우
-        if (userRepository.findByEmail(email).isPresent()) {
-            user = (User) userRepository.findByEmail(email).get();
-        }
+        if (userRepository.findByEmail(email).isPresent()) user = userRepository.findByEmail(email).get();
 
         user.setEmail(email);
         user.setName(name);

@@ -27,13 +27,15 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
     ) throws IOException, ServletException {
         log.info("# Authenticated successfully!");
 
-        // Todo 추후 구현 완료 되면 삭제 예정
+        /*
+ Token Response for Test
         Gson gson = new Gson();
 
         ResponseDto responseDto = ResponseDto.of(AuthSuccessTokenResponseDto.of(response));
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(gson.toJson(responseDto,ResponseDto.class));
+*/
     }
 
 }
