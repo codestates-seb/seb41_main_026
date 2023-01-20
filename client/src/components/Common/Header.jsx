@@ -6,10 +6,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
-import profileImg from '../../img/jinwoo.png';
+// import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
+  const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
@@ -39,20 +40,13 @@ function Header() {
     checkLoginState();
   });
 
-  /* when isLogin:true, change profile img */
-  // getUserProfile;
+  const randomImg = () => {
+    setimg('https://source.boringavatars.com/beam/40');
+  };
 
-  /* use Session Storage for searching keyword */
-  // const handleSearch = e => {
-  //   e.preventDefault();
-  //   setSearchText(e.target.value);
-  //   if (e.key === 'Enter' && searchText) {
-  //     if (window.location.pathname === '/search') window.location.reload();
-  //     else {
-  //       navigator('/search');
-  //     }
-  //   }
-  // };
+  useEffect(() => {
+    randomImg();
+  }, []);
 
   return (
     <nav
@@ -145,7 +139,7 @@ function Header() {
                   aria-expanded="false"
                 >
                   <img
-                    src={profileImg}
+                    src={img}
                     alt="mdo"
                     width="40"
                     height="40"
