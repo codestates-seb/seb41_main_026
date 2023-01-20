@@ -35,18 +35,9 @@ function Header() {
   });
 
   /* use Session Storage for searching keyword */
-  function handleSearch(e) {
-    setSearchText(e.target.value);
-    // 세션스토리지에 검색어 저장
-    sessionStorage.setItem('searchText', searchText);
-
-    if (e.key === 'Enter' && searchText) {
-      if (window.location.pathname === '/clear') window.location.reload();
-      else {
-        navigator('/clear');
-      }
-      setSearchText('');
-    }
+  function handleSearch() {
+    localStorage.setItem('searchText', searchText);
+    navigate('/search');
   }
 
   function handleLogOut() {
@@ -61,12 +52,8 @@ function Header() {
   /* when isLogin:true, change profile img */
   // getUserProfile;
 
-  // const onChangeSearch = () => {
-  //   setIsFocus(true);
-  // };
-
   const onClickRemove = () => {
-    sessionStorage.removeItem('searchText');
+    localStorage.removeItem('searchText');
   };
 
   return (
@@ -124,14 +111,19 @@ function Header() {
               <input
                 className="form-control form-control-dark text-bg-dark"
                 type="text"
-                value={searchText}
-                onChange={handleSearch}
+                onChange={e => {
+                  setSearchText(e.target.value);
+                }}
+                // onSubmit={handleSearch}
                 placeholder="검색하기"
                 aria-label="Search"
                 ref={search}
               />
               <navigate to="/search">
-                <button className="btn btn-outline-secondary rounded-0 rounded-end">
+                <button
+                  className="btn btn-outline-secondary rounded-0 rounded-end"
+                  onClick={handleSearch}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

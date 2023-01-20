@@ -7,7 +7,7 @@ function MainSearch() {
   return (
     <Layout header footer>
       <div className="container">
-        <div className="row min-vh-100 flex-column flex-md-row">
+        <div className="row d-flex row" style={{ height: '100vh' }}>
           <SearchSidebar />
           <SearchBody />
         </div>
