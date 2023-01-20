@@ -70,18 +70,20 @@ public class CommentService {
     }
 
     /* Comment 삭제 */
-//    @Transactional
-//    public Comment delete(Long commentId, Long userId) {
-//
-//        Comment comment = commentRepository.findByIdWithUser(commentId)
-//                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
-//
-//        if (!userId.equals(comment.getUser().getUserId())) {
-//            throw new BusinessException(ErrorCode.BAD_REQUEST);
-//        }
-//
-//        return commentRepository.delete(comment);
-//    }
+/*
+    @Transactional
+    public Comment delete(Long commentId, Long userId) {
+
+        Comment comment = commentRepository.findByIdWithUser(commentId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));
+
+        if (!userId.equals(comment.getUser().getUserId())) {
+            throw new BusinessException(ErrorCode.BAD_REQUEST);
+        }
+
+        return commentRepository.delete(comment);
+    }
+*/
 
     @Transactional
     public void delete(long commentId) {

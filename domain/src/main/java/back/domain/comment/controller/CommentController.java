@@ -59,7 +59,7 @@ public class CommentController {
     @PatchMapping("/{commentId}")
     public ResponseEntity commentPatch(@PathVariable Long commentId,
                                        @RequestBody CommentPatchDto commentPatchDto){
-        Comment comment = commentMapper.CommentPatchDtoToEntity(commentPatchDto);
+
         Comment patched = commentService.patch(commentId, commentPatchDto, commentPatchDto.getUserId());
         CommentResponseDto commentResponseDto = commentMapper.CommentEntityToResponseDto(patched);
 
