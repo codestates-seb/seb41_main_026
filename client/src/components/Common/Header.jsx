@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react';
+/* developed by Jinwoo, Choi */
+/* ************************* */
+import { useEffect, useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
 import profileImg from '../../img/jinwoo.png';
 
 function Header() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+  const search = useRef();
+  // const [searchText, setSearchText] = useState('');
+  // const navigator = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
@@ -17,12 +23,38 @@ function Header() {
   function handleLogOut() {
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    sessionStorage.removeItem('access_Token');
+    sessionStorage.removeItem('user_Id');
     window.location.reload();
   }
 
+  /* check and change state for Login */
+  const checkLoginState = () => {
+    if (cookie.accessToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+  };
+
   useEffect(() => {
-    setIsLogin(isLogin);
+    checkLoginState();
   });
+
+  /* when isLogin:true, change profile img */
+  // getUserProfile;
+
+  /* use Session Storage for searching keyword */
+  // const handleSearch = e => {
+  //   e.preventDefault();
+  //   setSearchText(e.target.value);
+  //   if (e.key === 'Enter' && searchText) {
+  //     if (window.location.pathname === '/search') window.location.reload();
+  //     else {
+  //       navigator('/search');
+  //     }
+  //   }
+  // };
 
   return (
     <nav
@@ -71,28 +103,39 @@ function Header() {
               </a>
             </li>
           </ul>
-
-          <button
-            className="btn btn-outline-light me-5"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#searchModal"
+          <form
+            className="d-flex col-12 col-lg-auto mb-3 mb-lg-0 me-lg-5"
+            role="search"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search"
-              viewBox="0 -1 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+            <div className="input-group">
+              <input
+                className="form-control form-control-dark text-bg-dark"
+                type={search}
+                placeholder="검색하기"
+                aria-label="Search"
+                // onChange={e => setSearch(e.target.value)}
+              />
+              <Link to="/search">
+                <button
+                  className="btn btn-outline-secondary"
+                  // onClick={getSearch}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-search"
+                    viewBox="0 -1 16 16"
+                  >
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  </svg>
+                </button>
+              </Link>
+            </div>
+          </form>
 
-            <span className="ms-2 me-5">검색하기</span>
-          </button>
-
-          {!isLogin ? (
+          {isLogin ? (
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a

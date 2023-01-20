@@ -113,6 +113,11 @@ function ModalSignUp() {
           const expires = dayjs().add('40', 'm').toDate();
           setCookie('accessToken', data, { expires });
           setCookie('refreshToken', res.data.data.refreshToken);
+          sessionStorage.setItem(
+            'access_Token',
+            res.headers.get('authorization'),
+          );
+          sessionStorage.setItem('user_Id', res.headers.get('userId'));
           setTimeout(() => {
             window.location.reload(true);
           }, 2000);
