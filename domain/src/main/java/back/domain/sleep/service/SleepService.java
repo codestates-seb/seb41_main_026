@@ -22,18 +22,15 @@ public class SleepService {
     public Sleep save(Sleep sleep,Long courseId) {
         Course course = courseService.verifiedCourse(courseId);
         sleep.addCourse(course);
-        Sleep saved = sleepRepository.save(sleep);
-        return saved;
+        return sleepRepository.save(sleep);
     }
     public Sleep get(Long sleepId) {
-        Sleep sleep  =verifiedSleep(sleepId);
-        return sleep;
+        return verifiedSleep(sleepId);
     }
     public Sleep verifiedSleep(Long sleepId){
         Optional<Sleep> optionalSleep = sleepRepository.findById(sleepId);
-        Sleep sleep = optionalSleep.orElseThrow(
+        return optionalSleep.orElseThrow(
                 () -> new BusinessException(ErrorCode.SLEEP_NOT_FOUND));
-        return sleep;
     }
 
     public List<Sleep> gets() {
@@ -44,11 +41,11 @@ public class SleepService {
         Sleep findSleep = verifiedSleep(sleepId);
 
         Optional.ofNullable(sleep.getName())
-                .ifPresent(name -> findSleep.setName(name));
+                .ifPresent(findSleep::setName);
         Optional.ofNullable(sleep.getLat())
-                .ifPresent(lat->findSleep.setLat(lat));
+                .ifPresent(findSleep::setLat);
         Optional.ofNullable(sleep.getLng())
-                .ifPresent(lng->findSleep.setLng(lng));
+                .ifPresent(findSleep::setLng);
 
         return sleepRepository.save(findSleep);
     }

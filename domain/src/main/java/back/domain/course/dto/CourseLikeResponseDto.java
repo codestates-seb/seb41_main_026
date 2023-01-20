@@ -1,6 +1,5 @@
 package back.domain.course.dto;
 
-import back.domain.enums.CourseLikeStatus;
 import lombok.*;
 
 @AllArgsConstructor

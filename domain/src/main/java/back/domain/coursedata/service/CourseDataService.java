@@ -23,8 +23,7 @@ public class CourseDataService {
     public CourseData save(CourseData courseData,Long courseId) {
         Course course = courseService.verifiedCourse(courseId);
         courseData.addCourse(course);
-        CourseData saved = courseDataRepository.save(courseData);
-        return saved;
+        return courseDataRepository.save(courseData);
     }
 
     /* CourseData 단건 조회 */
@@ -43,9 +42,9 @@ public class CourseDataService {
         CourseData findCourseData = verifiedCourseData(courseDataId);
 
         Optional.ofNullable(courseData.getTitle())
-                .ifPresent(title -> findCourseData.setTitle(title));
+                .ifPresent(findCourseData::setTitle);
         Optional.ofNullable(courseData.getText())
-                .ifPresent(text -> findCourseData.setText(text));
+                .ifPresent(findCourseData::setText);
 
 
         return courseDataRepository.save(findCourseData);
@@ -60,9 +59,7 @@ public class CourseDataService {
 
     public CourseData verifiedCourseData(Long courseDataId){
         Optional<CourseData> optionalCourseData = courseDataRepository.findById(courseDataId);
-        CourseData courseData = optionalCourseData.orElseThrow(
+        return optionalCourseData.orElseThrow(
                 () -> new BusinessException(ErrorCode.NOT_FOUND));
-
-        return courseData;
     }
 }

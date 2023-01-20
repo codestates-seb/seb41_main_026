@@ -23,11 +23,11 @@ public class EatService {
         Eat findEat = verifiedEat(eatId);
 
         Optional.ofNullable(eat.getName())
-                .ifPresent(name -> findEat.setName(name));
+                .ifPresent(findEat::setName);
         Optional.ofNullable(eat.getLat())
-                .ifPresent(lat -> findEat.setLat(lat));
+                .ifPresent(findEat::setLat);
         Optional.ofNullable(eat.getLng())
-                .ifPresent(lng ->findEat.setLng(lng));
+                .ifPresent(findEat::setLng);
         return eatRepository.save(findEat);
     }
 
@@ -40,22 +40,19 @@ public class EatService {
     public Eat save(Eat eat, Long courseId) {
         Course course = courseService.verifiedCourse(courseId);
         eat.addCourse(course);
-        Eat saved = eatRepository.save(eat);
-        return saved;
+        return eatRepository.save(eat);
 
     }
 
     public Eat get(Long eatId) {
-        Eat eat = verifiedEat(eatId);
 
-        return eat;
+        return verifiedEat(eatId);
     }
 
     public Eat verifiedEat(Long eatId){
         Optional<Eat> optionalEat = eatRepository.findById(eatId);
-        Eat eat = optionalEat.orElseThrow(
+        return optionalEat.orElseThrow(
                 () -> new BusinessException(ErrorCode.NOT_FOUND));
-        return eat;
     }
 
     public List<Eat> gets() {

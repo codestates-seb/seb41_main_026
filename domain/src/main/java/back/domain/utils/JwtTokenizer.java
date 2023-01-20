@@ -114,7 +114,7 @@ public class JwtTokenizer {
             String refreshToken,
             String base64SecretKey,
             HttpServletResponse response
-    ) throws IOException {
+    ) {
         Map<String, Object> claims = new HashMap<>();
         String subject = getEmail(refreshToken);
         claims.put("username", subject);
@@ -192,7 +192,6 @@ public class JwtTokenizer {
         return calendar.getTime();
     }
 
-    // Todo refactoring 중 활용할 곳이 없다면 제거 예정
     public String getEmail(String token) {
         Key key = getKeyFromBase64EncodedSecretKey(encodeBase64SecretKey(secretKey));
         return Jwts.parserBuilder()

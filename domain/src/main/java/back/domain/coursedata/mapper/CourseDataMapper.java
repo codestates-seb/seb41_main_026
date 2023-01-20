@@ -21,5 +21,5 @@ public interface CourseDataMapper {
         courseData.setText(courseDataPatchDto.getText());
         courseData.setTitle(courseDataPatchDto.getTitle());
         return courseData;
-    };
+    }
 }

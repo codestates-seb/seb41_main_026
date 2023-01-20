@@ -17,7 +17,7 @@ public interface SleepMapper {
         sleep.setName(sleepPostDto.getName());
         sleep.setLng(sleepPostDto.getLng());
         return sleep;
-    };
+    }
     SleepResponseDto SleepEntityToResponseDto(Sleep saved);
 
     List<SleepResponseDto> SleepEntityToResponseDtos(List<Sleep> sleeps);

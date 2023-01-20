@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.beans.JavaBean;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")

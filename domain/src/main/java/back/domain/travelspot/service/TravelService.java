@@ -4,7 +4,6 @@ import back.domain.course.entity.Course;
 import back.domain.course.service.CourseService;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
-import back.domain.travelspot.dto.TravelPatchDto;
 import back.domain.travelspot.dto.TravelPostDto;
 import back.domain.travelspot.entity.TravelSpot;
 import back.domain.travelspot.repository.TravelRepository;
@@ -33,25 +32,23 @@ public class TravelService {
     public TravelSpot findVerifiedTravel(long id) {
         Optional<TravelSpot> optionalTravel =
                 travelRepository.findById(id);
-        TravelSpot findTravel =
-                optionalTravel.orElseThrow(() ->
+        return optionalTravel.orElseThrow(() ->
                         new BusinessException(ErrorCode.NOT_FOUND));
-        return findTravel;
     }
 
     public List<TravelSpot> findTravels() {
-        return (List<TravelSpot>) travelRepository.findAll();
+        return travelRepository.findAll();
     }
 
     public TravelSpot patch (TravelSpot travelSpot, long id) {
         TravelSpot findTravel = findTravel(id);
 
         Optional.ofNullable(travelSpot.getName())
-                .ifPresent(name -> findTravel.setName(name));
+                .ifPresent(findTravel::setName);
         Optional.ofNullable(travelSpot.getLat())
-                .ifPresent(lat -> findTravel.setLat(lat));
+                .ifPresent(findTravel::setLat);
         Optional.ofNullable(travelSpot.getLng())
-                .ifPresent(lng -> findTravel.setLng(lng));
+                .ifPresent(findTravel::setLng);
 
         return travelRepository.save(findTravel);
     }

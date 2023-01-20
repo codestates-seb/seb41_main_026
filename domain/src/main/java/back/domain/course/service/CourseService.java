@@ -1,10 +1,8 @@
 package back.domain.course.service;
 
 
-import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
-import back.domain.course.repository.CourseLikeRepository;
 import back.domain.course.repository.CourseRepository;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +20,7 @@ public class CourseService {
 
     public Course post(Course course) {
         course.setViewCount(0);
-        Course save = courseRepository.save(course);
-        return save;
+        return courseRepository.save(course);
     }
 
     public Course get(Long courseId) {
@@ -41,29 +37,26 @@ public class CourseService {
 
     public Course verifiedCourse(Long courseId) {
         Optional <Course> optionalCourse = courseRepository.findById(courseId);
-        Course course = optionalCourse.orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
-
-        return course;
+        return optionalCourse.orElseThrow(() -> new BusinessException(ErrorCode.COURSE_NOT_FOUND));
     }
 
     public List<Course> gets() {
-        List<Course> courses = courseRepository.findAll();
-        return courses;
+        return courseRepository.findAll();
     }
 
     public Course patch(Course course, Long courseId) {
         Course findCourse = verifiedCourse(courseId);
 
         Optional.ofNullable(course.getCourseName())
-                .ifPresent(name -> findCourse.setCourseName(name));
+                .ifPresent(findCourse::setCourseName);
         Optional.ofNullable(course.getTag())
-                .ifPresent(tag -> findCourse.setTag(tag));
+                .ifPresent(findCourse::setTag);
         Optional.ofNullable(course.getLocation())
-                .ifPresent(location -> findCourse.setLocation(location));
+                .ifPresent(findCourse::setLocation);
         Optional.ofNullable(course.getGuideName())
-                .ifPresent(guidename -> findCourse.setGuideName(guidename));
+                .ifPresent(findCourse::setGuideName);
         Optional.ofNullable(course.getGuideText())
-                .ifPresent(text -> findCourse.setGuideText(text));
+                .ifPresent(findCourse::setGuideText);
         return findCourse;
     }
 
@@ -75,6 +68,6 @@ public class CourseService {
     @Transactional
     public List<Course> search(String keyword) {
         return courseRepository.findByCourseNameContaining(keyword);
-//        return courseRepository.findByTagContaining(keyword);
+        /* return courseRepository.findByTagContaining(keyword); */
     }
 }

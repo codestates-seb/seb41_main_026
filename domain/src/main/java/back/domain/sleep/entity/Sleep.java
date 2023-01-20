@@ -21,7 +21,7 @@ public class Sleep {
 
     @Column(nullable = false)
     @Setter
-    private String Name;
+    private String name;
 
     @Column(nullable = false)
     @Setter

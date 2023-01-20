@@ -18,7 +18,7 @@ public interface CourseLikeMapper {
         courseLikeResponseDto.setCourseLikeStatus(courseLike.getCourseLikeStatus());
         courseLikeResponseDto.setCourseId(courseLike.getCourse().getCourseId());
         return courseLikeResponseDto;
-    };
+    }
     CourseLike CourseLikePatchDtoToEntity(CourseLikePatchDto courseLikePatchDto);
     List<CourseLikeResponseDto> CourseLikeEntityToResponseDto(List<CourseLike> courseLikes);
 }

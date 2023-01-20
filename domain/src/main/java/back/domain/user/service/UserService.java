@@ -49,11 +49,7 @@ public class UserService {
         // DB에 User Role 저장
         List<String> roles = jwtAuthorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
-
-//        user.setLikeCount(0);
-        User save = userRepository.save(user);
-
-        return save;
+        return userRepository.save(user);
     }
     public User get(Long userId) {
         User user = verifiedUser(userId);
@@ -66,25 +62,23 @@ public class UserService {
     }
 
     public List<User> gets() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User verifiedUser(Long userId) {
         Optional<User> findUser = userRepository.findById(userId);
-        User user = findUser.orElseThrow( () -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-
-        return user;
+        return findUser.orElseThrow( () -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
     public User patch(User user, Long userId) throws BusinessException {
         User findUser = verifiedUser(userId);
 
         Optional.ofNullable(user.getName())
-                .ifPresent(name -> findUser.setName(name));
+                .ifPresent(findUser::setName);
         Optional.ofNullable(user.getUserImage())
-                .ifPresent(userImage -> findUser.setUserImage(userImage));
+                .ifPresent(findUser::setUserImage);
         Optional.ofNullable(user.getPassword())
-                .ifPresent(password -> findUser.setPassword(password));
+                .ifPresent(findUser::setPassword);
 
         findUser.setModifiedAt(LocalDateTime.now());
 
@@ -102,12 +96,12 @@ public class UserService {
                 } else throw new BusinessException(ErrorCode.INVALID_PASSWORD);
             }
             //소셜 회원 - 패스워드 변경 불가
-            else if(findUser.getPassword() == null){
+            else {
                 throw new BusinessException(ErrorCode.ACCESS_FORBIDDEN);
             }
         }
 
-        return (User) userRepository.save(findUser);
+        return userRepository.save(findUser);
     }
 
     public void delete(Long userId) {

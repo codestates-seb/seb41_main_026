@@ -4,16 +4,13 @@ package back.domain.course.entity;
 import back.domain.comment.entity.Comment;
 import back.domain.coursedata.entity.CourseData;
 import back.domain.eat.entity.Eat;
-import back.domain.enums.Tag;
 import back.domain.sleep.entity.Sleep;
 import back.domain.travelspot.entity.TravelSpot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import net.bytebuddy.matcher.FilterableList;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;

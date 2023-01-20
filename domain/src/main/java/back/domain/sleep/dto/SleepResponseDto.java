@@ -10,7 +10,7 @@ import lombok.*;
 public class SleepResponseDto {
 
     private Long sleepId;
-    private String Name;
+    private String name;
     private String lat;
     private String lng;
 }

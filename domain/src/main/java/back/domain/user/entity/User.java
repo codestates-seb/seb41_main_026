@@ -86,7 +86,8 @@ public class User {
 
     @Column
     @Setter
-    private Integer likeCount=0;
+    private Integer likeCount = 0;
+
 
     public void addCourseLike(CourseLike courseLike) {
         courseLikes.add(courseLike);

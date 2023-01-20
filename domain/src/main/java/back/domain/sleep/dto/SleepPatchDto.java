@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class SleepPatchDto {
 
-    private String Name;
+    private String name;
     private String lat;
     private String lng;
 }

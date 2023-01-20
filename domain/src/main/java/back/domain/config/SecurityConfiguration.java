@@ -14,13 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -86,12 +81,14 @@ public class SecurityConfiguration {
                         .mvcMatchers(HttpMethod.POST,"/courseLike/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
-                //OAuth2 로그인 설정 시작점
-//                .oauth2Login()
-//                //OAuth2 성공시 redirect
-//                .defaultSuccessUrl("/oauth/loginInfo", true)
-//                .userInfoEndpoint()
-//                .userService(oAuthService);
+                /*
+OAuth2 로그인 설정 시작점
+                .oauth2Login()
+                //OAuth2 성공시 redirect
+                .defaultSuccessUrl("/oauth/loginInfo", true)
+                .userInfoEndpoint()
+                .userService(oAuthService);
+*/
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userRepository))); // oauth2 적용
 
@@ -121,7 +118,8 @@ public class SecurityConfiguration {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(
                 Arrays.asList("http://localhost:3000",
-                        "http://localhost:8080"));
+                        "http://localhost:8080",
+                        "http://travelgajo.s3-website.ap-northeast-2.amazonaws.com"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setMaxAge(493772L);
         corsConfiguration.addAllowedOrigin("*");
@@ -136,19 +134,21 @@ public class SecurityConfiguration {
         return source;
     }
 
-//    @Bean
-//    public ClientRegistrationRepository clientRegistrationRepository() {
-//        var clientRegistration = clientRegistration();
-//
-//        return new InMemoryClientRegistrationRepository(clientRegistration);
-//    }
-//
-//    private ClientRegistration clientRegistration() {
-//        return CommonOAuth2Provider
-//                .GOOGLE
-//                .getBuilder("google")
-//                .clientId(clientId)
-//                .clientSecret(clientSecret)
-//                .build();
-//    }
+/*
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        var clientRegistration = clientRegistration();
+
+        return new InMemoryClientRegistrationRepository(clientRegistration);
+    }
+
+    private ClientRegistration clientRegistration() {
+        return CommonOAuth2Provider
+                .GOOGLE
+                .getBuilder("google")
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .build();
+    }
+*/
 }
