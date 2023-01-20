@@ -6,6 +6,7 @@ import back.domain.course.dto.CoursePostDto;
 import back.domain.course.dto.CourseResponseDto;
 import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
+import back.domain.coursedata.entity.CourseData;
 import back.domain.eat.entity.Eat;
 import back.domain.sleep.entity.Sleep;
 import back.domain.travelspot.entity.TravelSpot;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-19T11:29:52+0900",
+    date = "2023-01-20T11:27:12+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -80,6 +81,10 @@ public class CourseMapperImpl implements CourseMapper {
         List<Eat> list5 = save.getEats();
         if ( list5 != null ) {
             courseResponseDto.setEats( new ArrayList<Eat>( list5 ) );
+        }
+        List<CourseData> list6 = save.getCourseDatas();
+        if ( list6 != null ) {
+            courseResponseDto.setCourseDatas( new ArrayList<CourseData>( list6 ) );
         }
 
         return courseResponseDto;
