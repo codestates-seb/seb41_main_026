@@ -1,8 +1,8 @@
 /* developed by Jinwoo, Choi */
 /* ************************* */
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -108,7 +108,7 @@ function Header() {
             <div className="input-group">
               <input
                 className="form-control form-control-dark text-bg-dark"
-                type={search}
+                type="search"
                 placeholder="검색하기"
                 aria-label="Search"
                 // onChange={e => setSearch(e.target.value)}
