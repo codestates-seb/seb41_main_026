@@ -1,6 +1,8 @@
+/* developed by Jinwoo, Choi */
+/* ************************* */
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -26,7 +28,6 @@ function Header() {
     window.alert('로그아웃 되었습니다.');
     window.location.reload();
   }
-
   const checkLoginState = () => {
     if (cookie.accessToken) {
       setIsLogin(true);
@@ -53,6 +54,7 @@ function Header() {
       data-bs-theme="dark"
       style={{
         backgroundColor: '#142850',
+        width: '100vw',
       }}
     >
       <div className="container">
@@ -93,26 +95,37 @@ function Header() {
               </a>
             </li>
           </ul>
-
-          <button
-            className="btn btn-outline-light me-5"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#searchModal"
+          <form
+            className="d-flex col-12 col-lg-auto mb-3 mb-lg-0 me-lg-5"
+            role="search"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search"
-              viewBox="0 -1 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
-
-            <span className="ms-2 me-5">검색하기</span>
-          </button>
+            <div className="input-group">
+              <input
+                className="form-control form-control-dark text-bg-dark"
+                type="search"
+                placeholder="검색하기"
+                aria-label="Search"
+                // onChange={e => setSearch(e.target.value)}
+              />
+              <Link to="/search">
+                <button
+                  className="btn btn-outline-secondary"
+                  // onClick={getSearch}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-search"
+                    viewBox="0 -1 16 16"
+                  >
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                  </svg>
+                </button>
+              </Link>
+            </div>
+          </form>
 
           {isLogin ? (
             <div className="d-flex justify-content-end">
