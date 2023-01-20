@@ -40,6 +40,23 @@ function ModalLogin() {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
 
+  // const getUserInfo = () => {
+  //   axios
+  //     .get(
+  //       `${process.env.REACT_APP_API_URL}/user/${sessionStorage.getItem(
+  //         'userId',
+  //       )}`,
+  //       {
+  //         headers: {
+  //           authorization: sessionStorage.getItem('accessTk'),
+  //         },
+  //       },
+  //     )
+  //     .then(res => {
+  //       console.log(res);
+  //     });
+  // };
+
   // eslint-disable-next-line consistent-return
   const handleLogIn = e => {
     e.preventDefault();
@@ -71,8 +88,6 @@ function ModalLogin() {
           res.headers.get('authorization'),
         );
         sessionStorage.setItem('user_Id', res.headers.get('userId'));
-        // navigate('/');
-        // window.location.reload();
         window.alert('로그인 성공!');
       })
       .catch(err => {
@@ -80,6 +95,7 @@ function ModalLogin() {
         window.alert('로그인 실패!');
       });
   };
+
   return (
     <>
       <button

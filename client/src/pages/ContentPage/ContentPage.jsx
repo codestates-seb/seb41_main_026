@@ -1,472 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  GoogleMap,
-  LoadScriptNext,
-  MarkerF,
-  Polyline,
-} from '@react-google-maps/api';
 import styled from 'styled-components';
 import axios from 'axios';
-import union from '../../img/union.png';
-import polygon from '../../img/Polygon.png';
-import sampleImg from '../../img/sampleImg.jpg';
-import time from '../../img/time.png';
-import route from '../../img/route.png';
-import github from '../../img/vector.png';
-import jinwoo from '../../img/jinwoo.png';
 import heart from '../../img/heart.png';
 import heartFill from '../../img/heart_fill.png';
+import RouteContainer from '../../components/Content/RouteContainer';
+import TitleBox from '../../components/Content/TitleBox';
+import MapBox from '../../components/Content/MapBox';
+import MainBox from '../../components/Content/MainBox';
 import Layout from '../../components/Common/Layout';
 
-const Container = styled.div`
+const HeartWrap = styled.div`
+  width: 70px;
+  height: 140px;
+  border-radius: 30px;
+  background-color: white;
+  position: fixed;
+  left: 25px;
+  top: 450px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const TitleBox = styled.div`
-  width: 1200px;
-  border-bottom: 1px solid #b2d3be;
-  margin-top: 70px;
-  position: fixed;
-  top: 35px;
   z-index: 100;
 `;
 
-const Title = styled.span`
-  width: 135px;
-  height: 38px;
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 38px;
-  color: white;
-  margin-left: 20px;
-`;
-
-const Des = styled.span`
-  width: 30px;
-  height: 19px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  color: #35b8d6;
-  margin-left: 20px;
-`;
-
-const MainBox = styled.div`
-  width: 1200px;
-  display: flex;
-  margin-top: 100px;
-`;
-
-const ShortsBox = styled.div`
-  flex: 0.6;
-`;
-
-const ShortsTitle = styled.div`
-  position: relative;
-`;
-
-const UnionImg = styled.img`
-  width: 16px;
-  margin-left: 20px;
-`;
-const PolyGonImg = styled.img`
-  width: 5.45px;
-  position: absolute;
-  left: 25px;
-  top: 7px;
-`;
-
-const ShortsText = styled.span`
-  margin-left: 10px;
-  width: 59px;
-  height: 23px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  color: white;
-`;
-
-const CommentBox = styled.div`
-  flex: 0.4;
-  margin-left: 30px;
-`;
-
-const CommentTitle = styled.div`
-  width: 347px;
-  height: 24px;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: white;
-  margin-bottom: 20px;
-`;
-
-const CommentList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding: 20px 16px 5px;
-  width: 433px;
-  height: 415px;
-  background: #b2d3be;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 20px 20px 0px 0px;
-  overflow: auto;
-`;
-
-const CommentInputSection = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  width: 433px;
-  height: 62px;
-  background: #89a3b2;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0px 0px 20px 20px;
-`;
-
-const CommentInput = styled.input`
-  padding: 0px 12px;
-  width: 353px;
-  height: 30px;
-  background: #ffffff;
-  border: 1px solid #cfd4d9;
-  box-shadow: 0px 0px 0px #cbdafc;
-  border-radius: 4px 0px 0px 4px;
-`;
-
-const CommentButton = styled.div`
-  width: 48px;
-  height: 30px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 15px;
-  letter-spacing: -0.32px;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #6c757d;
-  border-radius: 0px 4px 4px 0px;
-  padding: 0px 12px;
-`;
-
-const Comment = styled.div`
-  padding: 16px;
-  background-color: white;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 14px;
-  color: #000000;
-  position: relative;
-  margin-top: 13px;
-`;
-
-const CommentDate = styled.div`
-  font-size: 12px;
-  margin-top: 8px;
-`;
-
-const Triangle = styled.div`
-  width: 7px;
-  height: 7px;
-  background: #ffffff;
-  transform: rotate(135deg);
-  position: absolute;
-  top: 19px;
-  right: -3px;
-`;
-
-const MapBox = styled.div`
-  width: 1200px;
-  margin: 100px 0;
-
-  display: flex;
-  justify-content: space-between;
-  .map-container {
-    width: 57.5%;
-    height: 400px;
-  }
-`;
-
-const LocationBox = styled.div`
-  width: 600px;
-  height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Location = styled.div`
-  width: 435px;
-  height: 80px;
-  background: #f2f4d1;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0px;
-  position: relative;
-  cursor: pointer;
-  margin-top: 10px;
-`;
-
-const LocationImg = styled.img`
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: -2px;
-`;
-
-const LocationText = styled.div`
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  color: #313131;
-  position: absolute;
-  left: 100px;
-  top: 30px;
-`;
-
-const InfoContainer = styled.div`
-  display: flex;
-  margin-top: 30px;
-`;
-
-const InfoBox = styled.div`
-  width: 642px;
-  height: 126px;
-  background: #f2f4d1;
-  border: 1px solid #b2d3be;
-  border-radius: 5px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-`;
-
-const CourseBox1 = styled.div`
-  margin-left: 30px;
-  flex: 0.2;
-  display: flex;
-  flex-direction: column;
-`;
-const CourseBox2 = styled.div`
-  flex: 0.8;
-  display: flex;
-  flex-direction: column;
-`;
-
-const CourseTitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #5e6073;
-  display: flex;
-`;
-
-const Course = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #5e6073;
-  display: flex;
-  align-items: center;
-`;
-
-const Category = styled.div`
-  height: 40px;
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  display: flex;
-`;
-
-const Spot = styled.div`
-  width: 70px;
-  height: 40px;
-  border: 1px solid #b2d3be;
-  background-color: ${({ focus }) => (focus ? '#b2d3be' : 'white')};
-  color: ${({ focus }) => (focus ? 'white' : 'black')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 7px;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-const TagWrap = styled.div`
-  width: 449px;
-  height: 126px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 70px;
-`;
-
-const TagTitle = styled.div`
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #00a8cc;
+const HeartDes = styled.div`
+  color: black;
   margin-bottom: 10px;
-`;
-
-const TagBox = styled.div`
-  padding: 8px;
-  height: 50px;
-  border: 3px solid #00a8cc;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-`;
-
-const Tag = styled.span`
-  width: 50px;
-  height: 25px;
-  background: #00a8cc;
-  border-radius: 4px;
-  padding: 0px 4px;
-  margin-left: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  color: white;
-`;
-
-const RouteContainer = styled.div`
-  width: 1200px;
-  display: flex;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  .tabCustom button {
-    background-color: #0c7b93;
-    color: white;
-    margin-right: 2px;
-    margin-bottom: 2px;
-  }
-  .tabCustom button:hover {
-    background-color: #00a8cc;
-  }
-  .tabCustom .active {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    background-color: #00a8cc;
-    margin-bottom: 0px;
-  }
-  .tabBorderCustom {
-    border: 3px solid #00a8cc;
-  }
-`;
-
-const RouteBox = styled.div`
-  width: 642px;
-`;
-
-const RouteCard = styled.div`
-  width: 642px;
-  display: flex;
-  margin-top: 30px;
-  margin-bottom: 80px;
-  border-radius: 5px;
-`;
-
-const RouteImg = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 5px;
-`;
-
-const RouteText = styled.div`
-  margin-left: 20px;
-  text-align: justify;
-`;
-
-const RouteTitle = styled.div`
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-  color: white;
-  margin-bottom: 10px;
-`;
-
-const RouteDes = styled.div`
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  color: #9c9c9c;
-`;
-
-const GuideWrap = styled.div`
-  width: 500px;
-  margin-left: 70px;
-  margin-top: 40px;
-`;
-
-const GuideTitle = styled.div`
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #00a8cc;
-  margin-bottom: 10px;
-`;
-
-const GuideBox = styled.div`
-  width: 449px;
-  height: 300px;
-  position: relative;
-  border: 3px solid #00a8cc;
-  border-radius: 20px;
-  text-align: center;
-`;
-
-const Guideline = styled.div`
-  width: 445px;
-  height: 95px;
-  background: #00a8cc;
-  border-top-left-radius: 33px;
-  border-top-right-radius: 33px;
-  border-bottom-left-radius: 170px;
-  border-bottom-right-radius: 170px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const GuideImg = styled.img`
-  width: 100px;
-  position: absolute;
-  top: 50px;
-  left: 169px;
-  border-radius: 50%;
-`;
-const GithubImg = styled.img`
-  width: 25px;
-  position: absolute;
-  top: 80px;
-  left: 120px;
-`;
-
-const GuideName = styled.div`
-  margin-top: 80px;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: white;
-`;
-
-const GuideText = styled.div`
-  margin-top: 20px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 110%;
-  color: #9c9c9c;
 `;
 
 const HeartBox = styled.span`
@@ -479,43 +40,20 @@ const Heart = styled.img`
   width: 22px;
   position: relative;
   top: 5px;
+  right: 4px;
+  :hover {
+    cursor: pointer;
+  }
 `;
+const sessionUserId = sessionStorage.getItem('user_Id');
 
 function ContentPage() {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
-  const [center, setCenter] = useState({ lat: 37.5400456, lng: 126.9921017 });
-  const [marker, setMarker] = useState('travelSpot');
-  const [travelFocus, setTravelFocus] = useState(false);
-  const [eatFocus, setEatFocus] = useState(false);
-  const [sleepFocus, setSleepFocus] = useState(false);
-  const [pathCoordinates, setPathCoordinates] = useState([
-    {
-      id: 1,
-      route: [
-        { lat: 37.5512141, lng: 126.9882024 },
-        { lat: 37.739235, lng: 126.99025 },
-      ],
-    },
-    {
-      id: 2,
-      route: [
-        { lat: 37.739235, lng: 126.99025 },
-        { lat: 37.052235, lng: 126.243683 },
-      ],
-    },
-    {
-      id: 3,
-      route: [
-        { lat: 37.052235, lng: 126.243683 },
-        { lat: 37.712776, lng: 126.005974 },
-      ],
-    },
-  ]);
+  const [heartData, setHeartData] = useState(null);
   const [heartState, setHeartState] = useState(false);
-  const [heartAllCount, setHeartAllCount] = useState(0);
-  const [heartMyCount, setHeartMyCount] = useState(0);
-  const [comment, setComment] = useState('');
+
+  const commentRef = useRef(0);
 
   useEffect(() => {
     axios
@@ -524,90 +62,6 @@ function ContentPage() {
       )
       .then(res => setCourseData(res.data));
   }, []);
-
-  console.log(courseData);
-
-  const travelSpot = [
-    {
-      id: 1,
-      name: '1. 한국 서울타워점',
-      position: { lat: 37.5512141, lng: 126.9882024 },
-    },
-    {
-      id: 2,
-      name: '2. 잠실 타워',
-      position: { lat: 37.739235, lng: 126.99025 },
-    },
-    {
-      id: 3,
-      name: '3. 한강 공원',
-      position: { lat: 37.052235, lng: 126.243683 },
-    },
-    {
-      id: 4,
-      name: '4. 명동 거리',
-      position: { lat: 37.712776, lng: 126.005974 },
-    },
-  ];
-
-  const eatSpot = [
-    {
-      id: 1,
-      name: '맛집1',
-      position: { lat: 37.3512141, lng: 126.9882024 },
-    },
-    {
-      id: 2,
-      name: '맛집2',
-      position: { lat: 37.939235, lng: 126.99025 },
-    },
-    {
-      id: 3,
-      name: '맛집3',
-      position: { lat: 37.072235, lng: 126.243683 },
-    },
-    {
-      id: 4,
-      name: '맛집4',
-      position: { lat: 37.712776, lng: 126.005974 },
-    },
-  ];
-
-  const sleepSpot = [
-    {
-      id: 1,
-      name: '숙소1',
-      lat: 37.4512141,
-      lng: 126.9882024,
-    },
-    {
-      id: 2,
-      name: '숙소2',
-      lat: 37.639235,
-      lng: 126.99025,
-    },
-    {
-      id: 3,
-      name: '숙소3',
-      lat: 37.062235,
-      lng: 126.243683,
-    },
-    {
-      id: 4,
-      name: '숙소4',
-      lat: 37.538235,
-      lng: 126.59125,
-    },
-  ];
-
-  // const tag = [
-  //   { id: 1, tag: '파주' },
-  //   { id: 2, tag: '봄' },
-  //   { id: 3, tag: '여름' },
-  //   { id: 4, tag: '가울' },
-  //   { id: 5, tag: '겨울' },
-  //   { id: 6, tag: '최진우' },
-  // ];
 
   const data = [
     {
@@ -632,391 +86,67 @@ function ContentPage() {
     },
   ];
 
-  const commentHandler = e => {
-    setComment(e.target.value);
+  const scrollToBottom = () => {
+    commentRef.current?.scrollTo({ top: 100000, behavior: 'smooth' });
   };
 
-  const postHandler = () => {
-    axios
-      .post(
-        'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
-        {
-          content: comment,
-          userId: 4,
-          courseId: parseInt(id, 10),
-        },
-      )
-      .then(() => window.location.reload());
-  };
-
-  const locationHandler = idValue => {
-    setCenter(travelSpot[idValue - 1].position);
-  };
-
-  const spot1Handler = () => {
-    setMarker('travelSpot');
-    setPathCoordinates([
-      {
-        id: 1,
-        route: [
-          { lat: 37.5512141, lng: 126.9882024 },
-          { lat: 37.739235, lng: 126.99025 },
-        ],
-      },
-      {
-        id: 2,
-        route: [
-          { lat: 37.739235, lng: 126.99025 },
-          { lat: 37.052235, lng: 126.243683 },
-        ],
-      },
-      {
-        id: 3,
-        route: [
-          { lat: 37.052235, lng: 126.243683 },
-          { lat: 37.712776, lng: 126.005974 },
-        ],
-      },
-    ]);
-    setTravelFocus(true);
-    setEatFocus(false);
-    setSleepFocus(false);
-  };
-
-  const spot2Handler = () => {
-    setMarker('eatSpot');
-    setTravelFocus(false);
-    setEatFocus(true);
-    setSleepFocus(false);
-    setPathCoordinates(null);
-  };
-
-  const spot3Handler = () => {
-    setMarker('sleepSpot');
-    setTravelFocus(false);
-    setEatFocus(false);
-    setSleepFocus(true);
-    setPathCoordinates(null);
-  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [courseData]);
 
   const heartHandler = () => {
-    setHeartState(!heartState);
+    axios
+      .post(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/courselike/${id}`,
+        {
+          userId: sessionUserId,
+        },
+        {
+          headers: {
+            authorization: sessionStorage.getItem('access_Token'),
+          },
+        },
+      )
+      .then(res => setHeartData(res?.data))
+      .then(() => setHeartState(!heartState));
   };
+  console.log(heartData);
 
   useEffect(() => {
-    if (heartState === true) {
-      setHeartMyCount(1);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartMyCount(-1);
-    }
+    axios
+      .get(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/course/${id}`,
+      )
+      .then(res => setCourseData(res.data));
   }, [heartState]);
 
-  useEffect(() => {
-    if (heartState === true) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    } else if (heartState === false && heartAllCount > 0) {
-      setHeartAllCount(heartAllCount + heartMyCount);
-    }
-  }, [heartMyCount]);
-
+  console.log(courseData);
   return (
     <Layout header footer>
-      <Container>
-        <div className="container">
-          <TitleBox>
-            <Title>
-              {courseData !== null ? (
-                courseData.courseName
-              ) : (
-                <span>Loading...</span>
-              )}
-            </Title>
-            {courseData !== null
-              ? courseData.tag.map(ele => {
-                  return (
-                    <>
-                      <Des>|</Des>
-                      <Des>{ele}</Des>
-                      <Des>|</Des>
-                    </>
-                  );
-                })
-              : null}
-
-            <Des>좋아요</Des>
-            <HeartBox>
-              {heartState ? (
-                <Heart src={heartFill} onClick={heartHandler} />
-              ) : (
-                <Heart src={heart} onClick={heartHandler} />
-              )}
-            </HeartBox>
-            <Des>{heartAllCount}</Des>
-          </TitleBox>
-          <MainBox>
-            <ShortsBox>
-              <ShortsTitle>
-                <UnionImg src={union} />
-                <PolyGonImg src={polygon} />
-                <ShortsText>Shorts</ShortsText>
-              </ShortsTitle>
-            </ShortsBox>
-            <CommentBox>
-              <CommentTitle>댓글 목록</CommentTitle>
-              <CommentList>
-                {courseData !== null
-                  ? courseData.comments.map(ele => {
-                      return (
-                        <>
-                          <Comment key={ele.commentId}>
-                            {ele.content}
-                            <Triangle />
-                          </Comment>
-                          <CommentDate>
-                            {ele.createdAt.slice(2, 10)}
-                            &ensp;
-                            {ele.createdAt.slice(-8, -3)}
-                          </CommentDate>
-                        </>
-                      );
-                    })
-                  : null}
-              </CommentList>
-              <CommentInputSection>
-                <CommentInput
-                  placeholder="댓글 달기"
-                  onChange={commentHandler}
-                />
-                <CommentButton onClick={postHandler}>게시</CommentButton>
-              </CommentInputSection>
-            </CommentBox>
-          </MainBox>
-
-          <MapBox>
-            <LoadScriptNext googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM">
-              <GoogleMap
-                style={{
-                  width: '600px',
-                  height: '600px',
-                  position: 'relative',
-                }}
-                zoom={13}
-                center={center}
-                mapContainerClassName="map-container"
-              >
-                {marker === 'travelSpot' &&
-                  travelSpot.map(ele => {
-                    return (
-                      <MarkerF
-                        key={ele.id}
-                        position={ele.position}
-                        label={String(ele.id)}
-                      />
-                    );
-                  })}
-
-                {marker === 'travelSpot' &&
-                  pathCoordinates.map(ele => {
-                    return (
-                      <Polyline
-                        key={ele.id}
-                        path={ele.route}
-                        options={{
-                          strokeColor: 'black',
-                          strokeOpacity: 1,
-                          strokeWeight: 2,
-                        }}
-                      />
-                    );
-                  })}
-
-                {marker === 'eatSpot' &&
-                  eatSpot.map(ele => {
-                    return <MarkerF key={ele.id} position={ele.position} />;
-                  })}
-
-                {marker === 'sleepSpot' &&
-                  sleepSpot.map(ele => {
-                    const position = { lat: ele.lat, lng: ele.lng };
-                    return <MarkerF key={ele.id} position={position} />;
-                  })}
-                <Category>
-                  <Spot focus={travelFocus} onClick={spot1Handler}>
-                    주요 명소
-                  </Spot>
-                  <Spot focus={eatFocus} onClick={spot2Handler}>
-                    맛집
-                  </Spot>
-                  <Spot focus={sleepFocus} onClick={spot3Handler}>
-                    숙박
-                  </Spot>
-                </Category>
-              </GoogleMap>
-            </LoadScriptNext>
-            <LocationBox>
-              {marker === 'travelSpot' &&
-                travelSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-
-              {marker === 'eatSpot' &&
-                eatSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-
-              {marker === 'sleepSpot' &&
-                sleepSpot.map(ele => {
-                  return (
-                    <Location
-                      key={ele.id}
-                      onClick={() => locationHandler(ele.id)}
-                    >
-                      <LocationImg src={sampleImg} alt="기본" />
-                      <LocationText>{ele.name}</LocationText>
-                    </Location>
-                  );
-                })}
-            </LocationBox>
-          </MapBox>
-          <RouteContainer>
-            <nav>
-              <div
-                className="nav nav-pills tabCustom"
-                id="nav-tab"
-                role="tablist"
-              >
-                <button
-                  className="nav-link active"
-                  id="nav-home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-home"
-                  aria-selected="true"
-                >
-                  코스소개
-                </button>
-                <button
-                  className="nav-link"
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  일정
-                </button>
-              </div>
-              <div
-                className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
-                id="nav-tabContent"
-              >
-                <RouteBox
-                  className="tab-pane active"
-                  id="nav-home"
-                  role="tabpanel"
-                  aria-labelledby="nav-home-tab"
-                  tabindex="0"
-                >
-                  {data.map(ele => {
-                    return (
-                      <RouteCard key={ele.id}>
-                        <RouteImg src={sampleImg} />
-                        <RouteText>
-                          <RouteTitle>{ele.title}</RouteTitle>
-                          <RouteDes>{ele.text}</RouteDes>
-                        </RouteText>
-                      </RouteCard>
-                    );
-                  })}
-                </RouteBox>
-                <div
-                  className="tab-pane"
-                  id="nav-profile"
-                  role="tabpanel"
-                  aria-labelledby="nav-profile-tab"
-                  tabIndex="0"
-                >
-                  <InfoContainer>
-                    <InfoBox>
-                      <CourseBox1>
-                        <CourseTitle>
-                          <img
-                            style={{ width: '20px', marginRight: '5px' }}
-                            src={route}
-                            alt="코스"
-                          />
-                          도보코스
-                        </CourseTitle>
-                        <CourseTitle>
-                          <img
-                            style={{ width: '20px', marginRight: '5px' }}
-                            src={time}
-                            alt="시간"
-                          />
-                          소요시간
-                        </CourseTitle>
-                      </CourseBox1>
-                      <CourseBox2>
-                        <Course>
-                          임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 -
-                          도라전망대 - 통일촌
-                        </Course>
-                        <Course>3시간</Course>
-                      </CourseBox2>
-                    </InfoBox>
-                  </InfoContainer>
-                </div>
-              </div>
-            </nav>
-            <div>
-              <TagWrap>
-                <TagTitle>태그</TagTitle>
-                <TagBox>
-                  {courseData !== null
-                    ? courseData.tag.map(ele => {
-                        return <Tag>{ele}</Tag>;
-                      })
-                    : null}
-                </TagBox>
-              </TagWrap>
-              <GuideWrap>
-                <GuideTitle>가이드</GuideTitle>
-                <GuideBox>
-                  <Guideline />
-                  <GuideImg src={jinwoo} />
-                  <GithubImg src={github} />
-                  <GuideName>최진우</GuideName>
-                  <GuideText>
-                    여행은 자고로 즐거워야한다!
-                    <br />
-                    오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
-                  </GuideText>
-                </GuideBox>
-              </GuideWrap>
-            </div>
-          </RouteContainer>
-        </div>
-      </Container>
+      <TitleBox courseData={courseData} />
+      <div className="container">
+        <HeartWrap>
+          <HeartDes>좋아요</HeartDes>
+          <HeartBox>
+            {heartData !== null && heartData.courseLikeStatus === 1 ? (
+              <Heart src={heartFill} onClick={heartHandler} />
+            ) : (
+              <Heart src={heart} onClick={heartHandler} />
+            )}
+          </HeartBox>
+          <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
+            {courseData !== null && courseData.likeCount}
+          </HeartDes>
+        </HeartWrap>
+        <MainBox
+          courseData={courseData}
+          id={id}
+          sessionUserId={sessionUserId}
+          commentRef={commentRef}
+        />
+        <MapBox />
+        <RouteContainer data={data} courseData={courseData} />
+      </div>
     </Layout>
   );
 }

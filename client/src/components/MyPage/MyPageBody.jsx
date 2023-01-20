@@ -5,6 +5,8 @@ import LoadingSpinner from '../LoadingSpinner';
 import MyPageCard from '../Card/MyPageCard';
 import MyPageUsercard from './MyPageUsercard';
 
+const userId = sessionStorage.getItem('user_Id');
+
 function MyPageBody() {
   const [myCommentCourse, setMyCommentCourse] = useState([]);
   const [myLikeCourse, setMyLikeCourse] = useState([]);
@@ -13,12 +15,21 @@ function MyPageBody() {
   const { pathname } = useLocation();
 
   const getMyCourse = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/user/1`).then(res => {
-      setMyLikeCourse(res.data.courseLikes);
-      setMyCommentCourse(res.data.comments);
-      setUserData(res.data);
-      setLoading(false);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+        headers: {
+          authorization: sessionStorage.getItem('access_Token'),
+        },
+      })
+      .then(res => {
+        setMyLikeCourse(res.data.courseLikes);
+        setMyCommentCourse(res.data.comments);
+        setUserData(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {

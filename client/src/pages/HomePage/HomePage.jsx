@@ -1,5 +1,7 @@
 import { SectionsContainer, Section } from 'react-fullpage';
 import styled from 'styled-components';
+import Footer from '../../components/Common/Footer';
+import Header from '../../components/Common/Header';
 import RegionSection from '../../components/RegionSection/RegionSection';
 
 const Container = styled.div`
@@ -25,19 +27,23 @@ const options = {
 
 function HomePage() {
   return (
-    <Container>
-      {/* eslint-disable-next-line */}
-      <SectionsContainer {...options}>
-        <Section>
-          {' '}
-          <RegionSection region="seoul" />
-        </Section>
-        <Section>
-          {' '}
-          <RegionSection region="Busan" />
-        </Section>
-      </SectionsContainer>
-    </Container>
+    <>
+      <Container>
+        <Header />
+        {/* eslint-disable-next-line */}
+        <SectionsContainer {...options}>
+          <Section>
+            {' '}
+            <RegionSection region="seoul" />
+          </Section>
+          <Section>
+            {' '}
+            <RegionSection region="Busan" />
+          </Section>
+        </SectionsContainer>
+      </Container>
+      <Footer />
+    </>
   );
 }
 

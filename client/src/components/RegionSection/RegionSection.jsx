@@ -73,7 +73,6 @@ const bgLink = [
 function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
-  const [DataChange, setDataChange] = useState(false); // eslint-disable-line no-unused-vars
   const locationData = useAxios(`${process.env.REACT_APP_API_URL}/course`);
   let filteredData = null;
 
@@ -110,7 +109,7 @@ function RegionSection({ region }) {
             <Title>{region}</Title>
             <CardBox ref={ref}>
               {filteredData === null ? (
-                <div style={{ fontSize: '35px' }} />
+                <div />
               ) : (
                 filteredData.map(ele => {
                   return <CourseCard key={ele.courseId} ele={ele} />;
