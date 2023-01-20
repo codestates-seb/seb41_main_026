@@ -1,21 +1,23 @@
-import React from 'react';
-// import axios from 'axios';
-// import MyPageCard from '../Card/MyPageCard';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import MyPageCard from '../Card/MyPageCard';
 
 function SearchBody() {
-  // const [search, setSearch] = useState('');
-  // const [data, setData] = useState([]);
-
-  // const getSearch = e => {
-  //   e.preventDefault();
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}/course/search?keyword=${search}`)
-  //     .then(res => {
-  //       console.log(res.data.course);
-  //       setData(res.data.course);
-  //     });
-  // };
-  // const searchText = sessionStorage.getItem('searchText');
+  const [search, setSearch] = useState('');
+  const searchText = sessionStorage.getItem('searchText');
+  const getSearch = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/course/search?keyword=${searchText}`,
+      )
+      .then(res => {
+        setSearch(res.data.course);
+      });
+  };
+  useEffect(() => {
+    getSearch();
+  }, []);
+  console.log(search);
   return (
     <div>
       {/* <input
@@ -31,15 +33,19 @@ function SearchBody() {
       <main className="col-sm-12 px-0 flex-grow-1 mb-5 py-5">
         <div className="container py-3">
           <div className="row row-cols-1 row-cols-md-3 g-4">
-            {/* {data.map(ele => {
-              return (
-                <MyPageCard
-                  title={ele.courseId}
-                  location={ele.location}
-                  id={ele.courseId}
-                />
-              );
-            })} */}
+            {search.length !== 0 ? (
+              search.map(ele => {
+                return (
+                  <MyPageCard
+                    title={ele.courseId}
+                    location={ele.location}
+                    id={ele.courseId}
+                  />
+                );
+              })
+            ) : (
+              <div>검색어를 입력해주세요</div>
+            )}
           </div>
         </div>
       </main>
