@@ -2,7 +2,7 @@
 /* ************************* */
 import { useEffect, useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -10,25 +10,23 @@ import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
-  const search = useRef();
-  // const [searchText, setSearchText] = useState('');
-  // const navigator = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
+  const navigate = useNavigate();
 
   function handleLogOut() {
     removeCookie('accessToken');
     removeCookie('refreshToken');
     sessionStorage.removeItem('access_Token');
     sessionStorage.removeItem('user_Id');
+    navigate('/');
+    window.alert('로그아웃 되었습니다.');
     window.location.reload();
   }
-
-  /* check and change state for Login */
   const checkLoginState = () => {
     if (cookie.accessToken) {
       setIsLogin(true);
