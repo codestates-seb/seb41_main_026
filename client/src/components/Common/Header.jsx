@@ -1,8 +1,9 @@
 /* developed by Jinwoo, Choi */
 /* ************************* */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate, Link } from 'react-router-dom';
+
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
@@ -10,24 +11,16 @@ import ModalSignUp from '../Modal/ModalSignUp';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const search = useRef();
+  const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
-  // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
-  const navigate = useNavigate();
 
-  function handleLogOut() {
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    sessionStorage.removeItem('access_Token');
-    sessionStorage.removeItem('user_Id');
-    navigate('/');
-    window.alert('로그아웃 되었습니다.');
-    window.location.reload();
-  }
   const checkLoginState = () => {
     if (cookie.accessToken) {
       setIsLogin(true);
@@ -40,6 +33,27 @@ function Header() {
     checkLoginState();
   });
 
+  /* use Session Storage for searching keyword */
+  function handleSearch() {
+    localStorage.setItem('searchText', searchText);
+    navigate('/search');
+  }
+
+  function handleLogOut() {
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    sessionStorage.clear();
+    navigate('/');
+    window.alert('로그아웃 되었습니다.');
+    window.location.reload();
+  }
+
+  /* when isLogin:true, change profile img */
+  // getUserProfile;
+
+  const onClickRemove = () => {
+    localStorage.removeItem('searchText');
+  };
   const randomImg = () => {
     setimg('https://source.boringavatars.com/beam/40');
   };
@@ -58,9 +72,9 @@ function Header() {
       }}
     >
       <div className="container">
-        <a className="navbar-brand me-3" href="/">
+        <Link className="navbar-brand me-3" to="/" onClick={onClickRemove}>
           <img src={logo} alt="logo" height="40px" />
-        </a>
+        </Link>
         <button
           className="navbar-toggler border-secondary border-2 btn btn-info"
           type="button"
@@ -102,15 +116,19 @@ function Header() {
             <div className="input-group">
               <input
                 className="form-control form-control-dark text-bg-dark"
-                type="search"
+                type="text"
+                onChange={e => {
+                  setSearchText(e.target.value);
+                }}
+                // onSubmit={handleSearch}
                 placeholder="검색하기"
                 aria-label="Search"
-                // onChange={e => setSearch(e.target.value)}
+                ref={search}
               />
-              <Link to="/search">
+              <navigate to="/search">
                 <button
-                  className="btn btn-outline-secondary"
-                  // onClick={getSearch}
+                  className="btn btn-outline-secondary rounded-0 rounded-end"
+                  onClick={handleSearch}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +141,7 @@ function Header() {
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                   </svg>
                 </button>
-              </Link>
+              </navigate>
             </div>
           </form>
 
