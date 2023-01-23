@@ -113,7 +113,9 @@ function MyPageBody() {
                           className="text-decoration-none"
                         >
                           <li className="text-info">
-                            {data.content.slice(0, 30)}...
+                            {data.content.length < 30
+                              ? `${data.content.slice(0, 30)}`
+                              : `${data.content.slice(0, 30)}...`}
                           </li>
                         </Link>
                       </div>
