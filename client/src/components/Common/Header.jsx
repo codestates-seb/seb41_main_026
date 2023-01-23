@@ -20,7 +20,7 @@ function Header() {
     'accessToken',
     'refreshToken',
   ]);
-
+  console.log(setCookie);
   const checkLoginState = () => {
     if (cookie.accessToken) {
       setIsLogin(true);

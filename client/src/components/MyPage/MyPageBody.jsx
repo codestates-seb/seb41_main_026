@@ -32,6 +32,11 @@ function MyPageBody() {
       });
   };
 
+  const recentComments = myCommentCourse.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+  );
+  const myRecentComment = recentComments.slice(0, 3);
+
   useEffect(() => {
     getMyCourse();
   }, []);
@@ -84,9 +89,7 @@ function MyPageBody() {
 
             <div className="mt-5">
               <div className="d-flex p-2">
-                <h1 className="fw-bold mt-3 flex-grow-1 fs-3">
-                  내 최근 댓글 코스
-                </h1>
+                <h1 className="fw-bold mt-3 flex-grow-1 fs-3">내 최근 댓글</h1>
                 <Link to="/mypage/comment">
                   {myCommentCourse.length === 0 ? (
                     <div />
@@ -95,20 +98,25 @@ function MyPageBody() {
                   )}
                 </Link>
               </div>
-              <div className="row row-cols-1 row-cols-md-3 g-4">
+              <div className="row row-cols-1 row-cols-md-1 g-4 p-3 mb-5">
                 {myCommentCourse.length === 0 ? (
-                  <div className="p-4 text-light-emphasis flex-grow-1 ">
-                    아직 댓글을 작성한 코스가 없습니다.
+                  <div className="p-4 text-light-emphasis flex-grow-1">
+                    아직 작성한 댓글이 없습니다.
                   </div>
                 ) : (
-                  myCommentCourse.map(data => {
+                  myRecentComment.map(data => {
                     return (
-                      <MyPageCard
-                        title={data.course.courseName}
-                        key={data.commentId}
-                        location={data.course.location}
-                        id={data.course.courseId}
-                      />
+                      <div>
+                        <Link
+                          key={data.commentId}
+                          to={`../course/${data.course.courseId}`}
+                          className="text-decoration-none"
+                        >
+                          <li className="text-info">
+                            {data.content.slice(0, 30)}...
+                          </li>
+                        </Link>
+                      </div>
                     );
                   })
                 )}
@@ -146,23 +154,48 @@ function MyPageBody() {
             <div>
               <div className="d-flex p-2">
                 <h1 className="fw-bold mt-3 flex-grow-1 fs-3">
-                  내가 작성한 댓글 코스
+                  내가 작성한 댓글 목록
                 </h1>
               </div>
-              <div className="row row-cols-1 row-cols-md-3 g-4">
+              <div className="row row-cols-1 row-cols-md-1 p-3 g-4">
                 {myCommentCourse.length === 0 ? (
                   <div className="p-4 text-light-emphasis flex-grow-1 ">
-                    아직 댓글을 작성한 코스가 없습니다.
+                    아직 작성한 댓글이 없습니다.
                   </div>
                 ) : (
                   myCommentCourse.map(data => {
+                    let day = Number(data.createdAt.slice(8, 10)) + 1;
+                    if (day > 31) {
+                      day = 1;
+                    }
+                    let hour = Number(data.createdAt.slice(-8, -6)) - 6;
+
+                    if (hour > 23) {
+                      hour = Number(data.createdAt.slice(-8, -6)) - 6;
+                    } else if (hour > 18) {
+                      hour = Number(data.createdAt.slice(-8, -6)) + 18;
+                    }
                     return (
-                      <MyPageCard
-                        title={data.course.courseName}
-                        key={data.commentId}
-                        location={data.course.location}
-                        id={data.course.courseId}
-                      />
+                      <div className="mb-0">
+                        <Link
+                          key={data.commentId}
+                          to={`../course/${data.course.courseId}`}
+                          className="text-decoration-none"
+                        >
+                          <li className="text-info mb-2">
+                            {data.content.length < 30
+                              ? `${data.content.slice(0, 30)}`
+                              : `${data.content.slice(0, 30)}...`}
+                          </li>
+                        </Link>
+                        <div className="text-secondary ms-3">
+                          {data.createdAt.slice(2, 8) + String(day)}
+                          &ensp;
+                          {String(hour) + data.createdAt.slice(-6, -3)}
+                        </div>
+
+                        <hr className="text-light" />
+                      </div>
                     );
                   })
                 )}
