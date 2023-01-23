@@ -54,7 +54,7 @@ public class CommentService {
 
     /* Comment 수정 */
     @Transactional
-    public Comment patch (Long commentId, CommentPatchDto commentPatchDto, Long userId) {
+    public Comment patch(Long commentId, CommentPatchDto commentPatchDto, Long userId) {
 
         Comment comment = commentRepository.findByIdWithUser(commentId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.COMMENT_NOT_FOUND));

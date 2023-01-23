@@ -3,6 +3,7 @@ package back.domain.comment.entity;
 
 import back.domain.course.entity.Course;
 import back.domain.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -25,6 +26,9 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 public class Comment {
+    private Long userId;
+
+    private Long courseId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +49,7 @@ public class Comment {
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
