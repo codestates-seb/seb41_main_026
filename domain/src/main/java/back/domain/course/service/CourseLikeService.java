@@ -41,14 +41,14 @@ public class CourseLikeService {
 
         int index= valueList.indexOf(value);
         index=index+1;
-        Long courseLikeid = Long.valueOf(index);
+        Long courseLikeId = Long.valueOf(index);
 
         if(userId == courseId){
-            courseLike.setCourseLikeId(courseLikeid);
-            if (!courseLikeRepository.existsById(courseLikeid)) {
+            courseLike.setCourseLikeId(courseLikeId);
+            if (!courseLikeRepository.existsById(courseLikeId)) {
                 CourseLikeAdd(courseLike, courseId, userId);
             } else {
-                CourseLike findCourseLike = verifiedCourseLike(courseLikeid);
+                CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
                 if (findCourseLike.getCourseLikeStatus() == 0) {
 
                     CourseLikeCondition(findCourseLike, courseId, userId, findCourseLike.getCourseLikeStatus() + 1);
@@ -58,11 +58,11 @@ public class CourseLikeService {
                 }
             }
         } else{
-            courseLike.setCourseLikeId(courseLikeid);
-            if (!courseLikeRepository.existsById(courseLikeid)) {
+            courseLike.setCourseLikeId(courseLikeId);
+            if (!courseLikeRepository.existsById(courseLikeId)) {
                 CourseLikeAdd(courseLike, courseId, userId);
             } else {
-                CourseLike findCourseLike = verifiedCourseLike(courseLikeid);
+                CourseLike findCourseLike = verifiedCourseLike(courseLikeId);
                 if (findCourseLike.getCourseLikeStatus() == 0) {
 
                     CourseLikeCondition(findCourseLike, courseId, userId, findCourseLike.getCourseLikeStatus() + 1);
@@ -73,7 +73,7 @@ public class CourseLikeService {
             }
         }
 
-        return verifiedCourseLike(courseLikeid);
+        return verifiedCourseLike(courseLikeId);
     }
 
     private void CourseLikeAdd(CourseLike courseLike, Long courseId, Long userId) {
