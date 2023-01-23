@@ -15,7 +15,7 @@ function Header() {
   const search = useRef();
   const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
-
+  const userId = sessionStorage.getItem('user_Id');
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
@@ -55,7 +55,7 @@ function Header() {
     localStorage.removeItem('searchText');
   };
   const randomImg = () => {
-    setimg('https://source.boringavatars.com/beam/40');
+    setimg(`https://source.boringavatars.com/beam/40/${userId}`);
   };
 
   useEffect(() => {
