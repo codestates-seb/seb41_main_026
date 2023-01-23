@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
@@ -21,15 +22,12 @@ public class CourseData {
     private Long courseDataId;
 
     @Column(nullable = false)
-    @Setter
     private String title;
 
     @Column(nullable = false)
-    @Setter
     private String text;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @Setter
     @JsonIgnore
     private Course course;
 

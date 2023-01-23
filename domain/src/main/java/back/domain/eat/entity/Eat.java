@@ -30,7 +30,6 @@ public class Eat {
     private String lng; // 위도
 
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
-    @Setter
     @JsonIgnore
     private Course course;
 

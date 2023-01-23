@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
@@ -20,19 +21,15 @@ public class Sleep {
     private Long sleepId;
 
     @Column(nullable = false)
-    @Setter
     private String name;
 
     @Column(nullable = false)
-    @Setter
     private String lat;
 
     @Column(nullable = false)
-    @Setter
     private String lng;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @Setter
     @JsonIgnore
     private Course course;
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @Table(name = "COURSES")
 @EntityListeners(AuditingEntityListener.class)
@@ -29,51 +30,46 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
 
-    @Setter
+
     @Column(nullable = false, unique = true)
     private String courseName;
 
-    @Setter
+
     @Column(nullable = false)
 //    @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> tag = new ArrayList<>();
 
-    @Setter
+
     @Column(nullable = false)
     private int viewCount; // 조회수
 
-    @Setter
+
     @Column(nullable = false)
     private int likeCount; // 좋아요 수
 
-    @Setter
+
     @Column(nullable = false)
     private String guideName;
 
-    @Setter
     @Column(nullable = false)
     private String guideText;
 
-    @Setter
     @Column(nullable = false)
     private String location;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    @Setter
     @JsonBackReference
     private List<CourseLike> courseLikes = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    @Setter
     @JsonBackReference
     private List<Comment> comments = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    @Setter
 //    @JsonBackReference
     private List<TravelSpot> travelSpots = new ArrayList<>();
 
