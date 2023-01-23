@@ -22,7 +22,7 @@ const HeartWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
 `;
 
 const HeartDes = styled.div`
