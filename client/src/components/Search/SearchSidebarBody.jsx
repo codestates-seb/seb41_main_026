@@ -26,6 +26,7 @@ function SearchSidebarBody({ locationData }) {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="form-check">
                   <input
+                    key="el.id"
                     className="form-check-input"
                     type="checkbox"
                     value={el.name}

@@ -13,7 +13,9 @@ function MyPageCard({ title, location, id }) {
             <p>{location}</p>
           </div>
           <Link style={{ textDecoration: 'none' }} to={`../course/${id}`}>
-            <button className="btn btn-secondary btn-sm mt-3">view tour</button>
+            <button className="btn btn-secondary btn-sm mt-3">
+              코스 바로가기
+            </button>
           </Link>
         </div>
       </div>
