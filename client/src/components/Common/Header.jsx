@@ -2,7 +2,6 @@
 /* ************************* */
 import { useEffect, useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
-
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
@@ -16,6 +15,7 @@ function Header() {
   const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
+  // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
@@ -42,6 +42,7 @@ function Header() {
   function handleLogOut() {
     removeCookie('accessToken');
     removeCookie('refreshToken');
+    removeCookie('userId');
     sessionStorage.clear();
     navigate('/');
     window.alert('로그아웃 되었습니다.');

@@ -21,6 +21,7 @@
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "react-social-media-embed": "^2.2.15",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
