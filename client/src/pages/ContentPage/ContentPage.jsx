@@ -12,17 +12,17 @@ import Layout from '../../components/Common/Layout';
 
 const HeartWrap = styled.div`
   width: 70px;
-  height: 140px;
-  border-radius: 30px;
+  height: 70px;
   background-color: white;
   position: fixed;
   left: 25px;
-  top: 450px;
+  top: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  border-radius: 50%;
 `;
 
 const HeartDes = styled.div`
@@ -127,7 +127,6 @@ function ContentPage() {
       <div className="container">
         {sessionUserId && (
           <HeartWrap>
-            <HeartDes>좋아요</HeartDes>
             <HeartBox>
               {heartData !== null && heartData.courseLikeStatus === 1 ? (
                 <Heart src={heartFill} onClick={heartHandler} />
@@ -135,7 +134,7 @@ function ContentPage() {
                 <Heart src={heart} onClick={heartHandler} />
               )}
             </HeartBox>
-            <HeartDes style={{ marginTop: '26px', fontSize: '18px' }}>
+            <HeartDes style={{ marginTop: '14px', fontSize: '13px' }}>
               {courseData !== null && courseData.likeCount}
             </HeartDes>
           </HeartWrap>

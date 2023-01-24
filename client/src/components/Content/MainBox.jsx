@@ -162,10 +162,6 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
         <CommentList ref={commentRef}>
           {courseData !== null
             ? courseData.comments.map(ele => {
-                // let day = Number(ele.createdAt.slice(8, 10)) + 1;
-                // if (day > 31) {
-                //   day = 1;
-                // }
                 let hour = Number(ele.createdAt.slice(-8, -6)) + 18;
 
                 if (hour > 24) {
