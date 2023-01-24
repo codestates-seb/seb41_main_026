@@ -88,7 +88,6 @@ function ModalLogin() {
       .then(res => {
         // const expires = dayjs().add('40', 'm').toDate();
         const { authorization, refresh, userid } = res.headers;
-        setCookie('accessToken', authorization);
         setCookie('refreshToken', refresh);
         setCookie('userId', userid);
         sessionStorage.setItem('access_Token', authorization);
@@ -101,8 +100,7 @@ function ModalLogin() {
         window.alert('로그인 성공!');
       })
       .catch(err => {
-        console.log(err);
-        window.alert('로그인 실패!');
+        window.alert(err, '로그인 실패!');
       });
   };
 

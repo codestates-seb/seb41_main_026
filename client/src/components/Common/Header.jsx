@@ -22,7 +22,7 @@ function Header() {
   ]);
 
   const checkLoginState = () => {
-    if (cookie.accessToken) {
+    if (sessionStorage.getItem('access_Token')) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -40,7 +40,7 @@ function Header() {
   }
 
   function handleLogOut() {
-    removeCookie('accessToken');
+    // removeCookie('accessToken');
     removeCookie('refreshToken');
     removeCookie('userId');
     sessionStorage.clear();

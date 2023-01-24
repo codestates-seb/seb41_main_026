@@ -111,7 +111,6 @@ function ModalSignUp() {
         .then(res => {
           // const expires = dayjs().add('40', 'm').toDate();
           const { authorization, refresh, userid } = res.headers;
-          setCookie('accessToken', authorization);
           setCookie('refreshToken', refresh);
           setCookie('userId', userid);
           sessionStorage.setItem('access_Token', authorization);
