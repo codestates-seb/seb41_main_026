@@ -85,12 +85,12 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li className="nav-item">
-              <a className="nav-link px-2" href="/">
+              <a className="nav-link px-2" href="/shorts">
                 쇼츠
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link px-2 " href="/destination">
+              <a className="nav-link px-2 " href="/">
                 지역
               </a>
             </li>
