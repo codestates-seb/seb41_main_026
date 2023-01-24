@@ -2,8 +2,10 @@
 /* ************************* */
 import { useEffect, useState, useRef } from 'react';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
+import { getAccessToken } from '../../redux/userSlice';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
 // import profileImg from '../../img/jinwoo.png';
@@ -21,8 +23,10 @@ function Header() {
     'refreshToken',
   ]);
 
+  const accessToken = useSelector(getAccessToken);
+
   const checkLoginState = () => {
-    if (sessionStorage.getItem('access_Token')) {
+    if (accessToken) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -40,7 +44,6 @@ function Header() {
   }
 
   function handleLogOut() {
-    // removeCookie('accessToken');
     removeCookie('refreshToken');
     removeCookie('userId');
     sessionStorage.clear();
