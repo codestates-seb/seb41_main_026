@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 // import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { setUserInfo, getAccessToken, getUserId } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
@@ -40,7 +40,7 @@ function ModalLogin() {
     'accessToken',
     'refreshToken',
   ]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -87,25 +87,20 @@ function ModalLogin() {
       )
       .then(res => {
         // const expires = dayjs().add('40', 'm').toDate();
-        const { authorization, refresh } = res.headers;
-        const userId = res.headers.get('userId');
-        setCookie('accessToken', authorization);
+        const { authorization, refresh, userid } = res.headers;
         setCookie('refreshToken', refresh);
-        sessionStorage.setItem(
-          'access_Token',
-          res.headers.get('authorization'),
-        );
-        sessionStorage.setItem('user_Id', userId);
-        navigate('/');
-        window.location.reload();
+        setCookie('userId', userid);
+        sessionStorage.setItem('access_Token', authorization);
+        sessionStorage.setItem('user_Id', userid);
+        // navigate('/');
+        // window.location.reload();
 
-        dispatch(setUserInfo({ userId, authorization })); // userSlice에 유저 정보 저장
+        dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
         console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
         window.alert('로그인 성공!');
       })
       .catch(err => {
-        console.log(err);
-        window.alert('로그인 실패!');
+        window.alert(err, '로그인 실패!');
       });
   };
 
@@ -197,7 +192,7 @@ function ModalLogin() {
                 >
                   취소
                 </button>
-                <Buttons type="button" className="btn" onClick={handleLogIn}>
+                <Buttons type="submit" className="btn" onClick={handleLogIn}>
                   로그인
                 </Buttons>
               </div>

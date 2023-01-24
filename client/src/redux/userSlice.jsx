@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const loginUserId = sessionStorage.getItem('user_Id');
-const loginAccessToken = sessionStorage.getItem('access_Token');
-
 const initialState = {
-  userId: loginUserId,
-  accessToken: loginAccessToken,
+  userId: '',
+  accessToken: '',
 };
 const userSlice = createSlice({
   name: 'user',
@@ -13,9 +10,8 @@ const userSlice = createSlice({
   reducers: {
     setUserInfo: (state, action) => {
       // 유저 정보를 저장하는 reducer (ex. 로그인)
-      console.log('이전 값은 -> ', state.userId, state.accessToken);
-      state.userId = action.payload.userId;
-      state.accessToken = action.payload.accessToken;
+      state.userId = action.payload.userid;
+      state.accessToken = action.payload.authorization;
       console.log(
         '저장되었습니다. 저장된 값은 -> ',
         state.userId,
@@ -27,26 +23,10 @@ const userSlice = createSlice({
       state.userId = -1;
       state.accessToken = '';
     },
-    // extractMailHome: state => {
-    //   // @ 뒷부분을 추출함
-    //   // donguk@google.com -> 'google' 만 추출하는 함수
-
-    //   return 'google';
-    // },
-    // reformingEnglishName: state => {
-    //   return ;
-    // },
-    // user: (state, action) => {
-    //   state.userId = action.payload.userId;
-    //   state.accessToken = action.payload.accessToken;
-    // },
-    // userAccessToken: (state, action) => {
-    //   state.accessToken = action.payload.accessToken;
-    // },
   },
 });
 
-export const { setUserInfo, resetUserInfo, user } = userSlice.actions;
+export const { setUserInfo, resetUserInfo } = userSlice.actions;
 
 export default userSlice.reducer;
 

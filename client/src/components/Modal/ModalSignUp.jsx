@@ -74,12 +74,11 @@ function ModalSignUp() {
       handlePassword();
       return false;
     }
-
+    // 회원가입
     // signUpAPI(name, email, password).then(res => {
     //   if (res !== '') {
     //     window.alert('회원가입 성공!');
     //     setsignUpInfo('');
-    //     setMsg(true);
     //     // naviagte('/');
     //   } else {
     //     alert('회원가입 실패');
@@ -111,22 +110,15 @@ function ModalSignUp() {
         // eslint-disable-next-line no-shadow
         .then(res => {
           // const expires = dayjs().add('40', 'm').toDate();
-          const userId = res.headers.get('userId');
-          const { authorization, refresh } = res.headers;
-          setCookie('accessToken', authorization);
+          const { authorization, refresh, userid } = res.headers;
           setCookie('refreshToken', refresh);
-          sessionStorage.setItem(
-            'access_Token',
-            res.headers.get('authorization'),
-          );
-          sessionStorage.setItem('user_Id', userId);
-          dispatch(setUserInfo({ userId, authorization })); // userSlice에 유저 정보 저장
+          setCookie('userId', userid);
+          sessionStorage.setItem('access_Token', authorization);
+          sessionStorage.setItem('user_Id', userid);
+          dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
           console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
           naviagte('/');
           window.alert('회원가입 성공!');
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 2000);
         })
         .catch(err => console.log(err, '회원가입 실패!'));
     });

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+// import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 import { regName, regPassword } from '../../util/regStore';
 import Layout from '../Common/Layout';
 import NotFound from './NotFound';
+// import { getUserId } from '../../redux/userSlice';
 
 const userId = sessionStorage.getItem('user_Id');
 
@@ -12,6 +14,8 @@ function MyPageInfo() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userDataModified = { name, password };
+
+  // const userId = useSelector(getUserId);
 
   useEffect(() => {
     axios
