@@ -300,7 +300,7 @@ function RouteContainer({ data, courseData }) {
           </div>
         </div>
       </nav>
-      <aside className="col-sm-4 ps-5 py-0 sticky-top">
+      <aside style={{ zIndex: '2' }} className="col-sm-4 ps-5 py-0 sticky-top">
         <TagWrap>
           <TagTitle>태그</TagTitle>
           <TagBox>

@@ -162,13 +162,9 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
         <CommentList ref={commentRef}>
           {courseData !== null
             ? courseData.comments.map(ele => {
-                let day = Number(ele.createdAt.slice(8, 10)) + 1;
-                if (day > 31) {
-                  day = 1;
-                }
-                let hour = Number(ele.createdAt.slice(-8, -6)) - 6;
+                let hour = Number(ele.createdAt.slice(-8, -6)) + 18;
 
-                if (hour > 23) {
+                if (hour > 24) {
                   hour = Number(ele.createdAt.slice(-8, -6)) - 6;
                 } else if (hour > 18) {
                   hour = Number(ele.createdAt.slice(-8, -6)) + 18;
@@ -181,7 +177,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
                       <Triangle />
                     </Comment>
                     <CommentDate>
-                      {ele.createdAt.slice(2, 8) + String(day)}
+                      {ele.createdAt.slice(2, 10)}
                       &ensp;
                       {String(hour) + ele.createdAt.slice(-6, -3)}
                     </CommentDate>

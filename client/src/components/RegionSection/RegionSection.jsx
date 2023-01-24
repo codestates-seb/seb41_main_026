@@ -24,10 +24,11 @@ const BgImgBox = styled.div`
 const Title = styled.div`
   width: 1200px;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   font-weight: 400;
   font-size: 40px;
   line-height: 100%;
+  color: #c8c8c8;
 `;
 
 const CardBox = styled.div`
@@ -38,14 +39,22 @@ const CardBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  margin-bottom: 30px;
+  margin-bottom: 90px;
+
+  @media screen and (max-width: 500px) {
+    width: 375px;
+  }
 `;
 
 const ButtonBox = styled.div`
   display: flex;
-  justify-content: flex-end;
   right: 0;
-  margin-top: 40px;
+  margin-bottom: 40px;
+  justify-content: center;
+
+  @media screen and (max-width: 500px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Button = styled.div`
@@ -58,6 +67,7 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 15px;
+  margin-right: 15px;
   background-color: white;
 `;
 
@@ -107,6 +117,14 @@ function RegionSection({ region }) {
         region === el.region ? (
           <BgImgBox key={el.id} bg={el.imgLink}>
             <Title>{region}</Title>
+            <ButtonBox>
+              <Button>
+                <ArrowImg src={leftImg} onClick={leftHandler} />
+              </Button>
+              <Button>
+                <ArrowImg src={rightImg} onClick={rightHandler} />
+              </Button>
+            </ButtonBox>
             <CardBox ref={ref}>
               {filteredData === null ? (
                 <div />
@@ -116,14 +134,6 @@ function RegionSection({ region }) {
                 })
               )}
             </CardBox>
-            <ButtonBox>
-              <Button>
-                <ArrowImg src={leftImg} onClick={leftHandler} />
-              </Button>
-              <Button>
-                <ArrowImg src={rightImg} onClick={rightHandler} />
-              </Button>
-            </ButtonBox>
           </BgImgBox>
         ) : null,
       )}
