@@ -28,6 +28,7 @@ function SearchBody() {
           search.map(ele => {
             return (
               <MyPageCard
+                key={ele.courseId}
                 title={ele.courseId}
                 location={ele.location}
                 id={ele.courseId}
