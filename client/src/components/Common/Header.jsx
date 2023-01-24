@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
-// import profileImg from '../../img/jinwoo.png';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -48,9 +47,6 @@ function Header() {
     window.location.reload();
   }
 
-  /* when isLogin:true, change profile img */
-  // getUserProfile;
-
   const onClickRemove = () => {
     localStorage.removeItem('searchText');
   };
@@ -89,12 +85,12 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li className="nav-item">
-              <a className="nav-link px-2" href="/">
+              <a className="nav-link px-2" href="/shorts">
                 쇼츠
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link px-2 " href="/destination">
+              <a className="nav-link px-2 " href="/">
                 지역
               </a>
             </li>
@@ -125,7 +121,7 @@ function Header() {
                 aria-label="Search"
                 ref={search}
               />
-              <navigate to="/search">
+              <div onSubmit={handleSearch}>
                 <button
                   className="btn btn-outline-secondary rounded-0 rounded-end"
                   onClick={handleSearch}
@@ -141,7 +137,7 @@ function Header() {
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                   </svg>
                 </button>
-              </navigate>
+              </div>
             </div>
           </form>
 
