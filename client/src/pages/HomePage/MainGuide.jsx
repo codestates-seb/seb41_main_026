@@ -15,8 +15,8 @@ const GuideBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
-  @media screen and (max-width: 500px) {
-    width: 350px;
+  @media screen and (max-width: 910px) {
+    width: 355px;
   }
   flex-wrap: wrap;
 `;
@@ -59,7 +59,10 @@ const GuideInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 910px) {
+    width: 600x;
+  }
+  @media screen and (max-width: 650px) {
     width: 450px;
   }
 `;
@@ -104,7 +107,11 @@ const GuideAnimationBox = styled.div`
   position: absolute;
   z-index: -1;
   bottom: 60px;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 910px) {
+    width: 550x;
+    bottom: 30px;
+  }
+  @media screen and (max-width: 650px) {
     width: 400px;
     bottom: 30px;
   }
@@ -119,7 +126,10 @@ const GuideDefalutBox = styled.div`
   position: absolute;
   bottom: 0px;
   z-index: -2;
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 910px) {
+    width: 500x;
+  }
+  @media screen and (max-width: 650px) {
     width: 350px;
   }
 `;
