@@ -118,6 +118,7 @@ function ModalSignUp() {
           dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
           console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
           naviagte('/');
+          window.location.reload();
           window.alert('회원가입 성공!');
         })
         .catch(err => console.log(err, '회원가입 실패!'));

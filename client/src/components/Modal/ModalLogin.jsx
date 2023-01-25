@@ -93,7 +93,7 @@ function ModalLogin() {
         sessionStorage.setItem('access_Token', authorization);
         sessionStorage.setItem('user_Id', userid);
         // navigate('/');
-        // window.location.reload();
+        window.location.reload();
 
         dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
         console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
