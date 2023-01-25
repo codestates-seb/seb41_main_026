@@ -197,6 +197,10 @@ function MapBox({ courseData }) {
 
   const spot1Handler = () => {
     setMarker('travelSpot');
+    setCenter({
+      lat: Number(courseData.travelSpots[0].lat),
+      lng: Number(courseData.travelSpots[0].lng),
+    });
     setPathCoordinates([
       {
         id: 1,
@@ -221,6 +225,10 @@ function MapBox({ courseData }) {
 
   const spot2Handler = () => {
     setMarker('eatSpot');
+    setCenter({
+      lat: Number(courseData.eats[0].lat),
+      lng: Number(courseData.eats[0].lng),
+    });
     setTravelFocus(false);
     setEatFocus(true);
     setSleepFocus(false);
@@ -233,6 +241,10 @@ function MapBox({ courseData }) {
     setEatFocus(false);
     setSleepFocus(true);
     setPathCoordinates(null);
+    setCenter({
+      lat: Number(courseData.sleeps[0].lat),
+      lng: Number(courseData.sleeps[0].lng),
+    });
   };
 
   return (
@@ -385,7 +397,7 @@ function MapBox({ courseData }) {
                   role="presentation"
                   className="card mb-2 border-0 rounded-2"
                   key={ele.id}
-                  onClick={() => locationHandler(ele.id)}
+                  onClick={() => locationHandler(ele.sleepId)}
                   style={{
                     maxWidth: '540px',
                     backgroundColor: '#0c7b93',
