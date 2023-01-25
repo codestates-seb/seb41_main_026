@@ -30,6 +30,10 @@ spring:
             scope:
               - email
               - profile
+          github:
+            clientId: ${GITHUB_CLIENT_ID}
+            clientSecret: ${GITHUB_SECRET}
+
 
   jackson:
     serialization:
