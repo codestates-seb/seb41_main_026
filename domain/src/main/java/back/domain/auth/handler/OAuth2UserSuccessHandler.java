@@ -1,7 +1,5 @@
 package back.domain.auth.handler;
 
-import back.domain.user.dto.UserPostDto;
-import back.domain.user.entity.Role;
 import back.domain.user.entity.User;
 import back.domain.user.repository.UserRepository;
 import back.domain.user.service.UserService;
@@ -12,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
