@@ -5,6 +5,7 @@ import back.domain.comment.entity.Comment;
 import back.domain.coursedata.entity.CourseData;
 import back.domain.eat.entity.Eat;
 import back.domain.sleep.entity.Sleep;
+import back.domain.travelspot.entity.Path;
 import back.domain.travelspot.entity.TravelSpot;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -76,7 +77,6 @@ public class Course {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-//    @JsonBackReference
     private List<TravelSpot> travelSpots = new ArrayList<>();
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
@@ -84,6 +84,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
     private List<Eat> eats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
+    private List<Path> paths = new ArrayList<>();
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
@@ -110,6 +113,9 @@ public class Course {
         eats.add(eat);
     }
 
+    public void addPath(Path path) {
+        paths.add(path);
+    }
     public void addCourseData(CourseData courseData){
         courseDatas.add(courseData);
     }

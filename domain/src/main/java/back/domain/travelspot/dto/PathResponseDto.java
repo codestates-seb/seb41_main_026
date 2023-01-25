@@ -13,5 +13,6 @@ public class PathResponseDto {
 
 
     private Long pathId;
+    private Long courseId;
     private List<String> route;
 }

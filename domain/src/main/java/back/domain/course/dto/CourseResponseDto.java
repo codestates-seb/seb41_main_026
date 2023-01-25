@@ -7,6 +7,7 @@ import back.domain.course.entity.CourseLike;
 import back.domain.coursedata.entity.CourseData;
 import back.domain.eat.entity.Eat;
 import back.domain.sleep.entity.Sleep;
+import back.domain.travelspot.entity.Path;
 import back.domain.travelspot.entity.TravelSpot;
 import lombok.*;
 
@@ -34,5 +35,6 @@ public class CourseResponseDto {
     private List<TravelSpot> travelSpots;
     private List<Sleep> sleeps;
     private List<Eat> eats;
+    private List<Path> paths;
     private List<CourseData> courseDatas;
 }
