@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-23T22:43:28+0900",
-    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
+    date = "2023-01-25T11:13:21+0900",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class CourseMapperImpl implements CourseMapper {
@@ -39,6 +39,8 @@ public class CourseMapperImpl implements CourseMapper {
         course.setGuideName( coursePostDto.getGuideName() );
         course.setGuideText( coursePostDto.getGuideText() );
         course.setLocation( coursePostDto.getLocation() );
+        course.setTime( coursePostDto.getTime() );
+        course.setRoute( coursePostDto.getRoute() );
 
         return course;
     }
@@ -62,6 +64,8 @@ public class CourseMapperImpl implements CourseMapper {
         courseResponseDto.setLikeCount( save.getLikeCount() );
         courseResponseDto.setGuideName( save.getGuideName() );
         courseResponseDto.setGuideText( save.getGuideText() );
+        courseResponseDto.setTime( save.getTime() );
+        courseResponseDto.setRoute( save.getRoute() );
         List<Comment> list1 = save.getComments();
         if ( list1 != null ) {
             courseResponseDto.setComments( new ArrayList<Comment>( list1 ) );
