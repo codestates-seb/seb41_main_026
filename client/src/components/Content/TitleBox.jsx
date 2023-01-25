@@ -15,10 +15,10 @@ width: 100%;
 `;
 
 const Title = styled.span`
-  width: 135px;
+  width: 400px;
   height: 38px;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 48px;
   color: white;
   margin-left: 20px;

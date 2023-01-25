@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const options = {
   activeClass: 'active',
-  anchors: ['sectionOne', 'sectionTwo', 'sectionThree'],
+  anchors: ['sectionOne', 'sectionTwo', 'sectionThree', 'sectionFour'],
   arrowNavigation: true,
   className: 'SectionContainer',
   delay: 1000,
@@ -34,15 +34,19 @@ function HomePage() {
         <SectionsContainer {...options}>
           <Section>
             {' '}
-            <RegionSection region="seoul" />
+            <RegionSection region="서울" />
           </Section>
           <Section>
             {' '}
-            <RegionSection region="Gyeongnam" />
+            <RegionSection region="부산" />
           </Section>
           <Section>
             {' '}
-            <RegionSection region="Busan" />
+            <RegionSection region="경상도" />
+          </Section>
+          <Section>
+            {' '}
+            <RegionSection region="강원도" />
           </Section>
         </SectionsContainer>
       </Container>

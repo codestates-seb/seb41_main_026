@@ -210,6 +210,7 @@ const Tag = styled.span`
 `;
 
 function RouteContainer({ courseData }) {
+  console.log(courseData);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
       <nav className="col-sm-8 px-0 flex-grow-1 mb-5">
@@ -251,7 +252,7 @@ function RouteContainer({ courseData }) {
             tabindex="0"
           >
             {courseData !== null &&
-              courseData.map(ele => {
+              courseData.courseDatas.map(ele => {
                 return (
                   <RouteCard key={ele.courseDataId}>
                     <RouteImg src={sampleImg} />
@@ -291,11 +292,8 @@ function RouteContainer({ courseData }) {
                   </CourseTitle>
                 </CourseBox1>
                 <CourseBox2>
-                  <Course>
-                    임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대 -
-                    통일촌
-                  </Course>
-                  <Course>3시간</Course>
+                  <Course>{courseData !== null && courseData.route}</Course>
+                  <Course>{courseData !== null && courseData.time}시간</Course>
                 </CourseBox2>
               </InfoBox>
             </InfoContainer>
