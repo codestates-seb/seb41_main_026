@@ -17,16 +17,13 @@ function Header() {
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
   const userId = sessionStorage.getItem('user_Id');
-  
   // eslint-disable-next-line no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'accessToken',
     'refreshToken',
   ]);
 
-
   const accessToken = useSelector(getAccessToken);
-  
   const checkLoginState = () => {
     if (accessToken) {
       setIsLogin(true);

@@ -19,6 +19,7 @@ const BgImgBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-position: center center;
 `;
 
 const Title = styled.div`
@@ -77,7 +78,8 @@ const ArrowImg = styled.img`
 
 const bgLink = [
   { id: 0, region: 'seoul', imgLink: '/img/seoulBg.jpg' },
-  { id: 1, region: 'Busan', imgLink: '/img/busanBg.jpg' },
+  { id: 1, region: 'Gyeongnam', imgLink: '/img/jirisanBg.jpg' },
+  { id: 2, region: 'Busan', imgLink: '/img/busanBg.jpg' },
 ];
 
 function RegionSection({ region }) {
