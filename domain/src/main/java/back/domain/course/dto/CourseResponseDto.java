@@ -1,6 +1,7 @@
 package back.domain.course.dto;
 
 
+import back.domain.comment.dto.CommentResponseDto;
 import back.domain.comment.entity.Comment;
 import back.domain.course.entity.CourseLike;
 import back.domain.coursedata.entity.CourseData;
@@ -26,6 +27,8 @@ public class CourseResponseDto {
     private int likeCount;
     private String guideName;
     private String guideText;
+    private int time;
+    private String route;
     private List<Comment> comments;
     private List<CourseLike> courseLikes;
     private List<TravelSpot> travelSpots;

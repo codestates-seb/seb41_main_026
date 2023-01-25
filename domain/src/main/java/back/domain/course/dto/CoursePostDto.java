@@ -17,4 +17,6 @@ public class CoursePostDto {
     private List<String> tag;
     private String guideName;
     private String guideText;
+    private String route;
+    private int time;
 }

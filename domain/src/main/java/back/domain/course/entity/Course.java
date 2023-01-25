@@ -58,6 +58,12 @@ public class Course {
     @Column(nullable = false)
     private String location;
 
+    @Column(nullable = false)
+    private int time;
+
+    @Column(nullable = false)
+    private String route;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     @JsonBackReference
