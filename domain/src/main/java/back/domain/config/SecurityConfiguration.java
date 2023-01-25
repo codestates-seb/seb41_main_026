@@ -4,6 +4,7 @@ import back.domain.auth.filter.JwtAuthenticationFilter;
 import back.domain.auth.filter.JwtVerificationFilter;
 import back.domain.auth.handler.*;
 import back.domain.user.repository.UserRepository;
+import back.domain.user.service.UserService;
 import back.domain.utils.JwtAuthorityUtils;
 import back.domain.utils.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
@@ -39,6 +46,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthorityUtils authorityUtils;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -90,7 +98,7 @@ OAuth2 로그인 설정 시작점
                 .userService(oAuthService);
 */
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userRepository))); // oauth2 적용
+                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userRepository, userService))); // oauth2 적용
 
         return http.build();
     }
@@ -118,8 +126,8 @@ OAuth2 로그인 설정 시작점
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(
                 Arrays.asList("http://localhost:3000",
-                        "http://localhost:8080",
-                        "http://travelgajo.s3-website.ap-northeast-2.amazonaws.com"));
+                        "http://travelgajo.s3-website.ap-northeast-2.amazonaws.com"
+                        ));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setMaxAge(493772L);
         corsConfiguration.addAllowedOrigin("*");

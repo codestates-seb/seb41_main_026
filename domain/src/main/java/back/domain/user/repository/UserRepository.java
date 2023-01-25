@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByEmail(String email);
+    public User findByName(String name);
 
     // 이미 생성된 사용자인지 처음 가입하는 사용자인지 체크
     Optional<User> findByEmailAndProvider(String email, String provider);
