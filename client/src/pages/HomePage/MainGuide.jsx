@@ -103,9 +103,10 @@ const GuideAnimationBox = styled.div`
   border-radius: 10px;
   position: absolute;
   z-index: -1;
-  bottom: 30px;
+  bottom: 60px;
   @media screen and (max-width: 500px) {
     width: 400px;
+    bottom: 30px;
   }
 `;
 
