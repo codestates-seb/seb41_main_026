@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SeasonSection from '../../components/SeasonSection/SeasonSection';
 import Layout from '../../components/Common/Layout';
 
-const Wrapper = styled.body`
+const Wrapper = styled.div`
   overflow: hidden;
   min-height: 100vh;
   nav {
@@ -21,15 +20,6 @@ const Wrapper = styled.body`
         color: #00a8cc;
       }
     }
-  }
-  .hidden {
-    opacity: 0;
-    filter: blur(5px);
-    transition: all 1s;
-  }
-  .show {
-    opacity: 1;
-    filter: blur(0);
   }
 `;
 
@@ -51,34 +41,6 @@ const BgImg = styled.div`
 `;
 
 function MainSeason() {
-  const [position, setPosition] = useState(0);
-
-  function onScroll() {
-    setPosition(window.scrollY);
-  }
-  useEffect(() => {
-    window.addEventListener('scroll', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      console.log(entry);
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      } else {
-        entry.target.classList.remove('show');
-      }
-    });
-  });
-
-  const hiddenElements = document.querySelectorAll('.hidden');
-  hiddenElements.forEach(el => {
-    observer.observe(el);
-  });
-
   return (
     <Layout header footer>
       <Wrapper>
@@ -107,12 +69,12 @@ function MainSeason() {
           </ul>
           <i className="bi bi-list mobile-nav-toggle" />
         </nav>
-        <section id="spring" className="hidden">
+        <section id="spring" className="">
           <BgImg
             style={{
               backgroundSize: 'cover',
               backgroundImage: 'url(/bgSpring.jpg)',
-              backgroundPositionY: position / 2,
+              backgroundAttachment: 'fixed',
             }}
           >
             <h1 className="text-black">봄</h1>
@@ -120,7 +82,7 @@ function MainSeason() {
           <SeasonSection season="봄" />
         </section>
 
-        <section id="summer" className="hidden">
+        <section id="summer" className="">
           <BgImg
             style={{
               backgroundSize: 'cover',
@@ -133,7 +95,7 @@ function MainSeason() {
           <SeasonSection season="여름" />
         </section>
 
-        <section id="autumn" className="hidden">
+        <section id="autumn" className="">
           <BgImg
             style={{
               backgroundSize: 'cover',
@@ -146,7 +108,7 @@ function MainSeason() {
           <SeasonSection season="가을" />
         </section>
 
-        <section id="winter" className="hidden">
+        <section id="winter" className="">
           <BgImg
             style={{
               backgroundSize: 'cover',
