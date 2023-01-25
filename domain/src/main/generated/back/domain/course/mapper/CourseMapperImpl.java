@@ -9,6 +9,7 @@ import back.domain.course.entity.CourseLike;
 import back.domain.coursedata.entity.CourseData;
 import back.domain.eat.entity.Eat;
 import back.domain.sleep.entity.Sleep;
+import back.domain.travelspot.entity.Path;
 import back.domain.travelspot.entity.TravelSpot;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-01-25T11:13:21+0900",
+    date = "2023-01-25T21:20:45+0900",
     comments = "version: 1.5.1.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
@@ -86,9 +87,13 @@ public class CourseMapperImpl implements CourseMapper {
         if ( list5 != null ) {
             courseResponseDto.setEats( new ArrayList<Eat>( list5 ) );
         }
-        List<CourseData> list6 = save.getCourseDatas();
+        List<Path> list6 = save.getPaths();
         if ( list6 != null ) {
-            courseResponseDto.setCourseDatas( new ArrayList<CourseData>( list6 ) );
+            courseResponseDto.setPaths( new ArrayList<Path>( list6 ) );
+        }
+        List<CourseData> list7 = save.getCourseDatas();
+        if ( list7 != null ) {
+            courseResponseDto.setCourseDatas( new ArrayList<CourseData>( list7 ) );
         }
 
         return courseResponseDto;
