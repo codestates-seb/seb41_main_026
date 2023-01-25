@@ -136,7 +136,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
-                .host("localhost")
+                .host("ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com")
 //                .port(80)
                 .path("/token")
                 .queryParams(queryParams)
