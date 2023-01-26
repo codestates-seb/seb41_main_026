@@ -13,7 +13,7 @@ function SearchBody({ search, searchText }) {
             return (
               <MyPageCard
                 key={ele.courseId}
-                title={ele.courseId}
+                title={ele.courseName}
                 location={ele.location}
                 id={ele.courseId}
               />
