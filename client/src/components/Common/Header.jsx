@@ -25,7 +25,6 @@ function Header() {
   ]);
 
   const accessToken = useSelector(getAccessToken);
-
   const checkLoginState = () => {
     if (accessToken) {
       setIsLogin(true);

@@ -19,6 +19,7 @@ const BgImgBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-position: center center;
 `;
 
 const Title = styled.div`
@@ -76,8 +77,10 @@ const ArrowImg = styled.img`
 `;
 
 const bgLink = [
-  { id: 0, region: 'seoul', imgLink: '/img/seoulBg.jpg' },
-  { id: 1, region: 'Busan', imgLink: '/img/busanBg.jpg' },
+  { id: 0, region: '서울', imgLink: '/img/seoulBg.jpg' },
+  { id: 1, region: '부산', imgLink: '/img/busanBg.jpg' },
+  { id: 2, region: '경상도', imgLink: '/img/jirisanBg.jpg' },
+  { id: 3, region: '강원도', imgLink: '/img/naksansaBg.jpg' },
 ];
 
 function RegionSection({ region }) {
