@@ -80,7 +80,8 @@ const bgLink = [
   { id: 0, region: '서울', imgLink: '/img/seoulBg.jpg' },
   { id: 1, region: '부산', imgLink: '/img/busanBg.jpg' },
   { id: 2, region: '경상도', imgLink: '/img/jirisanBg.jpg' },
-  { id: 3, region: '강원도', imgLink: '/img/naksansaBg.jpg' },
+  { id: 3, region: '경기도', imgLink: '/img/geonggidoBg.jgp' },
+  { id: 4, region: '강원도', imgLink: '/img/naksansaBg.jpg' },
 ];
 
 function RegionSection({ region }) {
