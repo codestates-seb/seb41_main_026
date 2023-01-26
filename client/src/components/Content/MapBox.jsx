@@ -102,7 +102,6 @@ function MapBox({ courseData }) {
       setPath(courseData.paths);
     }
   }, [courseData]);
-  console.log(path);
 
   // const travelSpot = [
   //   {
@@ -177,12 +176,26 @@ function MapBox({ courseData }) {
   //   },
   // ];
 
-  const locationHandler = idValue => {
-    console.log(center);
-    setCenter({
-      lat: Number(courseData.travelSpots[idValue - 1].lat),
-      lng: Number(courseData.travelSpots[idValue - 1].lng),
-    });
+  const locationHandler = (idValue, spot) => {
+    console.log(courseData.eats[0].lat);
+    console.log(idValue);
+    console.log(spot);
+    if (spot === 'travel') {
+      setCenter({
+        lat: Number(courseData.travelSpots[idValue].lat),
+        lng: Number(courseData.travelSpots[idValue].lng),
+      });
+    } else if (spot === 'eat') {
+      setCenter({
+        lat: Number(courseData.eats[idValue].lat),
+        lng: Number(courseData.eats[idValue].lng),
+      });
+    } else if (spot === 'sleep') {
+      setCenter({
+        lat: Number(courseData.sleeps[idValue].lat),
+        lng: Number(courseData.sleeps[idValue].lng),
+      });
+    }
   };
 
   const spot1Handler = () => {
@@ -191,23 +204,7 @@ function MapBox({ courseData }) {
       lat: Number(courseData.travelSpots[0].lat),
       lng: Number(courseData.travelSpots[0].lng),
     });
-    setPath([
-      {
-        id: 1,
-        route1: [35.1099097, 128.5413306],
-        route2: [35.2066907, 128.5741251],
-      },
-      {
-        id: 2,
-        route1: [35.2066907, 128.5741251],
-        route2: [35.178936, 128.5811386],
-      },
-      {
-        id: 3,
-        route1: [35.178936, 128.5811386],
-        route2: [35.2245245, 128.5795397],
-      },
-    ]);
+    setPath(courseData.paths);
     setTravelFocus(true);
     setEatFocus(false);
     setSleepFocus(false);
@@ -248,19 +245,19 @@ function MapBox({ courseData }) {
           className="col-sm-8 px-0 flex-grow-1 mb-5"
         >
           {marker === 'travelSpot' && courseData !== null
-            ? courseData.travelSpots.map(ele => {
+            ? courseData.travelSpots.map((ele, idx) => {
                 const position = { lat: Number(ele.lat), lng: Number(ele.lng) };
                 return (
                   <MarkerF
                     key={ele.id}
                     position={position}
-                    label={String(ele.id)}
+                    label={String(idx + 1)}
                   />
                 );
               })
             : null}
 
-          {marker === 'travelSpot' && path !== null
+          {marker === 'travelSpot' && courseData !== null && path !== null
             ? path.map(ele => {
                 const routeSpot = [
                   {
@@ -312,14 +309,13 @@ function MapBox({ courseData }) {
       </LoadScriptNext>
       <div className="col-sm-4 ps-3">
         {marker === 'travelSpot' && courseData !== null
-          ? courseData.travelSpots.map(ele => {
+          ? courseData.travelSpots.map((ele, idx) => {
               return (
                 <div className="col">
                   <Location
                     role="presentation"
                     className="card mb-2 border-0 rounded-2"
-                    key={ele.id}
-                    onClick={() => locationHandler(ele.id)}
+                    onClick={() => locationHandler(idx, 'travel')}
                     style={{
                       maxWidth: '540px',
                       backgroundColor: '#0c7b93',
@@ -350,14 +346,14 @@ function MapBox({ courseData }) {
           : null}
 
         {marker === 'eatSpot' &&
-          courseData.eats.map(ele => {
+          courseData.eats.map((ele, idx) => {
             return (
               <div className="col">
                 <Location
                   role="presentation"
                   className="card mb-2 border-0 rounded-2"
                   key={ele.id}
-                  onClick={() => locationHandler(ele.eatId)}
+                  onClick={() => locationHandler(idx, 'eat')}
                   style={{
                     maxWidth: '540px',
                     backgroundColor: '#0c7b93',
@@ -387,14 +383,14 @@ function MapBox({ courseData }) {
           })}
 
         {marker === 'sleepSpot' &&
-          courseData.sleeps.map(ele => {
+          courseData.sleeps.map((ele, idx) => {
             return (
               <div className="col">
                 <Location
                   role="presentation"
                   className="card mb-2 border-0 rounded-2"
                   key={ele.id}
-                  onClick={() => locationHandler(ele.sleepId)}
+                  onClick={() => locationHandler(idx, 'sleep')}
                   style={{
                     maxWidth: '540px',
                     backgroundColor: '#0c7b93',
