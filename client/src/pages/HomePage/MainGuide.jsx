@@ -5,7 +5,7 @@ import Layout from '../../components/Common/Layout';
 import MyPageCard from '../../components/Card/MyPageCard';
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -29,6 +29,12 @@ const GuideImg = styled.img`
   border-radius: 50%;
   margin-top: 30px;
   cursor: pointer;
+  :hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
 `;
 
 const GuideTitle = styled.div`
@@ -228,28 +234,26 @@ function MainGuide() {
           <GuideAnimationBox />
           <GuideDefalutBox />
         </GuideInfoBox>
-        <div className="row d-flex">
-          <main className="col-sm-12 px-0 flex-grow-1 mb-5 py-5">
-            <h1 className="text-center fs-2">
-              {guideData.name} 가이드의 담당 코스들
-            </h1>
-            <div className="container py-3">
-              <div className="row row-cols-1 row-cols-md-3 g-4">
-                {filteredData &&
-                  filteredData.map(el => {
-                    return (
-                      <MyPageCard
-                        key={el.courseId}
-                        title={el.courseName}
-                        location={el.location}
-                        id={el.courseId}
-                      />
-                    );
-                  })}
-              </div>
+        <main className="container col-sm-12 px-0 mb-5 py-5">
+          <h1 className="text-center fs-2">
+            {guideData.name} 가이드의 담당 코스들
+          </h1>
+          <div className="container py-3">
+            <div className="row row-cols-1 row-cols-md-3 g-4">
+              {filteredData &&
+                filteredData.map(el => {
+                  return (
+                    <MyPageCard
+                      key={el.courseId}
+                      title={el.courseName}
+                      location={el.location}
+                      id={el.courseId}
+                    />
+                  );
+                })}
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
       </Container>
     </Layout>
   );
