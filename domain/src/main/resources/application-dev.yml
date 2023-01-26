@@ -17,6 +17,17 @@ spring:
         # Entity에 예약어가 있다면 '' 자동 추가
 #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   #        auto_quote_keyword: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_ADDRESS}
+    password: ${GMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   sql:
     init:
       mode: always
