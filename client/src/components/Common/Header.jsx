@@ -16,8 +16,9 @@ function Header() {
   const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
-  const userId = useSelector(getUserId);
 
+  const userId = useSelector(getUserId);
+  
   const checkLoginState = () => {
     if (getCookie('accessToken')) {
       setIsLogin(true);
