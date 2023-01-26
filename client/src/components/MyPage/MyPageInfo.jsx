@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Sidebar from './Sidebar';
 import { regName, regPassword } from '../../util/regStore';
 import Layout from '../Common/Layout';
 import NotFound from './NotFound';
-// import { getUserId } from '../../redux/userSlice';
+import { getUserId } from '../../redux/userSlice';
+import { getCookie } from '../../util/cookie';
 
-const userId = sessionStorage.getItem('user_Id');
+// const userId = sessionStorage.getItem('user_Id');
 
 function MyPageInfo() {
   const [name, setName] = useState('');
@@ -15,13 +16,13 @@ function MyPageInfo() {
   const [password, setPassword] = useState('');
   const userDataModified = { name, password };
 
-  // const userId = useSelector(getUserId);
+  const userId = useSelector(getUserId);
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
         headers: {
-          authorization: sessionStorage.getItem('access_Token'),
+          authorization: getCookie('accessToken'),
         },
       })
       .then(res => {
@@ -53,7 +54,7 @@ function MyPageInfo() {
         userDataModified,
         {
           headers: {
-            authorization: sessionStorage.getItem('access_Token'),
+            authorization: getCookie('accessToken'),
           },
         },
       )
@@ -72,7 +73,7 @@ function MyPageInfo() {
       <div className="container">
         <div className="row min-vh-100 flex-column flex-md-row">
           <Sidebar />
-          {sessionStorage.getItem('access_Token') ? (
+          {getCookie('accessToken') ? (
             <main className="col-sm-9 px-0 flex-grow-1">
               <div className="container py-3">
                 <article>

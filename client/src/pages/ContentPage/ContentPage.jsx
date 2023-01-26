@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import heart from '../../img/heart.png';
@@ -9,6 +10,8 @@ import TitleBox from '../../components/Content/TitleBox';
 import MapBox from '../../components/Content/MapBox';
 import MainBox from '../../components/Content/MainBox';
 import Layout from '../../components/Common/Layout';
+import { getUserId } from '../../redux/userSlice';
+import { getCookie } from '../../util/cookie';
 
 const HeartWrap = styled.div`
   width: 70px;
@@ -45,7 +48,6 @@ const Heart = styled.img`
     cursor: pointer;
   }
 `;
-const sessionUserId = sessionStorage.getItem('user_Id');
 
 function ContentPage() {
   const { id } = useParams();
@@ -54,6 +56,8 @@ function ContentPage() {
   const [heartState, setHeartState] = useState(false);
 
   const commentRef = useRef(0);
+
+  const sessionUserId = useSelector(getUserId);
 
   useEffect(() => {
     axios
@@ -103,7 +107,7 @@ function ContentPage() {
         },
         {
           headers: {
-            authorization: sessionStorage.getItem('access_Token'),
+            authorization: getCookie('accessToken'),
           },
         },
       )

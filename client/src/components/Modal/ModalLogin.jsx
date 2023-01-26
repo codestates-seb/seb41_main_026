@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 // import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { setUserInfo, getAccessToken, getUserId } from '../../redux/userSlice';
+import { setUserInfo, getUserId } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 import { handleEmail, handlePassword } from '../../util/alertStore';
+import { setCookie } from '../../util/cookie';
+import findPasswordApi from '../../API/findPasswordApi';
 
 const Buttons = styled.button`
   background-color: rgba(20, 40, 80, 1);
@@ -30,17 +31,19 @@ const SocialButtons = styled.button`
 
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const findUserId = useSelector(getUserId);
-  const findAccessToken = useSelector(getAccessToken);
 
-  // eslint-disable-next-line no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([
-    'accessToken',
-    'refreshToken',
-  ]);
   // const navigate = useNavigate();
+
+  const loginRequestHandler = () => {
+    setIsLoading(true);
+    window.location.assign(
+      `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
+    );
+  };
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -76,6 +79,10 @@ function ModalLogin() {
       handlePassword();
       return false;
     }
+    setIsLoading(true);
+    // eslint-disable-next-line no-unused-expressions
+    isLoading;
+
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
@@ -86,21 +93,40 @@ function ModalLogin() {
         // { withCredentials: true },
       )
       .then(res => {
-        // const expires = dayjs().add('40', 'm').toDate();
+        setIsLoading(false);
+        const expires = dayjs().add('60', 'm').toDate();
         const { authorization, refresh, userid } = res.headers;
+        setCookie('accessToken', decodeURIComponent(`${authorization}`), {
+          expires,
+        });
         setCookie('refreshToken', refresh);
-        setCookie('userId', userid);
-        sessionStorage.setItem('access_Token', authorization);
-        sessionStorage.setItem('user_Id', userid);
         // navigate('/');
-        // window.location.reload();
+        window.location.reload();
 
-        dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
-        console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
+        dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
+        console.log('이전 상태를 불러왔음 ', findUserId);
         window.alert('로그인 성공!');
       })
       .catch(err => {
         window.alert(err, '로그인 실패!');
+      });
+  };
+  // eslint-disable-next-line consistent-return
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    const { email } = loginInfo;
+    if (email.length === 0 || !regEmail.test(email)) {
+      handleEmail();
+      return false;
+    }
+    setIsLoading(true);
+    findPasswordApi(email)
+      .then(() => {
+        setIsLoading(false);
+        window.alert('이메일이 발송되었습니다.');
+      })
+      .catch(err => {
+        window.alert(err, '올바른 이메일을 입력해주세요.');
       });
   };
 
@@ -211,7 +237,11 @@ function ModalLogin() {
                     }}
                   />
                 </SocialButtons>
-                <SocialButtons type="button" className="btn btn-outline-light">
+                <SocialButtons
+                  type="button"
+                  className="btn btn-outline-light"
+                  onClick={loginRequestHandler}
+                >
                   <img
                     src={`${process.env.PUBLIC_URL}/google.svg`}
                     alt="google icon"
@@ -303,6 +333,7 @@ function ModalLogin() {
                   className="form-control border-0 border-bottom ms-3"
                   id="email"
                   placeholder="이메일을 적으세요"
+                  onChange={handleInputValue('email')}
                   style={{
                     borderRadius: '0',
                     paddingLeft: '5px',
@@ -320,7 +351,11 @@ function ModalLogin() {
                 >
                   취소
                 </button>
-                <Buttons type="submit" className="btn">
+                <Buttons
+                  type="submit"
+                  className="btn"
+                  onClick={onSubmitHandler}
+                >
                   보내기
                 </Buttons>
               </div>
