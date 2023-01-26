@@ -11,7 +11,6 @@ import java.util.List;
 @ToString
 public class PathPostDto {
 
-    private Long courseId;
     private List<String> route1;
     private List<String> route2;
 

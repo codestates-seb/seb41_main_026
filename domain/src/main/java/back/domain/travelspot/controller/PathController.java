@@ -1,5 +1,7 @@
 package back.domain.travelspot.controller;
 
+import back.domain.course.entity.Course;
+import back.domain.course.service.CourseService;
 import back.domain.travelspot.dto.PathPostDto;
 import back.domain.travelspot.entity.Path;
 import back.domain.travelspot.mapper.PathMapper;
@@ -19,10 +21,12 @@ public class PathController {
 
     private final PathMapper pathMapper;
     private final PathService pathService;
+    private final CourseService courseService;
 
-    @PostMapping
-    public ResponseEntity post(@RequestBody PathPostDto route){
-        Path path = pathMapper.pathDtoToEntity(route);
+    @PostMapping("/{courseId}")
+    public ResponseEntity post(@PathVariable Long courseId, @RequestBody PathPostDto route){
+        Course course = courseService.verifiedCourse(courseId);
+        Path path = pathMapper.pathDtoToEntity(route, course);
         Path saved = pathService.save(path);
 
         return new ResponseEntity<>(
