@@ -20,7 +20,7 @@ const userSlice = createSlice({
     },
     resetUserInfo: state => {
       // 유저 정보를 제거하는 reducer (ex. 로그아웃)
-      state.userId = -1;
+      state.userId = '';
       state.accessToken = '';
     },
   },
@@ -31,5 +31,3 @@ export const { setUserInfo, resetUserInfo } = userSlice.actions;
 export default userSlice.reducer;
 
 export const getUserId = state => state.user.userId;
-
-export const getAccessToken = state => state.user.accessToken;

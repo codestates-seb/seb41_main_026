@@ -1,13 +1,13 @@
 /* developed by Jinwoo, Choi */
 /* ************************* */
 import { useEffect, useState, useRef } from 'react';
-import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
-import { getAccessToken } from '../../redux/userSlice';
 import ModalLogin from '../Modal/ModalLogin';
 import ModalSignUp from '../Modal/ModalSignUp';
+import { getUserId } from '../../redux/userSlice';
+import { getCookie, removeCookie } from '../../util/cookie';
 
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -16,19 +16,10 @@ function Header() {
   const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
-  const userId = sessionStorage.getItem('user_Id');
-  
-  // eslint-disable-next-line no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([
-    'accessToken',
-    'refreshToken',
-  ]);
+  const userId = useSelector(getUserId);
 
-
-  const accessToken = useSelector(getAccessToken);
-  
   const checkLoginState = () => {
-    if (accessToken) {
+    if (getCookie('accessToken')) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
@@ -46,8 +37,8 @@ function Header() {
   }
 
   function handleLogOut() {
+    removeCookie('accessToken');
     removeCookie('refreshToken');
-    removeCookie('userId');
     sessionStorage.clear();
     navigate('/');
     window.alert('로그아웃 되었습니다.');

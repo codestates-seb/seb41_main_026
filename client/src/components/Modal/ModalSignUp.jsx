@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { setUserInfo, getAccessToken, getUserId } from '../../redux/userSlice';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
+import { setUserInfo } from '../../redux/userSlice';
 // import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
@@ -15,6 +15,7 @@ import {
   handleNameL,
   handlePassword,
 } from '../../util/alertStore';
+import { setCookie } from '../../util/cookie';
 
 const Buttons = styled.button`
   background-color: rgba(20, 40, 80, 1);
@@ -41,13 +42,7 @@ function ModalSignUp() {
     password: '',
   });
   const dispatch = useDispatch();
-  const findUserId = useSelector(getUserId);
-  const findAccessToken = useSelector(getAccessToken);
-  // eslint-disable-next-line no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies([
-    'accessToken',
-    'refreshToken',
-  ]);
+
   const naviagte = useNavigate();
 
   const handleInputValue = key => e => {
@@ -109,14 +104,14 @@ function ModalSignUp() {
         )
         // eslint-disable-next-line no-shadow
         .then(res => {
-          // const expires = dayjs().add('40', 'm').toDate();
+          const expires = dayjs().add('40', 'm').toDate();
           const { authorization, refresh, userid } = res.headers;
+          setCookie('accessToken', decodeURIComponent(`${authorization}`), {
+            expires,
+          });
           setCookie('refreshToken', refresh);
-          setCookie('userId', userid);
-          sessionStorage.setItem('access_Token', authorization);
-          sessionStorage.setItem('user_Id', userid);
-          dispatch(setUserInfo({ userid, authorization })); // userSlice에 유저 정보 저장
-          console.log('이전 상태를 불러왔음 ', findUserId, findAccessToken);
+
+          dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
           naviagte('/');
           window.location.reload();
           window.alert('회원가입 성공!');
