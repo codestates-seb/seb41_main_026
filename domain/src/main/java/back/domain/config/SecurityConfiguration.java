@@ -123,7 +123,7 @@ OAuth2 로그인 설정 시작점
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedOrigins(
                 Arrays.asList("http://localhost:3000",
-                        "http://travelgajo.s3-website.ap-northeast-2.amazonaws.com"
+                        "http://travelproject.s3-website.ap-northeast-2.amazonaws.com/"
                         ));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setMaxAge(493772L);
