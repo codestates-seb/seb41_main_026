@@ -113,8 +113,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         return jwtTokenizer.generateAccessToken(claims, subject, expiration ,base64EncodedSecretKey);
-
-
     }
 
     private String delegateRefreshToken(String name) {
