@@ -1,23 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import MyPageCard from '../Card/MyPageCard';
 
-function SearchBody() {
-  const [search, setSearch] = useState('');
-  const searchText = localStorage.getItem('searchText');
-  const getSearch = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/course/search?keyword=${searchText}`,
-      )
-      .then(res => {
-        setSearch(res.data.course);
-      });
-  };
-  useEffect(() => {
-    getSearch();
-  }, []);
-  console.log(search);
+function SearchBody({ search, searchText }) {
   return (
     <main className="col-md-9 mb-5 py-5">
       <h1 className="fs-5 my-3 ms-2">

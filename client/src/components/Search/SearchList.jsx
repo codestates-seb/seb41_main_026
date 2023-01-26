@@ -3,7 +3,6 @@ import Search from './Search';
 
 function SearchList({ data }) {
   const [checkedItem, setCheckedItem] = useState(new Set());
-  // const [isAllChecked, setIsAllChecked] = useState(true);
 
   const checkedItemHandler = (id, checked) => {
     if (checked) {
@@ -14,17 +13,6 @@ function SearchList({ data }) {
       setCheckedItem(checkedItem);
     }
   };
-
-  // const allCheckedHandler = isChecked => {
-  //   if (isChecked) {
-  //     setCheckedItem(new Set(data.data.map(({ name }) => name)));
-  //     setIsAllChecked(false);
-  //   } else {
-  //     checkedItem.clear();
-  //     setCheckedItem(setCheckedItem);
-  //     setIsAllChecked(true);
-  //   }
-  // };
 
   return (
     <div className="accordion-item">
