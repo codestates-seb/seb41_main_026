@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import time from '../../img/time.png';
 import route from '../../img/route.png';
 import github from '../../img/vector.png';
-import jinwoo from '../../img/jinwoo.png';
 import sampleImg from '../../img/sampleImg.jpg';
+import tripImg from '../../img/tripImg.jpg';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -98,7 +98,8 @@ const Guideline = styled.div`
 `;
 
 const GuideImg = styled.img`
-  width: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-top: 20px;
 `;
@@ -208,7 +209,8 @@ const Tag = styled.span`
   color: white;
 `;
 
-function RouteContainer({ data, courseData }) {
+function RouteContainer({ courseData }) {
+  console.log(courseData);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
       <nav className="col-sm-8 px-0 flex-grow-1 mb-5">
@@ -249,17 +251,18 @@ function RouteContainer({ data, courseData }) {
             aria-labelledby="nav-home-tab"
             tabindex="0"
           >
-            {data.map(ele => {
-              return (
-                <RouteCard key={ele.id}>
-                  <RouteImg src={sampleImg} />
-                  <RouteText>
-                    <RouteTitle>{ele.title}</RouteTitle>
-                    <RouteDes>{ele.text}</RouteDes>
-                  </RouteText>
-                </RouteCard>
-              );
-            })}
+            {courseData !== null &&
+              courseData.courseDatas.map(ele => {
+                return (
+                  <RouteCard key={ele.courseDataId}>
+                    <RouteImg src={sampleImg} />
+                    <RouteText>
+                      <RouteTitle>{ele.title}</RouteTitle>
+                      <RouteDes>{ele.text}</RouteDes>
+                    </RouteText>
+                  </RouteCard>
+                );
+              })}
           </RouteBox>
           <div
             className="tab-pane"
@@ -289,11 +292,8 @@ function RouteContainer({ data, courseData }) {
                   </CourseTitle>
                 </CourseBox1>
                 <CourseBox2>
-                  <Course>
-                    임진각 공원 - DMZ 영상관 - 제3터널 - 도라산역 - 도라전망대 -
-                    통일촌
-                  </Course>
-                  <Course>3시간</Course>
+                  <Course>{courseData !== null && courseData.route}</Course>
+                  <Course>{courseData !== null && courseData.time}시간</Course>
                 </CourseBox2>
               </InfoBox>
             </InfoContainer>
@@ -315,14 +315,10 @@ function RouteContainer({ data, courseData }) {
           <GuideTitle>가이드</GuideTitle>
           <GuideBox>
             <Guideline />
-            <GuideImg src={jinwoo} />
+            <GuideImg src={tripImg} />
             <GithubImg src={github} />
-            <GuideName>최진우</GuideName>
-            <GuideText>
-              여행은 자고로 즐거워야한다!
-              <br />
-              오롯이 여행에만 집중할 수 있게끔 준비해드립니다.
-            </GuideText>
+            <GuideName>{courseData !== null && courseData.guideName}</GuideName>
+            <GuideText>{courseData !== null && courseData.guideText}</GuideText>
           </GuideBox>
         </GuideWrap>
       </aside>
