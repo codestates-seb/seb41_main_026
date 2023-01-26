@@ -86,12 +86,12 @@ const CommentButton = styled.div`
 
 const Comment = styled.div`
   padding: 16px;
-  background-color: white;
+  background-color: ${({ bgMyColor }) => (bgMyColor ? 'pink' : 'white')};
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
   line-height: 14px;
-  color: #000000;
+  color: ${({ bgMyColor }) => (bgMyColor ? '#3e3e3e' : 'black')};
   position: relative;
   margin-top: 13px;
   border-radius: 10px;
@@ -106,7 +106,7 @@ const CommentDate = styled.div`
 const Triangle = styled.div`
   width: 7px;
   height: 7px;
-  background: #ffffff;
+  background-color: ${({ bgMyColor }) => (bgMyColor ? 'pink' : 'white')};
   transform: rotate(135deg);
   position: absolute;
   top: 19px;
@@ -169,12 +169,13 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
                 } else if (hour > 18) {
                   hour = Number(ele.createdAt.slice(-8, -6)) + 18;
                 }
+                const bgMyColor = ele.userId === Number(sessionUserId);
 
                 return (
                   <div key={ele.commentId}>
-                    <Comment>
+                    <Comment bgMyColor={bgMyColor}>
                       {ele.content}
-                      <Triangle />
+                      <Triangle bgMyColor={bgMyColor} />
                     </Comment>
                     <CommentDate>
                       {ele.createdAt.slice(2, 10)}

@@ -16,7 +16,7 @@ const HeartWrap = styled.div`
   background-color: white;
   position: fixed;
   left: 25px;
-  top: 70px;
+  top: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,7 +37,7 @@ const HeartBox = styled.span`
 `;
 
 const Heart = styled.img`
-  width: 22px;
+  width: 24px;
   position: relative;
   top: 5px;
   right: 4px;
@@ -52,6 +52,7 @@ function ContentPage() {
   const [courseData, setCourseData] = useState(null);
   const [heartData, setHeartData] = useState(null);
   const [heartState, setHeartState] = useState(false);
+  const [change, setChange] = useState(false);
 
   const commentRef = useRef(0);
 
@@ -107,8 +108,18 @@ function ContentPage() {
           },
         },
       )
-      .then(res => setHeartData(res?.data))
-      .then(() => setHeartState(!heartState));
+      .then(res => {
+        setHeartData(res?.data);
+        return res.data;
+      })
+      .then(res => {
+        window.localStorage.setItem(
+          'heartStatus',
+          JSON.stringify(res.courseLikeStatus),
+        );
+        window.localStorage.setItem(`${id}`, JSON.stringify(`/course/${id}`));
+        setHeartState(!heartState);
+      });
   };
   console.log(heartData);
 
@@ -120,7 +131,21 @@ function ContentPage() {
       .then(res => setCourseData(res.data));
   }, [heartState]);
 
+  useEffect(() => {
+    if (
+      window.location.pathname !==
+      JSON.parse(window.localStorage.getItem(`${id}`))
+    ) {
+      window.localStorage.removeItem(`heartStatus`);
+    }
+  }, []);
+
+  useEffect(() => {
+    setChange(!change);
+  }, [window.localStorage.getItem('heartStatus')]);
+
   console.log(courseData);
+  console.log(heartData);
   return (
     <Layout header footer>
       <TitleBox courseData={courseData} />
@@ -128,7 +153,7 @@ function ContentPage() {
         {sessionUserId && (
           <HeartWrap>
             <HeartBox>
-              {heartData !== null && heartData.courseLikeStatus === 1 ? (
+              {JSON.parse(window.localStorage.getItem('heartStatus')) ? (
                 <Heart src={heartFill} onClick={heartHandler} />
               ) : (
                 <Heart src={heart} onClick={heartHandler} />
