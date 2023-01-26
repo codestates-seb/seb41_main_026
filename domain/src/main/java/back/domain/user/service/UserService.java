@@ -1,10 +1,10 @@
 package back.domain.user.service;
 
 
+import back.domain.course.entity.CourseLike;
 import back.domain.enums.UserStatus;
 import back.domain.exception.BusinessException;
 import back.domain.exception.ErrorCode;
-import back.domain.user.dto.UserPostDto;
 import back.domain.user.entity.User;
 import back.domain.user.repository.UserRepository;
 import back.domain.utils.JwtAuthorityUtils;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import back.domain.course.entity.CourseLike;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -111,8 +110,8 @@ public class UserService {
     }
 
     private void verifyExistEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent())
+        User user = userRepository.findByEmail(email);
+        if (user != null)
             throw new BusinessException(ErrorCode.USER_EMAIL_EXISTS);
     }
 }
