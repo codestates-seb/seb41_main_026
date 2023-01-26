@@ -85,26 +85,11 @@ function MapBox({ courseData }) {
   const [travelFocus, setTravelFocus] = useState(true);
   const [eatFocus, setEatFocus] = useState(false);
   const [sleepFocus, setSleepFocus] = useState(false);
-  const [pathCoordinates, setPathCoordinates] = useState([
-    {
-      id: 1,
-      route1: [35.1099097, 128.5413306],
-      route2: [35.2066907, 128.5741251],
-    },
-    {
-      id: 2,
-      route1: [35.2066907, 128.5741251],
-      route2: [35.178936, 128.5811386],
-    },
-    {
-      id: 3,
-      route1: [35.178936, 128.5811386],
-      route2: [35.2245245, 128.5795397],
-    },
-  ]);
+  const [path, setPath] = useState(null);
 
   useEffect(() => {
     if (courseData !== null) {
+      console.log(courseData.travelSpots[0]);
       setCenter({
         lat: Number(courseData.travelSpots[0].lat),
         lng: Number(courseData.travelSpots[0].lng),
@@ -112,7 +97,12 @@ function MapBox({ courseData }) {
     }
   }, [courseData]);
 
-  console.log(center);
+  useEffect(() => {
+    if (courseData !== null) {
+      setPath(courseData.paths);
+    }
+  }, [courseData]);
+  console.log(path);
 
   // const travelSpot = [
   //   {
@@ -201,7 +191,7 @@ function MapBox({ courseData }) {
       lat: Number(courseData.travelSpots[0].lat),
       lng: Number(courseData.travelSpots[0].lng),
     });
-    setPathCoordinates([
+    setPath([
       {
         id: 1,
         route1: [35.1099097, 128.5413306],
@@ -232,7 +222,7 @@ function MapBox({ courseData }) {
     setTravelFocus(false);
     setEatFocus(true);
     setSleepFocus(false);
-    setPathCoordinates(null);
+    setPath(null);
   };
 
   const spot3Handler = () => {
@@ -240,7 +230,7 @@ function MapBox({ courseData }) {
     setTravelFocus(false);
     setEatFocus(false);
     setSleepFocus(true);
-    setPathCoordinates(null);
+    setPath(null);
     setCenter({
       lat: Number(courseData.sleeps[0].lat),
       lng: Number(courseData.sleeps[0].lng),
@@ -270,24 +260,31 @@ function MapBox({ courseData }) {
               })
             : null}
 
-          {marker === 'travelSpot' &&
-            pathCoordinates.map(ele => {
-              const routeSpot = [
-                { lat: ele.route1[0], lng: ele.route1[1] },
-                { lat: ele.route2[0], lng: ele.route2[1] },
-              ];
-              return (
-                <Polyline
-                  key={ele.id}
-                  path={routeSpot}
-                  options={{
-                    strokeColor: 'black',
-                    strokeOpacity: 1,
-                    strokeWeight: 2,
-                  }}
-                />
-              );
-            })}
+          {marker === 'travelSpot' && path !== null
+            ? path.map(ele => {
+                const routeSpot = [
+                  {
+                    lat: Number(ele.route.route1[0]),
+                    lng: Number(ele.route.route1[1]),
+                  },
+                  {
+                    lat: Number(ele.route.route2[0]),
+                    lng: Number(ele.route.route2[1]),
+                  },
+                ];
+                return (
+                  <Polyline
+                    key={ele.id}
+                    path={routeSpot}
+                    options={{
+                      strokeColor: 'black',
+                      strokeOpacity: 1,
+                      strokeWeight: 2,
+                    }}
+                  />
+                );
+              })
+            : null}
 
           {marker === 'eatSpot' &&
             courseData.eats.map(ele => {

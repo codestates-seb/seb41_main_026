@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import LoadingSpinner from '../LoadingSpinner';
 import MyPageCard from '../Card/MyPageCard';
 import MyPageUsercard from './MyPageUsercard';
+import { getUserId } from '../../redux/userSlice';
+import { getCookie } from '../../util/cookie';
 
-const userId = sessionStorage.getItem('user_Id');
+// const userId = sessionStorage.getItem('user_Id');
 
 function MyPageBody() {
   const [myCommentCourse, setMyCommentCourse] = useState([]);
@@ -14,11 +17,13 @@ function MyPageBody() {
   const [loading, setLoading] = useState(true);
   const { pathname } = useLocation();
 
+  const userId = useSelector(getUserId);
+
   const getMyCourse = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
         headers: {
-          authorization: sessionStorage.getItem('access_Token'),
+          authorization: getCookie('accessToken'),
         },
       })
       .then(res => {
