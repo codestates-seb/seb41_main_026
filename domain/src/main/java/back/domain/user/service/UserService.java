@@ -110,8 +110,10 @@ public class UserService {
     }
 
     private void verifyExistEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null)
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent())
+//        User user = userRepository.findByEmail(email);
+//        if (user != null)
             throw new BusinessException(ErrorCode.USER_EMAIL_EXISTS);
     }
 }

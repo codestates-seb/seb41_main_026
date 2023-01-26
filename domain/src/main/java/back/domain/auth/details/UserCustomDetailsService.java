@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -19,14 +20,22 @@ public class UserCustomDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User findUser = userRepository.findByName(name);
+//    @Override
+//    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+//        User findUser = userRepository.findByName(name);
+//
+//        if (findUser != null) {
+//            return new UserDetail(findUser);
+//        }
+//        return null;
+//    }
 
-        if (findUser != null) {
-            return new UserDetail(findUser);
-        }
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> findUser = userRepository.findByEmail(email);
+        User user = findUser.orElseThrow(
+                () -> new UsernameNotFoundException("Not Found User")
+        );
+        return new UserDetail(user);
     }
 
     private final class UserDetail extends User implements UserDetails {
