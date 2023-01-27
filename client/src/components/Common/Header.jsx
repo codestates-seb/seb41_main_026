@@ -17,6 +17,7 @@ function Header() {
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
   const userId = useSelector(getUserId);
+
   const checkLoginState = () => {
     if (getCookie('accessToken')) {
       setIsLogin(true);
@@ -180,10 +181,14 @@ function Header() {
               </div>
             </div>
           ) : (
-            <form className="d-flex justify-content-end">
-              <ModalLogin />
-              <ModalSignUp />
-            </form>
+            <>
+              <form className="d-flex justify-content-end">
+                <ModalLogin />
+              </form>
+              <form className="d-flex justify-content-end">
+                <ModalSignUp />
+              </form>
+            </>
           )}
         </div>
       </div>

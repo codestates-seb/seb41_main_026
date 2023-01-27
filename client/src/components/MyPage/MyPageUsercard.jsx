@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getUserId } from '../../redux/userSlice';
 
 function MyPageUsercard({ userData }) {
-  const userId = sessionStorage.getItem('user_Id');
+  const userId = useSelector(getUserId);
   return (
     <div className="container col-xxl-8 px-3 py-3 mb-5">
       <div className="row flex-lg-row-reverse align-items-center g-2 border border-3 rounded p-3">

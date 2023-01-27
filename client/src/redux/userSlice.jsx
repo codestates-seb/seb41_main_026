@@ -12,11 +12,6 @@ const userSlice = createSlice({
       // 유저 정보를 저장하는 reducer (ex. 로그인)
       state.userId = action.payload.userid;
       state.accessToken = action.payload.authorization;
-      console.log(
-        '저장되었습니다. 저장된 값은 -> ',
-        state.userId,
-        state.accessToken,
-      );
     },
     resetUserInfo: state => {
       // 유저 정보를 제거하는 reducer (ex. 로그아웃)
