@@ -34,11 +34,11 @@ function MyPageBody() {
         console.log(err);
       });
   };
-
   const recentComments = myCommentCourse.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
   );
   const myRecentComment = recentComments.slice(0, 3);
+  const myRecentLike = myLikeCourse.slice(0, 3);
 
   useEffect(() => {
     getMyCourse();
@@ -77,7 +77,7 @@ function MyPageBody() {
                   아직 좋아요를 누른 코스가 없습니다.
                 </div>
               ) : (
-                myLikeCourse.map(data => {
+                myRecentLike.map(data => {
                   return (
                     <MyPageCard
                       title={data.course.courseName}
