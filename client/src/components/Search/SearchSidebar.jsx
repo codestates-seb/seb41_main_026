@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchSidebarBody from './SearchSidebarBody';
+import SearchList from './SearchList';
 
 const sideDB = {
   location: {
@@ -40,9 +40,9 @@ function SearchSidebar() {
       <div className="mt-2 justify-content-around">
         <div className="p-1 d-flex flex-column">
           <div className="accordion" id="accordionPanel">
-            <SearchSidebarBody locationData={sideDB.location} />
-            <SearchSidebarBody locationData={sideDB.season} />
-            <SearchSidebarBody locationData={sideDB.guide} />
+            <SearchList data={sideDB.location} />
+            <SearchList data={sideDB.season} />
+            <SearchList data={sideDB.guide} />
           </div>
         </div>
       </div>

@@ -114,7 +114,7 @@ function MyPageBody() {
                       <div>
                         <Link
                           key={data.commentId}
-                          to={`../course/${data.course.courseId}`}
+                          to={`../course/${data.courseId}`}
                           className="text-decoration-none"
                         >
                           <li className="text-info">
@@ -186,7 +186,7 @@ function MyPageBody() {
                       <div className="mb-0">
                         <Link
                           key={data.commentId}
-                          to={`../course/${data.course.courseId}`}
+                          to={`../course/${data.courseId}`}
                           className="text-decoration-none"
                         >
                           <li className="text-info mb-2">
