@@ -1,6 +1,6 @@
 /* developed by Jinwoo, Choi */
 /* ************************* */
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.png';
@@ -10,25 +10,12 @@ import { getUserId } from '../../redux/userSlice';
 import { getCookie, removeCookie } from '../../util/cookie';
 
 function Header() {
-  const [isLogin, setIsLogin] = useState(false);
   const [searchText, setSearchText] = useState('');
   const search = useRef();
   const navigate = useNavigate();
   const [img, setimg] = useState('https://source.boringavatars.com/beam/40');
 
   const userId = useSelector(getUserId);
-
-  const checkLoginState = () => {
-    if (getCookie('accessToken')) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-  };
-
-  useEffect(() => {
-    checkLoginState();
-  });
 
   /* use Session Storage for searching keyword */
   function handleSearch() {
@@ -139,7 +126,7 @@ function Header() {
             </div>
           </form>
 
-          {isLogin ? (
+          {getCookie('accessToken') ? (
             <div className="d-flex justify-content-end">
               <div className="dropdown">
                 <a
@@ -238,4 +225,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);
