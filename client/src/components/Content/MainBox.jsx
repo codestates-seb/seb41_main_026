@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { getCookie } from '../../util/cookie';
 
 const Container = styled.div`
   margin-top: 100px;
@@ -133,7 +134,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
           },
           {
             headers: {
-              authorization: sessionStorage.getItem('access_Token'),
+              authorization: getCookie('accessToken'),
             },
           },
         )
