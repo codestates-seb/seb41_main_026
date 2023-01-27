@@ -6,7 +6,7 @@ function MainShorts() {
     <Layout header footer>
       <div
         className="container-fluid d-flex justify-content-center fixed-top ps-0 pe-0 py-5"
-        style={{ top: '20px' }}
+        style={{ marginTop: '60px', zIndex: '1' }}
       >
         <iframe
           title="taggbox"

@@ -130,14 +130,14 @@ function MyPageInfo() {
 
                       <div className="mb-3 mt-5">
                         <label
-                          htmlFor="inputPassword5"
+                          htmlFor="inputNewPassword"
                           className="form-label text-info"
                         >
                           새로운 비밀번호
                         </label>
                         <input
                           type="password"
-                          id="inputPassword5"
+                          id="inputNewPassword"
                           className="form-control"
                           placeholder="새로운 비밀번호를 입력해주세요"
                           aria-describedby="passwordHelpBlock"

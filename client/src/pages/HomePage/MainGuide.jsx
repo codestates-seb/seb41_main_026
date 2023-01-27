@@ -223,7 +223,7 @@ function MainGuide() {
             <GuideText>
               {guideData.text.split('\n').map(ele => {
                 return (
-                  <div>
+                  <div key={ele.id}>
                     {ele}
                     <br />
                   </div>
