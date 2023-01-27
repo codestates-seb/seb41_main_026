@@ -175,7 +175,7 @@ function ContentPage() {
           commentRef={commentRef}
         />
         <MapBox courseData={courseData} />
-        <RouteContainer courseData={courseData} />
+        <RouteContainer id={id} courseData={courseData} />
       </div>
     </Layout>
   );

@@ -15,10 +15,10 @@ const Box = styled.div`
 `;
 
 const Title = styled.span`
-  width: 360px;
+  width: 470px;
   height: 38px;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 48px;
   color: white;
   margin-left: 20px;
