@@ -22,16 +22,24 @@ const Title = styled.span`
   line-height: 48px;
   color: white;
   margin-left: 20px;
+  @media screen and (max-width: 500px) {
+    font-size: 15px;
+    width: 350px;
+  }
 `;
 
-const Des = styled.span`
-  width: 30px;
+const Des = styled.div`
+  width: 70px;
   height: 19px;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
   color: #35b8d6;
   margin-left: 20px;
+  @media screen and (max-width: 500px) {
+    width: 40px;
+    font-size: 12px;
+  }
 `;
 
 function TitleBox({ courseData }) {
