@@ -152,7 +152,7 @@ function MainGuide() {
   const yunHandler = () => {
     setGuideData({
       name: '최윤정',
-      text: '반가워요!',
+      text: '하루하루 빠르게 변하지만 도시 한복판에 600년의 역사를 가지고 있는 매력적인 도시 서울! 갈 곳 많고 볼 것 많은 서울을 알차고 즐겁게 여행하실 수 있도록 도와드립니다.',
       imgLink: '/img/yun.png',
     });
   };

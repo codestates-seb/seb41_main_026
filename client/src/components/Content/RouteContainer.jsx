@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 /* image items */
 import time from '../../img/time.png';
 import route from '../../img/route.png';
 import github from '../../img/vector.png';
-import sampleImg from '../../img/sampleImg.jpg';
 import tripImg from '../../img/tripImg.jpg';
 
 const Container = styled.div`
   margin-top: 20px;
+
   .tabCustom button {
     background-color: #0c7b93;
     color: white;
@@ -43,6 +43,7 @@ const RouteImg = styled.img`
   width: 200px;
   height: 200px;
   border-radius: 5px;
+  border: 1px solid #ececec;
 `;
 
 const RouteText = styled.div`
@@ -54,7 +55,7 @@ const RouteTitle = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
-  color: white;
+  color: black;
   margin-bottom: 10px;
 `;
 
@@ -62,7 +63,7 @@ const RouteDes = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #9c9c9c;
+  color: #909090;
 `;
 
 const GuideWrap = styled.div`
@@ -84,6 +85,7 @@ const GuideBox = styled.div`
   border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
+  background-color: white;
 `;
 
 const Guideline = styled.div`
@@ -113,7 +115,7 @@ const GuideName = styled.div`
   margin-top: 20px;
   font-weight: 400;
   font-size: 20px;
-  color: white;
+  color: black;
 `;
 
 const GuideText = styled.div`
@@ -122,6 +124,7 @@ const GuideText = styled.div`
   font-size: 16px;
   line-height: 150%;
   color: #9c9c9c;
+  padding: 14px;
 `;
 
 const InfoContainer = styled.div`
@@ -193,6 +196,7 @@ const TagBox = styled.div`
   border-radius: 20px;
   display: flex;
   align-items: center;
+  background-color: white;
 `;
 
 const Tag = styled.span`
@@ -209,8 +213,187 @@ const Tag = styled.span`
   color: white;
 `;
 
-function RouteContainer({ courseData }) {
-  console.log(courseData);
+function RouteContainer({ id, courseData }) {
+  const [filteredImg, setFilteredImg] = useState(null);
+  const routeAllImg = [
+    {
+      id: 1,
+      imgLink: [
+        '/img/1busan1.jpg',
+        '/img/1busan2.jpg',
+        '/img/1busan3.jpg',
+        '/img/1busan4.jpg',
+      ],
+    },
+    {
+      id: 2,
+      imgLink: [
+        '/img/2busan1.jpg',
+        '/img/2busan2.jpg',
+        '/img/2busan3.jpg',
+        '/img/2busan4.jpg',
+      ],
+    },
+    {
+      id: 3,
+      imgLink: [
+        '/img/3busan1.jpg',
+        '/img/3busan2.jpg',
+        '/img/3busan3.jpg',
+        '/img/3busan4.jpg',
+        '/img/3busan5.jpg',
+        '/img/3busan6.jpg',
+      ],
+    },
+    {
+      id: 4,
+      imgLink: [
+        '/img/1paju1.jpeg',
+        '/img/1paju2.jpeg',
+        '/img/1paju3.jpeg',
+        '/img/1paju4.jpeg',
+      ],
+    },
+    {
+      id: 5,
+      imgLink: ['/img/2paju1.jpeg'],
+    },
+    {
+      id: 6,
+      imgLink: [
+        '/img/3paju1.jpeg',
+        '/img/3paju2.jpeg',
+        '/img/3paju3.jpeg',
+        '/img/3paju4.jpeg',
+      ],
+    },
+    {
+      id: 7,
+      imgLink: [
+        '/img/daegu1.jpeg',
+        '/img/daegu2.jpeg',
+        '/img/daegu3.jpeg',
+        '/img/daegu4.jpeg',
+        '/img/daegu5.jpeg',
+      ],
+    },
+    {
+      id: 8,
+      imgLink: [
+        '/img/gumi1.jpeg',
+        '/img/gumi2.jpeg',
+        '/img/gumi3.jpeg',
+        '/img/gumi4.jpeg',
+      ],
+    },
+    {
+      id: 9,
+      imgLink: [
+        '/img/changwon1.jpeg',
+        '/img/changwon2.jpeg',
+        '/img/changwon3.jpeg',
+        '/img/changwon4.jpeg',
+        '/img/changwon5.jpeg',
+        '/img/changwon6.jpeg',
+      ],
+    },
+    {
+      id: 10,
+      imgLink: [
+        '/img/andong1.jpeg',
+        '/img/andong2.jpeg',
+        '/img/andong3.jpeg',
+        '/img/andong4.jpeg',
+      ],
+    },
+    {
+      id: 11,
+      imgLink: [
+        '/img/geongju1.jpeg',
+        '/img/geongju2.jpeg',
+        '/img/geongju3.jpeg',
+        '/img/geongju4.jpeg',
+        '/img/geongju5.jpeg',
+      ],
+    },
+    {
+      id: 12,
+      imgLink: [
+        '/img/pohang1.jpeg',
+        '/img/pohang2.jpeg',
+        '/img/pohang3.jpeg',
+        '/img/pohang4.jpeg',
+      ],
+    },
+    {
+      id: 13,
+      imgLink: [
+        '/img/hapcheon1.jpg',
+        '/img/hapcheon2.jpg',
+        '/img/hapcheon3.jpg',
+      ],
+    },
+    {
+      id: 14,
+      imgLink: [
+        '/img/masan1.jpg',
+        '/img/masan2.jpg',
+        '/img/masan3.jpg',
+        '/img/masan4.jpg',
+      ],
+    },
+    {
+      id: 15,
+      imgLink: [
+        '/img/sokcho1.jpg',
+        '/img/sokcho2.jpg',
+        '/img/sokcho3.jpg',
+        '/img/sokcho4.jpg',
+      ],
+    },
+    {
+      id: 16,
+      imgLink: [
+        '/img/1seoul1.jpeg',
+        '/img/1seoul2.jpeg',
+        '/img/1seoul3.jpeg',
+        '/img/1seoul4.jpeg',
+      ],
+    },
+    {
+      id: 17,
+      imgLink: [
+        '/img/2seoul1.jpeg',
+        '/img/2seoul2.jpeg',
+        '/img/2seoul3.jpeg',
+        '/img/2seoul4.jpeg',
+        '/img/2seoul5.jpeg',
+      ],
+    },
+
+    {
+      id: 18,
+      imgLink: [
+        '/img/3seoul1.jpeg',
+        '/img/3seoul2.jpeg',
+        '/img/3seoul3.jpeg',
+        '/img/3seoul4.jpeg',
+      ],
+    },
+  ];
+
+  console.log(id);
+
+  useEffect(() => {
+    setFilteredImg(
+      routeAllImg.filter(ele => {
+        console.log(ele.id === Number(id));
+        return ele.id === Number(id);
+      }),
+    );
+  }, []);
+
+  console.log(filteredImg);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
       <nav className="col-sm-8 px-0 flex-grow-1 mb-5">
@@ -243,6 +426,7 @@ function RouteContainer({ courseData }) {
         <div
           className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
           id="nav-tabContent"
+          style={{ backgroundColor: 'white' }}
         >
           <RouteBox
             className="tab-pane active"
@@ -252,17 +436,20 @@ function RouteContainer({ courseData }) {
             tabindex="0"
           >
             {courseData !== null &&
-              courseData.courseDatas.map(ele => {
-                return (
-                  <RouteCard key={ele.courseDataId}>
-                    <RouteImg src={sampleImg} />
-                    <RouteText>
-                      <RouteTitle>{ele.title}</RouteTitle>
-                      <RouteDes>{ele.text}</RouteDes>
-                    </RouteText>
-                  </RouteCard>
-                );
-              })}
+            filteredImg !== null &&
+            filteredImg.length !== 0
+              ? courseData.courseDatas.map((ele, idx) => {
+                  return (
+                    <RouteCard key={ele.courseDataId}>
+                      <RouteImg src={filteredImg[0].imgLink[idx]} />
+                      <RouteText>
+                        <RouteTitle>{ele.title}</RouteTitle>
+                        <RouteDes>{ele.text}</RouteDes>
+                      </RouteText>
+                    </RouteCard>
+                  );
+                })
+              : null}
           </RouteBox>
           <div
             className="tab-pane"

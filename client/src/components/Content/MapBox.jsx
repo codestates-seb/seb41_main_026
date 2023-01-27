@@ -87,8 +87,8 @@ function MapBox({ courseData }) {
   const [eatFocus, setEatFocus] = useState(false);
   const [sleepFocus, setSleepFocus] = useState(false);
   const [path, setPath] = useState(null);
-  // const inputRef = useRef();
   const [searchBox, setSearchBox] = useState(null);
+  const [searchMarker, setSearchMarker] = useState(null);
 
   useEffect(() => {
     if (courseData !== null) {
@@ -241,6 +241,10 @@ function MapBox({ courseData }) {
     console.log(searchBox.getPlaces());
     const [place] = searchBox.getPlaces();
     if (place) {
+      setSearchMarker({
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      });
       setCenter({
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng(),
@@ -250,6 +254,7 @@ function MapBox({ courseData }) {
   const onSBLoad = ref => {
     setSearchBox(ref);
   };
+
   return (
     <Container className="row min-vh-100 flex-column flex-md-row">
       <LoadScript
@@ -281,6 +286,9 @@ function MapBox({ courseData }) {
               }}
             />
           </StandaloneSearchBox>
+
+          {searchMarker !== null && <MarkerF key={1} position={searchMarker} />}
+
           {marker === 'travelSpot' && courseData !== null
             ? courseData.travelSpots.map((ele, idx) => {
                 const position = { lat: Number(ele.lat), lng: Number(ele.lng) };

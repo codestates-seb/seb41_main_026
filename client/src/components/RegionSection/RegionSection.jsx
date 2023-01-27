@@ -84,6 +84,30 @@ const bgLink = [
   { id: 4, region: '강원도', imgLink: '/img/naksansaBg.jpg' },
 ];
 
+const thumbnail = [
+  { id: 1, imgLink: '/img/1busan1.jpg' },
+  { id: 2, imgLink: '/img/2busan1.jpg' },
+  { id: 3, imgLink: '/img/3busan1.jpg' },
+  { id: 4, imgLink: '/img/1paju1.jpeg' },
+  { id: 5, imgLink: '/img/2paju1.jpeg' },
+  { id: 6, imgLink: '/img/3paju1.jpeg' },
+  { id: 7, imgLink: '/img/daegu1.jpeg' },
+  { id: 8, imgLink: '/img/gumi1.jpeg' },
+  { id: 9, imgLink: '/img/changwon1.jpeg' },
+  { id: 10, imgLink: '/img/andong1.jpeg' },
+  { id: 11, imgLink: '/img/geongju1.jpeg' },
+  { id: 12, imgLink: '/img/pohang1.jpeg' },
+  { id: 13, imgLink: '/img/hapcheon1.jpg' },
+  {
+    id: 14,
+    imgLink: '/img/masan1.jpg',
+  },
+  { id: 15, imgLink: '/img/sokcho1.jpg' },
+  { id: 16, imgLink: '/img/1seoul1.jpeg' },
+  { id: 17, imgLink: '/img/2seoul1.jpeg' },
+  { id: 18, imgLink: '/img/3seoul1.jpeg' },
+];
+
 function RegionSection({ region }) {
   const ref = useRef();
   const [location, setLocation] = useState(0);
@@ -134,7 +158,13 @@ function RegionSection({ region }) {
                 <div />
               ) : (
                 filteredData.map(ele => {
-                  return <CourseCard key={ele.courseId} ele={ele} />;
+                  return (
+                    <CourseCard
+                      key={ele.courseId}
+                      ele={ele}
+                      thumbnail={thumbnail}
+                    />
+                  );
                 })
               )}
             </CardBox>

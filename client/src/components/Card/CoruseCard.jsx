@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import img from '../../img/sampleImg.jpg';
 
 const CardBox = styled.div`
   &:hover {
@@ -70,10 +69,12 @@ const CardButton = styled.button`
   cursor: pointer;
 `;
 
-function CourseCard({ ele }) {
+function CourseCard({ ele, thumbnail }) {
   return (
     <CardBox>
-      <CardImg src={img} />
+      {thumbnail.map(
+        el => ele.courseId === el.id && <CardImg src={el.imgLink} />,
+      )}
       <CardTitle>{ele.courseName}</CardTitle>
       <CardText>{ele.content}</CardText>
       <Link style={{ textDecoration: 'none' }} to={`./course/${ele.courseId}`}>
