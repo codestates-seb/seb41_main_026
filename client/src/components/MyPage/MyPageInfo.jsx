@@ -8,8 +8,6 @@ import NotFound from './NotFound';
 import { getUserId } from '../../redux/userSlice';
 import { getCookie } from '../../util/cookie';
 
-// const userId = sessionStorage.getItem('user_Id');
-
 function MyPageInfo() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

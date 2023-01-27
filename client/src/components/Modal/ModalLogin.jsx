@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import dayjs from 'dayjs';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { setUserInfo, getUserId } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
@@ -31,12 +31,13 @@ const SocialButtons = styled.button`
 
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const findUserId = useSelector(getUserId);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const loginRequestHandler = () => {
     setIsLoading(true);
@@ -81,7 +82,6 @@ function ModalLogin() {
     }
     setIsLoading(true);
     // eslint-disable-next-line no-unused-expressions
-    isLoading;
 
     axios
       .post(
@@ -100,7 +100,7 @@ function ModalLogin() {
           expires,
         });
         setCookie('refreshToken', refresh);
-        // navigate('/');
+        navigate('/');
         window.location.reload();
 
         dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
@@ -177,7 +177,7 @@ function ModalLogin() {
                 <input
                   type="email"
                   className="form-control border-0 border-bottom ms-3"
-                  id="email"
+                  id="loginEmail"
                   placeholder="이메일을 적으세요"
                   onChange={handleInputValue('email')}
                   style={{
@@ -198,8 +198,9 @@ function ModalLogin() {
                 />
                 <input
                   type="password"
+                  autoComplete="off"
                   className="form-control border-0 border-bottom ms-3"
-                  id="password"
+                  id="loginPassword"
                   placeholder="비밀번호를 적으세요"
                   onChange={handleInputValue('password')}
                   style={{

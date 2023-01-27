@@ -8,8 +8,6 @@ import MyPageUsercard from './MyPageUsercard';
 import { getUserId } from '../../redux/userSlice';
 import { getCookie } from '../../util/cookie';
 
-// const userId = sessionStorage.getItem('user_Id');
-
 function MyPageBody() {
   const [myCommentCourse, setMyCommentCourse] = useState([]);
   const [myLikeCourse, setMyLikeCourse] = useState([]);
@@ -200,7 +198,6 @@ function MyPageBody() {
                           &ensp;
                           {String(hour) + data.createdAt.slice(-6, -3)}
                         </div>
-
                         <hr className="text-light" />
                       </div>
                     );

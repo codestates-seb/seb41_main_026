@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-// import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { setUserInfo } from '../../redux/userSlice';
-// import signUpAPI from '../../API/signUpAPI';
+// // import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 import {
-  handleEmail,
   handleName,
+  handleEmail,
   handleNameL,
   handlePassword,
 } from '../../util/alertStore';
@@ -41,6 +40,8 @@ function ModalSignUp() {
     email: '',
     password: '',
   });
+  // eslint-disable-next-line no-unused-vars
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const naviagte = useNavigate();
@@ -69,6 +70,9 @@ function ModalSignUp() {
       handlePassword();
       return false;
     }
+    setIsLoading(true);
+    // eslint-disable-next-line no-unused-expressions
+
     // 회원가입
     // signUpAPI(name, email, password).then(res => {
     //   if (res !== '') {
@@ -116,7 +120,7 @@ function ModalSignUp() {
           window.location.reload();
           window.alert('회원가입 성공!');
         })
-        .catch(err => console.log(err, '회원가입 실패!'));
+        .catch(err => window.alert(err, '회원가입 실패!'));
     });
   };
 
@@ -189,7 +193,7 @@ function ModalSignUp() {
                 <input
                   type="email"
                   className="form-control border-0 border-bottom ms-3"
-                  id="email"
+                  id="signUpEmail"
                   placeholder="이메일을 적으세요"
                   onChange={handleInputValue('email')}
                   style={{
@@ -210,8 +214,9 @@ function ModalSignUp() {
                 />
                 <input
                   type="password"
+                  autoComplete="off"
                   className="form-control border-0 border-bottom ms-3"
-                  id="password"
+                  id="signUpPassword"
                   placeholder="비밀번호를 적으세요"
                   onChange={handleInputValue('password')}
                   style={{
@@ -230,7 +235,12 @@ function ModalSignUp() {
                 >
                   취소
                 </button>
-                <Buttons type="submit" className="btn" onClick={handleSignUp}>
+                <Buttons
+                  type="submit"
+                  className="btn"
+                  onClick={handleSignUp}
+                  data-bs-dismiss="modal"
+                >
                   회원가입
                 </Buttons>
               </div>

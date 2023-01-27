@@ -181,10 +181,14 @@ function Header() {
               </div>
             </div>
           ) : (
-            <form className="d-flex justify-content-end">
-              <ModalLogin />
-              <ModalSignUp />
-            </form>
+            <>
+              <form className="d-flex justify-content-end">
+                <ModalLogin />
+              </form>
+              <form className="d-flex justify-content-end">
+                <ModalSignUp />
+              </form>
+            </>
           )}
         </div>
       </div>
