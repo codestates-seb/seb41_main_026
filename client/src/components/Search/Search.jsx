@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 
-function Search({ data, checkedItemHandler }) {
-  const [isChecked, setIsChecked] = useState(true);
+function Search({ data }) {
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [checkedValues, setValue] = useState([]);
 
-  const checkHandler = ({ target }) => {
-    setIsChecked(!isChecked);
-    checkedItemHandler(data.name, target.checked);
+  const checkHandler = event => {
+    // setIsChecked(!isChecked);
+    const [list, setList] = useState([]);
+
+    const { value, checked } = event.target;
+    if (checked) {
+      setList([...list, value]);
+    } else {
+      setList(list.filter(e => e !== value));
+    }
+
+    console.log(list);
   };
 
   return (
@@ -16,9 +26,8 @@ function Search({ data, checkedItemHandler }) {
           className="form-check-input"
           type="checkbox"
           value={data.name}
-          id="flexCheckChecked"
-          checked={isChecked}
-          onChange={e => checkHandler(e)}
+          id={data.name}
+          onChange={checkHandler}
         />
         <label
           className="form-check-label pt-1"
