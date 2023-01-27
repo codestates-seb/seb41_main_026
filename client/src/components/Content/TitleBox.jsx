@@ -2,23 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Box = styled.div`
-width: 100%;
+  width: 100%;
   display: flex;
   position: fixed;
   margin: 10px 0px;
   padding: 5px 0;
   justify-content: center;
-  align-items: flex-end; bottom;
+  align-items: flex-end;
   background-color: rgba(0, 0, 0, 0.5);
   top: 55px;
   z-index: 100;
 `;
 
 const Title = styled.span`
-  width: 135px;
+  width: 360px;
   height: 38px;
   font-weight: 400;
-  font-size: 32px;
+  font-size: 22px;
   line-height: 48px;
   color: white;
   margin-left: 20px;

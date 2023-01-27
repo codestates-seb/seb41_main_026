@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import useAxios from '../../util/useAxios';
 import Layout from '../../components/Common/Layout';
+import MyPageCard from '../../components/Card/MyPageCard';
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -15,23 +17,36 @@ const GuideBox = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
+  @media screen and (max-width: 910px) {
+    width: 355px;
+  }
+  flex-wrap: wrap;
 `;
 
 const GuideImg = styled.img`
   width: 90px;
+  height: 90px;
   border-radius: 50%;
+  margin-top: 30px;
   cursor: pointer;
+  :hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
 `;
 
 const GuideTitle = styled.div`
   font-family: 'ABeeZee';
   font-weight: 400;
-  font-size: 42px;
+  font-size: 38px;
   line-height: 100%;
   text-align: center;
   letter-spacing: -0.06em;
   color: #ffffff;
   margin-top: 130px;
+  margin-bottom: 40px;
 `;
 
 const GuideInfoBox = styled.div`
@@ -42,6 +57,7 @@ const GuideInfoBox = styled.div`
   align-items: center;
   flex-direction: column;
   position: relative;
+  margin-bottom: 150px;
 `;
 
 const GuideInfo = styled.div`
@@ -53,6 +69,13 @@ const GuideInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 910px) {
+    width: 600x;
+  }
+  @media screen and (max-width: 650px) {
+    width: 450px;
+  }
+  margin-bottom: 350px;
 `;
 
 const GuideName = styled.div`
@@ -61,17 +84,8 @@ const GuideName = styled.div`
   font-size: 30px;
   line-height: 35px;
   text-align: center;
-  color: #171c2c;
-  margin-top: 20px;
-`;
-
-const GuideAlias = styled.div`
-  font-family: 'ABeeZee';
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  color: #ffffff;
-  margin-top: 20px;
+  color: #e1e1e1;
+  margin-top: 30px;
 `;
 
 const GuideText = styled.div`
@@ -82,7 +96,8 @@ const GuideText = styled.div`
   line-height: 170%;
   text-align: center;
   color: #142850;
-  margin-top: 40px;
+  margin-top: 30px;
+  padding: 20px;
 `;
 
 const GuideAnimationBox = styled.div`
@@ -93,7 +108,13 @@ const GuideAnimationBox = styled.div`
   border-radius: 10px;
   position: absolute;
   z-index: -1;
-  bottom: 60px;
+  bottom: 300px;
+  @media screen and (max-width: 910px) {
+    width: 550x;
+  }
+  @media screen and (max-width: 650px) {
+    width: 400px;
+  }
 `;
 
 const GuideDefalutBox = styled.div`
@@ -103,14 +124,19 @@ const GuideDefalutBox = styled.div`
   box-shadow: 0px 20px 60px rgba(46, 33, 61, 0.08);
   border-radius: 10px;
   position: absolute;
-  bottom: 0px;
+  bottom: 255px;
   z-index: -2;
+  @media screen and (max-width: 910px) {
+    width: 500x;
+  }
+  @media screen and (max-width: 650px) {
+    width: 350px;
+  }
 `;
 
 function MainGuide() {
   const [guideData, setGuideData] = useState({
     name: '이동국',
-    alias: '26조 팀장',
     text: '난 매일 새벽 6시에 일어나 운동을 해요. 가끔 사람들이 유명인 닮았다는 얘기를 해주는데요,\n솔직히 저는 잘 모르겠어요.\n 저와 친해지고 싶으면 창원, 대구, 구미로 놀러오세요.',
     imgLink: '/img/dk.png',
   });
@@ -118,7 +144,6 @@ function MainGuide() {
   const dkHandler = () => {
     setGuideData({
       name: '이동국',
-      alias: '26조 팀장',
       text: '난 매일 새벽 6시에 일어나 운동을 해요. 가끔 사람들이 유명인 닮았다는 얘기를 해주는데요,\n솔직히 저는 잘 모르겠어요.\n 저와 친해지고 싶으면 창원, 대구, 구미로 놀러오세요.',
       imgLink: '/img/dk.png',
     });
@@ -127,8 +152,7 @@ function MainGuide() {
   const yunHandler = () => {
     setGuideData({
       name: '최윤정',
-      alias: '별명',
-      text: '인사말인사말',
+      text: '반가워요!',
       imgLink: '/img/yun.png',
     });
   };
@@ -136,8 +160,7 @@ function MainGuide() {
   const dhHandler = () => {
     setGuideData({
       name: '김동현',
-      alias: '디온',
-      text: '여행지의 설레는 마음을 어떤곳이든 느낄 수 있도록!\n 제가 여행하는 느낌으로 코스를 짭니다',
+      text: '여행지의 설레는 마음을 어떤곳이든 느낄 수 있도록!',
       imgLink: '/img/dh.png',
     });
   };
@@ -145,8 +168,7 @@ function MainGuide() {
   const jinHandler = () => {
     setGuideData({
       name: '최진우',
-      alias: '별명',
-      text: '인사말인사말',
+      text: '여행은 즐거워야 한다!',
       imgLink: '/img/jinwoo.png',
     });
   };
@@ -154,8 +176,7 @@ function MainGuide() {
   const seongHandler = () => {
     setGuideData({
       name: '유성민',
-      alias: '별명',
-      text: '인사말인사말',
+      text: '시원한 바닷바람 맞으며 힐링! 부산으로 여행오세요!',
       imgLink: '/img/seong.png',
     });
   };
@@ -163,11 +184,21 @@ function MainGuide() {
   const wonHandler = () => {
     setGuideData({
       name: '김원도',
-      alias: '별명',
-      text: '인사말인사말',
+      text: '역사 여행을 한 번 떠나보시는것 어떠신가요?\n유교문화(안동), 신라(경주)로 역사 여행을 경험해보세요.\n그리고 포항 바람을 느껴 보시는 것도 추천드립니다.',
       imgLink: '/img/wondo.png',
     });
   };
+
+  let filteredData = null;
+  const data = useAxios(`${process.env.REACT_APP_API_URL}/course`);
+
+  if (data !== null) {
+    filteredData = data.filter(ele => {
+      return ele.guideName === guideData.name;
+    });
+  }
+
+  console.log(filteredData);
 
   return (
     <Layout header footer>
@@ -188,7 +219,7 @@ function MainGuide() {
               src={guideData.imgLink}
             />
             <GuideName>{guideData.name}</GuideName>
-            <GuideAlias>{guideData.alias}</GuideAlias>
+
             <GuideText>
               {guideData.text.split('\n').map(ele => {
                 return (
@@ -203,6 +234,26 @@ function MainGuide() {
           <GuideAnimationBox />
           <GuideDefalutBox />
         </GuideInfoBox>
+        <main className="container col-sm-12 px-0 mb-5 py-5">
+          <h1 className="text-center fs-2">
+            {guideData.name} 가이드의 담당 코스들
+          </h1>
+          <div className="container py-3">
+            <div className="row row-cols-1 row-cols-md-3 g-4">
+              {filteredData &&
+                filteredData.map(el => {
+                  return (
+                    <MyPageCard
+                      key={el.courseId}
+                      title={el.courseName}
+                      location={el.location}
+                      id={el.courseId}
+                    />
+                  );
+                })}
+            </div>
+          </div>
+        </main>
       </Container>
     </Layout>
   );
