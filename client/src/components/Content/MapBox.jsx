@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
   GoogleMap,
-  LoadScriptNext,
+  LoadScript,
   MarkerF,
   Polyline,
+  StandaloneSearchBox,
 } from '@react-google-maps/api';
 import styled from 'styled-components';
 
@@ -86,6 +87,8 @@ function MapBox({ courseData }) {
   const [eatFocus, setEatFocus] = useState(false);
   const [sleepFocus, setSleepFocus] = useState(false);
   const [path, setPath] = useState(null);
+  // const inputRef = useRef();
+  const [searchBox, setSearchBox] = useState(null);
 
   useEffect(() => {
     if (courseData !== null) {
@@ -234,9 +237,25 @@ function MapBox({ courseData }) {
     });
   };
 
+  const onPlacesChanged = () => {
+    console.log(searchBox.getPlaces());
+    const [place] = searchBox.getPlaces();
+    if (place) {
+      setCenter({
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      });
+    }
+  };
+  const onSBLoad = ref => {
+    setSearchBox(ref);
+  };
   return (
     <Container className="row min-vh-100 flex-column flex-md-row">
-      <LoadScriptNext googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM">
+      <LoadScript
+        libraries={['places']}
+        googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM"
+      >
         <GoogleMap
           style={{ position: 'relative' }}
           zoom={13}
@@ -244,6 +263,24 @@ function MapBox({ courseData }) {
           mapContainerClassName="map-container"
           className="col-sm-8 px-0 flex-grow-1 mb-5"
         >
+          <StandaloneSearchBox
+            onPlacesChanged={onPlacesChanged}
+            onLoad={onSBLoad}
+          >
+            <input
+              type="text"
+              className="form-control"
+              placeholder="지역을 검색하세요"
+              style={{
+                position: 'absolute',
+                width: '350px',
+                height: '40px',
+                backgroundColor: 'white',
+                top: '10px',
+                left: '180px',
+              }}
+            />
+          </StandaloneSearchBox>
           {marker === 'travelSpot' && courseData !== null
             ? courseData.travelSpots.map((ele, idx) => {
                 const position = { lat: Number(ele.lat), lng: Number(ele.lng) };
@@ -306,7 +343,7 @@ function MapBox({ courseData }) {
             </Spot>
           </Category>
         </GoogleMap>
-      </LoadScriptNext>
+      </LoadScript>
       <div className="col-sm-4 ps-3">
         {marker === 'travelSpot' && courseData !== null
           ? courseData.travelSpots.map((ele, idx) => {
