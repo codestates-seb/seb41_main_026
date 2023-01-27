@@ -24,13 +24,12 @@ function ModalDeleteUser() {
         },
       })
       .then(res => {
-        console.log(res.data);
         removeCookie('accessToken');
         removeCookie('refreshToken');
         sessionStorage.clear();
         navigate('/');
         window.location.reload();
-        window.alert('회원 탈퇴 완료...');
+        window.alert(res, '회원 탈퇴 완료...');
       })
       .catch(() => window.alert('회원 탈퇴 실패.'));
   };

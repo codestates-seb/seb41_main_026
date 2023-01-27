@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import { setUserInfo, getUserId } from '../../redux/userSlice';
+import { setUserInfo } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 import { handleEmail, handlePassword } from '../../util/alertStore';
@@ -35,7 +35,6 @@ function ModalLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  const findUserId = useSelector(getUserId);
 
   const navigate = useNavigate();
 
@@ -80,8 +79,6 @@ function ModalLogin() {
       handlePassword();
       return false;
     }
-    setIsLoading(true);
-    // eslint-disable-next-line no-unused-expressions
 
     axios
       .post(
@@ -104,13 +101,13 @@ function ModalLogin() {
         window.location.reload();
 
         dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
-        console.log('이전 상태를 불러왔음 ', findUserId);
         window.alert('로그인 성공!');
       })
       .catch(err => {
         window.alert(err, '로그인 실패!');
       });
   };
+  // 비번 찾기 로직
   // eslint-disable-next-line consistent-return
   const onSubmitHandler = e => {
     e.preventDefault();

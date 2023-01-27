@@ -71,7 +71,6 @@ function ModalSignUp() {
       return false;
     }
     setIsLoading(true);
-    // eslint-disable-next-line no-unused-expressions
 
     // 회원가입
     // signUpAPI(name, email, password).then(res => {
@@ -95,6 +94,7 @@ function ModalSignUp() {
         },
       },
       // { withCredentials: true },
+      // eslint-disable-next-line no-unused-vars
     ).then(res => {
       axios
         .post(
@@ -104,7 +104,6 @@ function ModalSignUp() {
             password,
           },
           // { withCredentials: true },
-          console.log(res),
         )
         // eslint-disable-next-line no-shadow
         .then(res => {
