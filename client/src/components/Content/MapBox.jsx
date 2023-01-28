@@ -8,8 +8,6 @@ import {
 } from '@react-google-maps/api';
 import styled from 'styled-components';
 
-import sampleImg from '../../img/sampleImg.jpg';
-
 const Container = styled.div`
   margin-top: 50px;
   .map-container {
@@ -367,13 +365,6 @@ function MapBox({ courseData }) {
                     }}
                   >
                     <div className="row g-2">
-                      <div className="col-md-4 col-sm-4 col-4">
-                        <img
-                          src={sampleImg}
-                          className="rounded-start img-fluid px-1 pt-1"
-                          alt="img"
-                        />
-                      </div>
                       <div className="col-md-8">
                         <div className="card-body">
                           <div className="d-flex">
@@ -405,13 +396,6 @@ function MapBox({ courseData }) {
                   }}
                 >
                   <div className="row g-2">
-                    <div className="col-md-4 col-sm-4 col-4">
-                      <img
-                        src={sampleImg}
-                        className="rounded-start img-fluid px-1 pt-1"
-                        alt="img"
-                      />
-                    </div>
                     <div className="col-md-8">
                       <div className="card-body">
                         <div className="d-flex">
@@ -442,13 +426,6 @@ function MapBox({ courseData }) {
                   }}
                 >
                   <div className="row g-2">
-                    <div className="col-md-4 col-sm-4 col-4">
-                      <img
-                        src={sampleImg}
-                        className="rounded-start img-fluid px-1 pt-1"
-                        alt="img"
-                      />
-                    </div>
                     <div className="col-md-8">
                       <div className="card-body">
                         <div className="d-flex">

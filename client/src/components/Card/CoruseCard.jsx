@@ -54,8 +54,8 @@ const CardText = styled.div`
 `;
 
 const CardButton = styled.button`
-  width: 116px;
-  height: 38px;
+  width: 160px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
