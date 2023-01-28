@@ -32,14 +32,12 @@ const SocialButtons = styled.button`
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
   // eslint-disable-next-line no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const loginRequestHandler = () => {
-    setIsLoading(true);
     window.location.assign(
       `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
     );
@@ -73,7 +71,6 @@ function ModalLogin() {
         // { withCredentials: true },
       )
       .then(res => {
-        setIsLoading(false);
         const expires = dayjs().add('60', 'm').toDate();
         const { authorization, refresh, userid } = res.headers;
         setCookie('accessToken', decodeURIComponent(`${authorization}`), {
@@ -86,8 +83,23 @@ function ModalLogin() {
         dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
         window.alert('로그인 성공!');
       })
+      // eslint-disable-next-line no-unused-vars
       .catch(err => {
-        window.alert(err, '로그인 실패!');
+        let errorText;
+        const { message } = err;
+        const code = Number(message.slice(-3));
+        switch (code) {
+          case 401:
+            errorText =
+              '잘못된 이메일이나 패스워드 입니다, 다시 한번 확인해 주세요.';
+            break;
+          case 500:
+            errorText = '서비스에 문제가 있습니다.';
+            break;
+          default:
+            errorText = message;
+        }
+        return alert(errorText);
       });
   };
   // 비번 찾기 로직
@@ -99,10 +111,8 @@ function ModalLogin() {
       handleEmail();
       return false;
     }
-    setIsLoading(true);
     findPasswordApi(email)
       .then(() => {
-        setIsLoading(false);
         window.alert('이메일이 발송되었습니다.');
       })
       .catch(err => {
@@ -132,7 +142,7 @@ function ModalLogin() {
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-3 text-black"
+                  className="modal-title fs-3 text-white"
                   id="exampleModalLabel"
                 >
                   Log In

@@ -7,7 +7,7 @@ export const handleNameL = () => {
 };
 
 export const handleEmail = () => {
-  alert('이메일이 타당하지 않습니다.');
+  alert('이메일이 형식이 타당하지 않습니다.');
 };
 
 export const handlePassword = () => {
