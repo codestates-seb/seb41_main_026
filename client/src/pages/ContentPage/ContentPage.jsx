@@ -148,8 +148,6 @@ function ContentPage() {
     setChange(!change);
   }, [window.localStorage.getItem('heartStatus')]);
 
-  console.log(courseData);
-  console.log(heartData);
   return (
     <Layout header footer>
       <TitleBox courseData={courseData} />
