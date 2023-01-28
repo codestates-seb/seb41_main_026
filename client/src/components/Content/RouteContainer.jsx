@@ -209,6 +209,7 @@ const Tag = styled.span`
 
 function RouteContainer({ id, courseData }) {
   const [filteredImg, setFilteredImg] = useState(null);
+  // const [profileImg, setProfileImg] = useState('');
   const routeAllImg = [
     {
       id: 1,
@@ -376,12 +377,50 @@ function RouteContainer({ id, courseData }) {
     },
   ];
 
-  console.log(id);
+  // const guideImg = [
+  //   {
+  //     name: '유성민',
+  //     imgLink: '/img/seong.png',
+  //     bgLink: '/img/2busan1.jpg',
+  //   },
+  //   {
+  //     name: '이동국',
+  //     imgLink: '/img/dk.png',
+  //     bgLink: '/img/changwon1.jpeg',
+  //   },
+  //   {
+  //     name: '최윤정',
+  //     imgLink: '/img/yun.png',
+  //     bgLink: '/img/2seoul1.jpeg',
+  //   },
+  //   {
+  //     name: '김동현',
+  //     imgLink: '/img/dh.png',
+  //     bgLink: '/img/hapcheon1.jpg',
+  //   },
+  //   {
+  //     name: '최진우',
+  //     imgLink: '/img/jinwoo.png',
+  //     bgLink: '/img/3paju1.jpeg',
+  //   },
+  //   {
+  //     name: '김원도',
+  //     imgLink: '/img/wondo.png',
+  //     bgLink: '/img/geongju1.jpeg',
+  //   },
+  // ];
+  // const [profile, setProfile] = useState([]);
+  // useEffect(() => {
+  //   setProfile(
+  //     guideImg.filter(i => {
+  //       return i.name === courseData.guideName;
+  //     }),
+  //   );
+  // }, []);
 
   useEffect(() => {
     setFilteredImg(
       routeAllImg.filter(ele => {
-        console.log(ele.id === Number(id));
         return ele.id === Number(id);
       }),
     );
@@ -482,7 +521,7 @@ function RouteContainer({ id, courseData }) {
       </nav>
       <aside style={{ zIndex: '2' }} className="col-md-4 ps-5 py-0 sticky-top">
         <TagWrap>
-          <TagTitle>태그</TagTitle>
+          <TagTitle>추천 계절</TagTitle>
           <TagBox>
             {courseData !== null
               ? courseData.tag.map(ele => {

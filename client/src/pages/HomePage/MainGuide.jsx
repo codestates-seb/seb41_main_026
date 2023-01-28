@@ -224,7 +224,7 @@ function MainGuide() {
           <h1 className="text-center fs-2">
             {guideData.name} 가이드의 담당 코스들
           </h1>
-          <div className="container py-3">
+          <div className="container py-3 mb-5">
             <div className="row row-cols-1 row-cols-md-3 g-4">
               {filteredData &&
                 filteredData.map(el => {
