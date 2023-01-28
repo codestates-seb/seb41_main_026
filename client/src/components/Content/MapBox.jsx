@@ -33,6 +33,10 @@ const Container = styled.div`
 const Location = styled.div`
   cursor: pointer;
   margin-top: 10px;
+  background-color: #0c7b93;
+  :hover {
+    background-color: #00a8cc;
+  }
 `;
 
 // const LocationImg = styled.img`
@@ -361,7 +365,6 @@ function MapBox({ courseData }) {
                     onClick={() => locationHandler(idx, 'travel')}
                     style={{
                       maxWidth: '540px',
-                      backgroundColor: '#0c7b93',
                     }}
                   >
                     <div className="row g-2">
