@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { getCookie } from '../../util/cookie';
@@ -116,6 +116,7 @@ const Triangle = styled.div`
 
 function MainBox({ courseData, id, sessionUserId, commentRef }) {
   const [comment, setComment] = useState('');
+  const blurRef = useRef();
   const commentHandler = e => {
     setComment(e.target.value);
   };
@@ -143,11 +144,14 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
   };
 
   const enterHandler = e => {
+    e.preventDefault();
     if (e.keyCode === 13) {
       postHandler();
+      blurRef.current.blur();
     }
   };
 
+  console.log(courseData);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row">
       <main className="col-sm-8 px-0 flex-grow-1 mb-5">
@@ -190,6 +194,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
         </CommentList>
         <CommentInputSection>
           <CommentInput
+            ref={blurRef}
             className="col-sm-10"
             value={comment}
             placeholder="댓글 달기"
