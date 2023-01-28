@@ -168,14 +168,14 @@ function Header() {
               </div>
             </div>
           ) : (
-            <>
+            <div className="d-flex column justify-content-end">
               <form className="d-flex justify-content-end">
                 <ModalLogin />
               </form>
               <form className="d-flex justify-content-end">
                 <ModalSignUp />
               </form>
-            </>
+            </div>
           )}
         </div>
       </div>
