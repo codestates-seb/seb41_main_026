@@ -7,6 +7,7 @@ import Layout from '../Common/Layout';
 import NotFound from './NotFound';
 import { getUserId } from '../../redux/userSlice';
 import { getCookie } from '../../util/cookie';
+import { handleName, handleNameL, handlePassword } from '../../util/alertStore';
 
 function MyPageInfo() {
   const [name, setName] = useState('');
@@ -35,15 +36,13 @@ function MyPageInfo() {
   const onSubmit = e => {
     e.preventDefault();
     if (name.length === 0 || !regName.test(name)) {
-      alert('이름은 한글, 숫자, 영어만 가능합니다.');
+      handleName();
     }
     if (name.length < 2 || name.length > 15) {
-      alert('이름을 최소 2자 이상 15자 이하로 적어주세요.');
+      handleNameL();
     }
     if (password.length === 0 || !regPassword.test(password)) {
-      alert(
-        '최소 6자 최대 12자, 하나 이상의 문자, 하나 이상의 숫자를 적어주세요.',
-      );
+      handlePassword();
     }
 
     axios

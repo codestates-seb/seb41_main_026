@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { setUserInfo } from '../../redux/userSlice';
-// // import signUpAPI from '../../API/signUpAPI';
+// import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
 import whiteNaver from '../../img/whiteNaver.png';
 import {
@@ -34,6 +34,13 @@ const SocialButtons = styled.button`
   }
 `;
 
+const ValidationText = styled.div`
+  color: #ff0000;
+  font-size: 13px;
+  padding-left: 36px;
+  padding-top: 5px;
+`;
+
 function ModalSignUp() {
   const [signUpInfo, setSignUpInfo] = useState({
     name: '',
@@ -41,7 +48,11 @@ function ModalSignUp() {
     password: '',
   });
   // eslint-disable-next-line no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
+  const [validationCorrect, setValidationCorrect] = useState({
+    nameCorrect: true,
+    emailCorrect: true,
+    passwordCorrect: true,
+  });
   const dispatch = useDispatch();
 
   const naviagte = useNavigate();
@@ -59,25 +70,34 @@ function ModalSignUp() {
       return false;
     }
     if (name.length < 2 || name.length > 15) {
+      setValidationCorrect(prev => {
+        return { ...prev, nameCorrect: false };
+      });
       handleNameL();
       return false;
     }
     if (email.length === 0 || !regEmail.test(email)) {
+      setValidationCorrect(prev => {
+        return { ...prev, emailCorrect: false };
+      });
       handleEmail();
       return false;
     }
     if (password.length === 0 || !regPassword.test(password)) {
+      setValidationCorrect(prev => {
+        return { ...prev, passwordCorrect: false };
+      });
       handlePassword();
       return false;
     }
-    setIsLoading(true);
 
     // 회원가입
     // signUpAPI(name, email, password).then(res => {
     //   if (res !== '') {
     //     window.alert('회원가입 성공!');
-    //     setsignUpInfo('');
-    //     // naviagte('/');
+    //     // setsignUpInfo('');
+    //     naviagte('/');
+    //     window.location.reload();
     //   } else {
     //     alert('회원가입 실패');
     //   }
@@ -94,33 +114,49 @@ function ModalSignUp() {
         },
       },
       // { withCredentials: true },
+    )
       // eslint-disable-next-line no-unused-vars
-    ).then(res => {
-      axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/auth/login`,
-          {
-            email,
-            password,
-          },
-          // { withCredentials: true },
-        )
-        // eslint-disable-next-line no-shadow
-        .then(res => {
-          const expires = dayjs().add('40', 'm').toDate();
-          const { authorization, refresh, userid } = res.headers;
-          setCookie('accessToken', decodeURIComponent(`${authorization}`), {
-            expires,
-          });
-          setCookie('refreshToken', refresh);
+      .then(res => {
+        axios
+          .post(
+            `${process.env.REACT_APP_API_URL}/auth/login`,
+            {
+              email,
+              password,
+            },
+            // { withCredentials: true },
+          )
+          // eslint-disable-next-line no-shadow
+          .then(res => {
+            const expires = dayjs().add('60', 'm').toDate();
+            const { authorization, refresh, userid } = res.headers;
+            setCookie('accessToken', decodeURIComponent(`${authorization}`), {
+              expires,
+            });
+            setCookie('refreshToken', refresh);
 
-          dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
-          naviagte('/');
-          window.location.reload();
-          window.alert('회원가입 성공!');
-        })
-        .catch(err => window.alert(err, '회원가입 실패!'));
-    });
+            dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
+            naviagte('/');
+            window.location.reload();
+            window.alert('회원가입 성공!');
+          });
+      })
+      .catch(err => {
+        let errorText;
+        const { message } = err;
+        const code = Number(message.slice(-3));
+        switch (code) {
+          case 409:
+            errorText = '중복된 이메일입니다.';
+            break;
+          case 500:
+            errorText = '서비스에 문제가 있습니다.';
+            break;
+          default:
+            errorText = message;
+        }
+        return alert(errorText);
+      });
   };
 
   return (
@@ -145,7 +181,7 @@ function ModalSignUp() {
             <div className="modal-header border-bottom-0">
               <div className="col-lg-7 col-sm-12 text-lg-end text-center mt-3">
                 <h1
-                  className="modal-title fs-3 text-black"
+                  className="modal-title fs-3 text-white"
                   id="exampleModalLabel"
                 >
                   Sign Up
@@ -180,6 +216,11 @@ function ModalSignUp() {
                   }}
                 />
               </div>
+              {!validationCorrect.nameCorrect && (
+                <ValidationText className="input__validation">
+                  이름을 2글자 이상 15글자 이하로 적어주세요.
+                </ValidationText>
+              )}
               <br />
               <div className="d-flex align-items-center">
                 <img
@@ -202,6 +243,11 @@ function ModalSignUp() {
                   }}
                 />
               </div>
+              {!validationCorrect.emailCorrect && (
+                <ValidationText className="input__validation">
+                  이메일이 형식이 타당하지 않습니다.
+                </ValidationText>
+              )}
               <br />
               <div className="d-flex align-items-center">
                 <img
@@ -225,6 +271,11 @@ function ModalSignUp() {
                   }}
                 />
               </div>
+              {!validationCorrect.passwordCorrect && (
+                <ValidationText className="input__validation">
+                  6자 이상 12자 이하, 하나 이상의 문자, 숫자를 적어주세요.
+                </ValidationText>
+              )}
               <br />
               <div className="col-lg-12 col-sm-12 text-sm-end text-center">
                 <button
@@ -234,12 +285,7 @@ function ModalSignUp() {
                 >
                   취소
                 </button>
-                <Buttons
-                  type="submit"
-                  className="btn"
-                  onClick={handleSignUp}
-                  data-bs-dismiss="modal"
-                >
+                <Buttons type="submit" className="btn" onClick={handleSignUp}>
                   회원가입
                 </Buttons>
               </div>
