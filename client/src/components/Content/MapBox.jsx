@@ -352,7 +352,7 @@ function MapBox({ courseData }) {
           </Category>
         </GoogleMap>
       </LoadScript>
-      <div className="col-sm-4 ps-3">
+      <div className="col-md-4 ps-3">
         {marker === 'travelSpot' && courseData !== null
           ? courseData.travelSpots.map((ele, idx) => {
               return (

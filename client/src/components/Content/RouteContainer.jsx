@@ -42,8 +42,7 @@ const RouteCard = styled.div`
 const RouteImg = styled.img`
   width: 200px;
   height: 200px;
-  border-radius: 5px;
-  border: 1px solid #ececec;
+  border-radius: 10px;
 `;
 
 const RouteText = styled.div`
@@ -55,7 +54,6 @@ const RouteTitle = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
-  color: black;
   margin-bottom: 10px;
 `;
 
@@ -63,7 +61,7 @@ const RouteDes = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #909090;
+  color: #bbb;
 `;
 
 const GuideWrap = styled.div`
@@ -85,7 +83,6 @@ const GuideBox = styled.div`
   border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
-  background-color: white;
 `;
 
 const Guideline = styled.div`
@@ -115,7 +112,6 @@ const GuideName = styled.div`
   margin-top: 20px;
   font-weight: 400;
   font-size: 20px;
-  color: black;
 `;
 
 const GuideText = styled.div`
@@ -123,7 +119,6 @@ const GuideText = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #9c9c9c;
   padding: 14px;
 `;
 
@@ -196,7 +191,6 @@ const TagBox = styled.div`
   border-radius: 20px;
   display: flex;
   align-items: center;
-  background-color: white;
 `;
 
 const Tag = styled.span`
@@ -256,7 +250,7 @@ function RouteContainer({ id, courseData }) {
     },
     {
       id: 5,
-      imgLink: ['/img/2paju1.jpeg'],
+      imgLink: ['/img/2paju1.jpeg', '/img/2paju2.jpg', '/img/2paju3.jpg'],
     },
     {
       id: 6,
@@ -396,7 +390,7 @@ function RouteContainer({ id, courseData }) {
   console.log(filteredImg);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
-      <nav className="col-sm-8 px-0 flex-grow-1 mb-5">
+      <nav className="col-md-8 px-2">
         <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
@@ -426,7 +420,6 @@ function RouteContainer({ id, courseData }) {
         <div
           className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
           id="nav-tabContent"
-          style={{ backgroundColor: 'white' }}
         >
           <RouteBox
             className="tab-pane active"
@@ -487,7 +480,7 @@ function RouteContainer({ id, courseData }) {
           </div>
         </div>
       </nav>
-      <aside style={{ zIndex: '2' }} className="col-sm-4 ps-5 py-0 sticky-top">
+      <aside style={{ zIndex: '2' }} className="col-md-4 ps-5 py-0 sticky-top">
         <TagWrap>
           <TagTitle>태그</TagTitle>
           <TagBox>
