@@ -33,6 +33,10 @@ const Container = styled.div`
 const Location = styled.div`
   cursor: pointer;
   margin-top: 10px;
+  background-color: #0c7b93;
+  :hover {
+    background-color: #00a8cc;
+  }
 `;
 
 // const LocationImg = styled.img`
@@ -350,7 +354,7 @@ function MapBox({ courseData }) {
           </Category>
         </GoogleMap>
       </LoadScript>
-      <div className="col-sm-4 ps-3">
+      <div className="col-md-4 ps-3">
         {marker === 'travelSpot' && courseData !== null
           ? courseData.travelSpots.map((ele, idx) => {
               return (
@@ -361,7 +365,6 @@ function MapBox({ courseData }) {
                     onClick={() => locationHandler(idx, 'travel')}
                     style={{
                       maxWidth: '540px',
-                      backgroundColor: '#0c7b93',
                     }}
                   >
                     <div className="row g-2">

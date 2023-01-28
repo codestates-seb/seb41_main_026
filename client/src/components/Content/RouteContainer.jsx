@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import time from '../../img/time.png';
 import route from '../../img/route.png';
 import github from '../../img/vector.png';
-import tripImg from '../../img/tripImg.jpg';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -42,8 +41,7 @@ const RouteCard = styled.div`
 const RouteImg = styled.img`
   width: 200px;
   height: 200px;
-  border-radius: 5px;
-  border: 1px solid #ececec;
+  border-radius: 10px;
 `;
 
 const RouteText = styled.div`
@@ -55,7 +53,6 @@ const RouteTitle = styled.div`
   font-weight: 400;
   font-size: 18px;
   line-height: 100%;
-  color: black;
   margin-bottom: 10px;
 `;
 
@@ -63,7 +60,7 @@ const RouteDes = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #909090;
+  color: #bbb;
 `;
 
 const GuideWrap = styled.div`
@@ -85,7 +82,10 @@ const GuideBox = styled.div`
   border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 `;
 
 const Guideline = styled.div`
@@ -105,17 +105,16 @@ const GuideImg = styled.img`
   border-radius: 50%;
   margin-top: 20px;
 `;
+
 const GithubImg = styled.img`
   width: 25px;
-  top: 80px;
-  left: 120px;
+  margin-left: 60px;
 `;
 
 const GuideName = styled.div`
   margin-top: 20px;
   font-weight: 400;
   font-size: 20px;
-  color: black;
 `;
 
 const GuideText = styled.div`
@@ -123,7 +122,6 @@ const GuideText = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #9c9c9c;
   padding: 14px;
 `;
 
@@ -196,7 +194,6 @@ const TagBox = styled.div`
   border-radius: 20px;
   display: flex;
   align-items: center;
-  background-color: white;
 `;
 
 const Tag = styled.span`
@@ -215,6 +212,7 @@ const Tag = styled.span`
 
 function RouteContainer({ id, courseData }) {
   const [filteredImg, setFilteredImg] = useState(null);
+  // const [profileImg, setProfileImg] = useState('');
   const routeAllImg = [
     {
       id: 1,
@@ -256,7 +254,7 @@ function RouteContainer({ id, courseData }) {
     },
     {
       id: 5,
-      imgLink: ['/img/2paju1.jpeg'],
+      imgLink: ['/img/2paju1.jpeg', '/img/2paju2.jpg', '/img/2paju3.jpg'],
     },
     {
       id: 6,
@@ -382,12 +380,55 @@ function RouteContainer({ id, courseData }) {
     },
   ];
 
-  console.log(id);
+  const guideImg = [
+    {
+      name: '유성민',
+      imgLink: '/img/seong.png',
+      bgLink: '/img/2busan1.jpg',
+    },
+    {
+      name: '이동국',
+      imgLink: '/img/dk.png',
+      bgLink: '/img/changwon1.jpeg',
+    },
+    {
+      name: '최윤정',
+      imgLink: '/img/yun.png',
+      bgLink: '/img/2seoul1.jpeg',
+    },
+    {
+      name: '김동현',
+      imgLink: '/img/dh.png',
+      bgLink: '/img/hapcheon1.jpg',
+    },
+    {
+      name: '최진우',
+      imgLink: '/img/jinwoo.png',
+      bgLink: '/img/3paju1.jpeg',
+    },
+    {
+      name: '김원도',
+      imgLink: '/img/wondo.png',
+      bgLink: '/img/geongju1.jpeg',
+    },
+  ];
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    if (courseData !== null) {
+      setProfile(
+        guideImg.filter(i => {
+          return i.name === courseData.guideName;
+        }),
+      );
+    }
+  }, [courseData]);
+
+  console.log(profile);
 
   useEffect(() => {
     setFilteredImg(
       routeAllImg.filter(ele => {
-        console.log(ele.id === Number(id));
         return ele.id === Number(id);
       }),
     );
@@ -396,7 +437,7 @@ function RouteContainer({ id, courseData }) {
   console.log(filteredImg);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
-      <nav className="col-sm-8 px-0 flex-grow-1 mb-5">
+      <nav className="col-md-8 px-2">
         <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
@@ -426,7 +467,6 @@ function RouteContainer({ id, courseData }) {
         <div
           className="tab-content p-3 rounded-end-4 rounded-bottom-4 tabBorderCustom"
           id="nav-tabContent"
-          style={{ backgroundColor: 'white' }}
         >
           <RouteBox
             className="tab-pane active"
@@ -487,9 +527,9 @@ function RouteContainer({ id, courseData }) {
           </div>
         </div>
       </nav>
-      <aside style={{ zIndex: '2' }} className="col-sm-4 ps-5 py-0 sticky-top">
+      <aside style={{ zIndex: '2' }} className="col-md-4 ps-5 py-0 sticky-top">
         <TagWrap>
-          <TagTitle>태그</TagTitle>
+          <TagTitle>추천 계절</TagTitle>
           <TagBox>
             {courseData !== null
               ? courseData.tag.map(ele => {
@@ -502,7 +542,7 @@ function RouteContainer({ id, courseData }) {
           <GuideTitle>가이드</GuideTitle>
           <GuideBox>
             <Guideline />
-            <GuideImg src={tripImg} />
+            {profile !== null && <GuideImg src={profile[0].imgLink} />}
             <GithubImg src={github} />
             <GuideName>{courseData !== null && courseData.guideName}</GuideName>
             <GuideText>{courseData !== null && courseData.guideText}</GuideText>
