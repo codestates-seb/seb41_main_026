@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import time from '../../img/time.png';
 import route from '../../img/route.png';
 import github from '../../img/vector.png';
-import tripImg from '../../img/tripImg.jpg';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -83,6 +82,10 @@ const GuideBox = styled.div`
   border: 3px solid #00a8cc;
   border-radius: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 `;
 
 const Guideline = styled.div`
@@ -102,10 +105,10 @@ const GuideImg = styled.img`
   border-radius: 50%;
   margin-top: 20px;
 `;
+
 const GithubImg = styled.img`
   width: 25px;
-  top: 80px;
-  left: 120px;
+  margin-left: 60px;
 `;
 
 const GuideName = styled.div`
@@ -377,46 +380,51 @@ function RouteContainer({ id, courseData }) {
     },
   ];
 
-  // const guideImg = [
-  //   {
-  //     name: '유성민',
-  //     imgLink: '/img/seong.png',
-  //     bgLink: '/img/2busan1.jpg',
-  //   },
-  //   {
-  //     name: '이동국',
-  //     imgLink: '/img/dk.png',
-  //     bgLink: '/img/changwon1.jpeg',
-  //   },
-  //   {
-  //     name: '최윤정',
-  //     imgLink: '/img/yun.png',
-  //     bgLink: '/img/2seoul1.jpeg',
-  //   },
-  //   {
-  //     name: '김동현',
-  //     imgLink: '/img/dh.png',
-  //     bgLink: '/img/hapcheon1.jpg',
-  //   },
-  //   {
-  //     name: '최진우',
-  //     imgLink: '/img/jinwoo.png',
-  //     bgLink: '/img/3paju1.jpeg',
-  //   },
-  //   {
-  //     name: '김원도',
-  //     imgLink: '/img/wondo.png',
-  //     bgLink: '/img/geongju1.jpeg',
-  //   },
-  // ];
-  // const [profile, setProfile] = useState([]);
-  // useEffect(() => {
-  //   setProfile(
-  //     guideImg.filter(i => {
-  //       return i.name === courseData.guideName;
-  //     }),
-  //   );
-  // }, []);
+  const guideImg = [
+    {
+      name: '유성민',
+      imgLink: '/img/seong.png',
+      bgLink: '/img/2busan1.jpg',
+    },
+    {
+      name: '이동국',
+      imgLink: '/img/dk.png',
+      bgLink: '/img/changwon1.jpeg',
+    },
+    {
+      name: '최윤정',
+      imgLink: '/img/yun.png',
+      bgLink: '/img/2seoul1.jpeg',
+    },
+    {
+      name: '김동현',
+      imgLink: '/img/dh.png',
+      bgLink: '/img/hapcheon1.jpg',
+    },
+    {
+      name: '최진우',
+      imgLink: '/img/jinwoo.png',
+      bgLink: '/img/3paju1.jpeg',
+    },
+    {
+      name: '김원도',
+      imgLink: '/img/wondo.png',
+      bgLink: '/img/geongju1.jpeg',
+    },
+  ];
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    if (courseData !== null) {
+      setProfile(
+        guideImg.filter(i => {
+          return i.name === courseData.guideName;
+        }),
+      );
+    }
+  }, [courseData]);
+
+  console.log(profile);
 
   useEffect(() => {
     setFilteredImg(
@@ -534,7 +542,7 @@ function RouteContainer({ id, courseData }) {
           <GuideTitle>가이드</GuideTitle>
           <GuideBox>
             <Guideline />
-            <GuideImg src={tripImg} />
+            {profile !== null && <GuideImg src={profile[0].imgLink} />}
             <GithubImg src={github} />
             <GuideName>{courseData !== null && courseData.guideName}</GuideName>
             <GuideText>{courseData !== null && courseData.guideText}</GuideText>
