@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 
 function Search({ data, handleFilter }) {
-  const checkHandler = event => {
-    const [list, setList] = useState([]);
-    const { value, checked } = event.target;
-    if (checked) {
-      setList([...list, value]);
-    } else {
-      setList(list.filter(e => e !== value));
-    }
+  const [isChecked, setIsChecked] = useState('true');
+  const getIsChecked = () => {
+    setIsChecked(!isChecked);
   };
 
   return (
@@ -20,9 +15,11 @@ function Search({ data, handleFilter }) {
           type="checkbox"
           value={data.name}
           id={data.name}
-          onChange={checkHandler}
+          onChange={() => {
+            getIsChecked();
+          }}
           onClick={handleFilter}
-          checked
+          checked={isChecked}
         />
         <label
           className="form-check-label pt-1"

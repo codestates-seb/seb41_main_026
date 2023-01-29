@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import SearchList from './SearchList';
 
 const sideDB = {
@@ -54,7 +54,6 @@ function SearchSidebar({ getFilteredSearch }) {
       최진우: true,
     },
   });
-
   const handleFilter = e => {
     const seasonType = e.target.id;
 
@@ -85,12 +84,37 @@ function SearchSidebar({ getFilteredSearch }) {
     getFilteredSearch(result);
   };
 
+  useEffect(() => {
+    setFilterState({
+      passingTags: {
+        봄: true,
+        여름: true,
+        가을: true,
+        겨울: true,
+        서울: true,
+        부산: true,
+        경상도: true,
+        강원도: true,
+        경기도: true,
+        최윤정: true,
+        김원도: true,
+        유성민: true,
+        김동현: true,
+        이동국: true,
+        최진우: true,
+      },
+    });
+  }, []);
+
   return (
     <aside className="col-md-3 pb-23 pt-5">
       <div className="mt-2 justify-content-around">
         <div className="p-1 d-flex flex-column">
           <div className="accordion" id="accordionPanel">
-            <button onClick={filterHandler} className="btn btn-primary">
+            <button
+              onClick={filterHandler}
+              className="btn btn-primary my-2 text-light"
+            >
               필터 적용
             </button>
             <SearchList

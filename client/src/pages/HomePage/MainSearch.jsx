@@ -32,6 +32,7 @@ function MainSearch() {
       console.log(filteredData, result);
     }
   };
+
   useEffect(() => {
     getSearch();
   }, []);
@@ -41,11 +42,7 @@ function MainSearch() {
       <div className="container">
         <div className="row d-flex row" style={{ height: '100vh' }}>
           <SearchSidebar getFilteredSearch={getFilteredSearch} />
-          <SearchBody
-            search={filterData}
-            searchText={searchText}
-            getFilteredSearch={getFilteredSearch}
-          />
+          <SearchBody search={filterData} searchText={searchText} />
         </div>
       </div>
     </Layout>

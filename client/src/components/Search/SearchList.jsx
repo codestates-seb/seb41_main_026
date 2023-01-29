@@ -1,19 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Search from './Search';
 
 function SearchList({ data, handleFilter, filterHandler }) {
-  const [checkedItem, setCheckedItem] = useState(new Set());
-
-  const checkedItemHandler = (id, checked) => {
-    if (checked) {
-      checkedItem.add(id);
-      setCheckedItem(checkedItem);
-    } else if (!checked && checkedItem.has(id)) {
-      checkedItem.delete(id);
-      setCheckedItem(checkedItem);
-    }
-  };
-
   return (
     <div className="accordion-item">
       <h2 className="accordion-header" id="panelsStayOpen-headingOne">
@@ -26,7 +14,6 @@ function SearchList({ data, handleFilter, filterHandler }) {
           aria-expanded="true"
           aria-controls="panelsStayOpen-collapseOne"
         >
-          <input type="checkbox" className="form-check-input me-2" />
           {data.title}
         </button>
       </h2>
@@ -42,7 +29,6 @@ function SearchList({ data, handleFilter, filterHandler }) {
                 handleFilter={handleFilter}
                 key={el.index}
                 data={el}
-                checkedItemHandler={checkedItemHandler}
                 onChange={filterHandler}
               />
             );

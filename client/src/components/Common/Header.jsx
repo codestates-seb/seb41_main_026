@@ -101,7 +101,6 @@ function Header() {
                 onChange={e => {
                   setSearchText(e.target.value);
                 }}
-                // onSubmit={handleSearch}
                 placeholder="검색하기"
                 aria-label="Search"
                 ref={search}
