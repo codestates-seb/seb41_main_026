@@ -181,18 +181,20 @@ function Header() {
       </div>
 
       <div
-        className="modal fade "
+        className="modal "
         id="exampleModal3"
         tabIndex="-1"
         aria-labelledby="exampleModalLabel3"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
+        <div className="modal-dialog modal-dialog-centered p-4">
+          <div className="modal-content" style={{ backgroundColor: '#0c7b93' }}>
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">
-                로그아웃
-              </h1>
+              <div className="col-lg-7 col-sm-12 text-lg-end text-center">
+                <h1 className="modal-title fs-3" id="exampleModalLabel">
+                  로그아웃
+                </h1>
+              </div>
               <button
                 type="button"
                 className="btn-close"
@@ -200,11 +202,13 @@ function Header() {
                 aria-label="Close"
               />
             </div>
-            <div className="modal-body mb-3">정말 로그아웃 하시겠습니까?</div>
+            <div className="modal-body p-5" style={{ textAlign: 'center' }}>
+              정말 로그아웃 하시겠습니까?
+            </div>
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-outline-secondary"
+                className="btn btn-secondary me-3"
                 data-bs-dismiss="modal"
               >
                 취소
