@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Search from './Search';
 
-function SearchList({ data, handleFilter }) {
+function SearchList({ data, handleFilter, filterHandler }) {
   const [checkedItem, setCheckedItem] = useState(new Set());
 
   const checkedItemHandler = (id, checked) => {
@@ -43,6 +43,7 @@ function SearchList({ data, handleFilter }) {
                 key={el.index}
                 data={el}
                 checkedItemHandler={checkedItemHandler}
+                onChange={filterHandler}
               />
             );
           })}

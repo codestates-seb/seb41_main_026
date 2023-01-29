@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import SearchList from './SearchList';
 
 const sideDB = {
@@ -37,10 +37,21 @@ const sideDB = {
 function SearchSidebar({ getFilteredSearch }) {
   const [filterState, setFilterState] = useState({
     passingTags: {
-      봄: false,
-      여름: false,
-      가을: false,
-      겨울: false,
+      봄: true,
+      여름: true,
+      가을: true,
+      겨울: true,
+      서울: true,
+      부산: true,
+      경상도: true,
+      강원도: true,
+      경기도: true,
+      최윤정: true,
+      김원도: true,
+      유성민: true,
+      김동현: true,
+      이동국: true,
+      최진우: true,
     },
   });
 
@@ -70,19 +81,33 @@ function SearchSidebar({ getFilteredSearch }) {
 
   const result = filteredCollect();
 
-  useEffect(() => {
+  const filterHandler = () => {
     getFilteredSearch(result);
-  });
-  console.log(result);
+  };
 
   return (
     <aside className="col-md-3 pb-23 pt-5">
       <div className="mt-2 justify-content-around">
         <div className="p-1 d-flex flex-column">
           <div className="accordion" id="accordionPanel">
-            <SearchList data={sideDB.location} />
-            <SearchList data={sideDB.season} handleFilter={handleFilter} />
-            <SearchList data={sideDB.guide} />
+            <button onClick={filterHandler} className="btn btn-primary">
+              필터 적용
+            </button>
+            <SearchList
+              data={sideDB.location}
+              filterHandler={filterHandler}
+              handleFilter={handleFilter}
+            />
+            <SearchList
+              data={sideDB.season}
+              filterHandler={filterHandler}
+              handleFilter={handleFilter}
+            />
+            <SearchList
+              data={sideDB.guide}
+              handleFilter={handleFilter}
+              filterHandler={filterHandler}
+            />
           </div>
         </div>
       </div>
