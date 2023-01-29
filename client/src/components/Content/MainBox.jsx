@@ -64,6 +64,9 @@ const CommentInput = styled.input`
   outline: none;
   box-shadow: 0px 0px 0px #cbdafc;
   border-radius: 4px 0px 0px 4px;
+  &:focus {
+    border: 3px solid #4c77db;
+  }
 `;
 
 const CommentButton = styled.div`
@@ -114,8 +117,22 @@ const Triangle = styled.div`
   right: -3px;
 `;
 
+const Update = styled.img`
+  width: 14px;
+  margin-left: 12px;
+  margin-right: 7px;
+  cursor: pointer;
+`;
+
+const Delete = styled.img`
+  width: 14px;
+  cursor: pointer;
+`;
+
 function MainBox({ courseData, id, sessionUserId, commentRef }) {
   const [comment, setComment] = useState('');
+  const [updateState, setUpdateState] = useState(false);
+  const [patchId, setPatchId] = useState(null);
   const blurRef = useRef();
   const commentHandler = e => {
     setComment(e.target.value);
@@ -124,10 +141,27 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
   const postHandler = () => {
     if (comment.replace(/^\s+|\s+$/g, '') === '') {
       setComment('');
-    } else if (comment.length > 0) {
+    } else if (comment.length > 0 && updateState === false) {
       axios
         .post(
           'http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment',
+          {
+            content: comment,
+            userId: sessionUserId,
+            courseId: parseInt(id, 10),
+          },
+          {
+            headers: {
+              authorization: getCookie('accessToken'),
+            },
+          },
+        )
+        .then(() => window.location.reload());
+    } else if (comment.length > 0 && updateState === true) {
+      console.log('이까지는 오나');
+      axios
+        .patch(
+          `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment/${patchId}`,
           {
             content: comment,
             userId: sessionUserId,
@@ -149,6 +183,26 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
       postHandler();
       blurRef.current.blur();
     }
+  };
+
+  const updateHandler = commentId => {
+    setComment('');
+    setUpdateState(true);
+    setPatchId(commentId);
+    blurRef.current.focus();
+  };
+
+  const deleteHandler = commentId => {
+    axios
+      .delete(
+        `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment/${commentId}`,
+        {
+          headers: {
+            authorization: getCookie('accessToken'),
+          },
+        },
+      )
+      .then(() => window.location.reload());
   };
 
   console.log(courseData);
@@ -174,13 +228,25 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
                 } else if (hour > 18) {
                   hour = Number(ele.createdAt.slice(-8, -6)) + 18;
                 }
-                const bgMyColor = ele.userId === Number(sessionUserId);
+                const myComment = ele.userId === Number(sessionUserId);
 
                 return (
                   <div key={ele.commentId}>
-                    <Comment bgMyColor={bgMyColor}>
+                    <Comment bgMyColor={myComment}>
                       {ele.content}
-                      <Triangle bgMyColor={bgMyColor} />
+                      {myComment ? (
+                        <>
+                          <Update
+                            src="/img/edit.png"
+                            onClick={() => updateHandler(ele.commentId)}
+                          />
+                          <Delete
+                            src="/img/trash.png"
+                            onClick={() => deleteHandler(ele.commentId)}
+                          />
+                        </>
+                      ) : null}
+                      <Triangle bgMyColor={myComment} />
                     </Comment>
                     <CommentDate>
                       {ele.createdAt.slice(2, 10)}
@@ -202,7 +268,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
             onKeyUp={enterHandler}
           />
           <CommentButton className="col-sm-2" onClick={postHandler}>
-            게시
+            {updateState ? '수정' : '게시'}
           </CommentButton>
         </CommentInputSection>
       </aside>
