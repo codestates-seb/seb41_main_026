@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Search({ data }) {
+function Search({ data, handleFilter }) {
   // const [isChecked, setIsChecked] = useState(false);
   // const [checkedValues, setValue] = useState([]);
 
@@ -14,8 +14,6 @@ function Search({ data }) {
     } else {
       setList(list.filter(e => e !== value));
     }
-
-    console.log(list);
   };
 
   return (
@@ -28,6 +26,7 @@ function Search({ data }) {
           value={data.name}
           id={data.name}
           onChange={checkHandler}
+          onClick={handleFilter}
         />
         <label
           className="form-check-label pt-1"

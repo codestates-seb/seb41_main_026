@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Search from './Search';
 
-function SearchList({ data }) {
+function SearchList({ data, handleFilter }) {
   const [checkedItem, setCheckedItem] = useState(new Set());
 
   const checkedItemHandler = (id, checked) => {
@@ -39,6 +39,7 @@ function SearchList({ data }) {
           {data.data.map(el => {
             return (
               <Search
+                handleFilter={handleFilter}
                 key={el.index}
                 data={el}
                 checkedItemHandler={checkedItemHandler}

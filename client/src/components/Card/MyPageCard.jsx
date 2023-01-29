@@ -6,6 +6,12 @@ const CardImg = styled.div`
   div {
     overflow: hidden;
   }
+  :hover {
+    transform: translateY(-2px);
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+  }
+
   div img {
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -63,7 +69,9 @@ function MyPageCard({ title, location, id }) {
         <div className="card-body p-2">
           <div className="d-flex">
             <h3 className="card-title lh-base flex-grow-1">{title}</h3>
-            <p className="ms-2 text-info">{location}</p>
+            <p className="ms-2 text-info text-end" style={{ width: '50px' }}>
+              {location}
+            </p>
           </div>
           <Link style={{ textDecoration: 'none' }} to={`../course/${id}`}>
             <button className="btn btn-secondary btn-sm mt-3">

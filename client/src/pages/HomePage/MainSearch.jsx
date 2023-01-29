@@ -16,6 +16,16 @@ function MainSearch() {
         setSearch(res.data.course);
       });
   };
+
+  const getFilteredSearch = seasonData => {
+    if (search !== null) {
+      let filteredData = null;
+      filteredData = search.filter(ele => {
+        return ele.tag.indexOf(seasonData) >= 0;
+      });
+    }
+  };
+
   useEffect(() => {
     getSearch();
   }, []);
@@ -24,8 +34,12 @@ function MainSearch() {
     <Layout header footer>
       <div className="container">
         <div className="row d-flex row" style={{ height: '100vh' }}>
-          <SearchSidebar />
-          <SearchBody search={search} searchText={searchText} />
+          <SearchSidebar getFilteredSearch={getFilteredSearch} />
+          <SearchBody
+            search={filteredSearch}
+            searchText={searchText}
+            getFilteredSearch={getFilteredSearch}
+          />
         </div>
       </div>
     </Layout>

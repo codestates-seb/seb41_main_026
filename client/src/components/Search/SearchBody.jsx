@@ -8,7 +8,7 @@ function SearchBody({ search, searchText }) {
         검색어: <span className="text-info fs-2">{searchText}</span>
       </h1>
       <div className="row row-cols-1 row-cols-md-3 g-4">
-        {search.length !== 0 ? (
+        {search !== null ? (
           search.map(ele => {
             return (
               <MyPageCard
