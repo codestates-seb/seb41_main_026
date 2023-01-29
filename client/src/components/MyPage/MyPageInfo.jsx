@@ -8,6 +8,7 @@ import NotFound from './NotFound';
 import { getUserId } from '../../redux/userSlice';
 import { getCookie } from '../../util/cookie';
 import { handleName, handleNameL, handlePassword } from '../../util/alertStore';
+import ModalDeleteUser from '../Modal/ModalDeleteUser';
 
 function MyPageInfo() {
   const [name, setName] = useState('');
@@ -152,15 +153,19 @@ function MyPageInfo() {
                           최소 6자 최대 12자, 하나 이상의 문자와 숫자
                         </div>
                       </div>
-
-                      <button
-                        type="button"
-                        className="btn btn-outline-info"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal5"
-                      >
-                        수정 사항 변경
-                      </button>
+                      <div className="d-flex">
+                        <button
+                          type="button"
+                          className="btn btn-outline-info"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal5"
+                        >
+                          수정 사항 변경
+                        </button>
+                        <div style={{ marginLeft: '10px' }}>
+                          <ModalDeleteUser />
+                        </div>
+                      </div>
                     </form>
                   </div>
                 </article>
