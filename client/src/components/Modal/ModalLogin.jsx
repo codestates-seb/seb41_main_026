@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { setUserInfo } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
-import whiteNaver from '../../img/whiteNaver.png';
+// import whiteNaver from '../../img/whiteNaver.png';
 import { handleEmail, handlePassword } from '../../util/alertStore';
 import { setCookie } from '../../util/cookie';
 import findPasswordApi from '../../API/findPasswordApi';
@@ -19,15 +19,15 @@ const Buttons = styled.button`
   }
 `;
 
-const SocialButtons = styled.button`
-  border-radius: 20px;
-  width: 80px;
-  margin-left: 10px;
-  margin-top: 20px;
-  &:hover {
-    background-color: rgb(0, 168, 204);
-  }
-`;
+// const SocialButtons = styled.button`
+//   border-radius: 20px;
+//   width: 80px;
+//   margin-left: 10px;
+//   margin-top: 20px;
+//   &:hover {
+//     background-color: rgb(0, 168, 204);
+//   }
+// `;
 
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
@@ -37,11 +37,11 @@ function ModalLogin() {
 
   const navigate = useNavigate();
 
-  const loginRequestHandler = () => {
-    window.location.assign(
-      `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
-    );
-  };
+  // const loginRequestHandler = () => {
+  //   window.location.assign(
+  //     `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
+  //   );
+  // };
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -214,9 +214,9 @@ function ModalLogin() {
                 </Buttons>
               </div>
             </div>
-            <div className="p-5">
-              <div className="modal-body border-top d-flex gap-4 m-auto">
-                <SocialButtons type="submit" className="btn btn-outline-light">
+            {/* <div className="p-5">
+              <div className="modal-body border-top d-flex gap-4 m-auto"> */}
+            {/* <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/github.svg`}
                     alt="github icon"
@@ -254,9 +254,9 @@ function ModalLogin() {
                       marginBottom: '-6px',
                     }}
                   />
-                </SocialButtons>
-              </div>
-            </div>
+                </SocialButtons> */}
+            {/* </div>
+            </div> */}
             <div className="pe-5 ps-5">
               <div className="modal-footer">
                 <button

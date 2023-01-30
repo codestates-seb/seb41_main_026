@@ -5,9 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { setUserInfo } from '../../redux/userSlice';
-// import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
-import whiteNaver from '../../img/whiteNaver.png';
+// import whiteNaver from '../../img/whiteNaver.png';
 import {
   handleName,
   handleEmail,
@@ -24,15 +23,15 @@ const Buttons = styled.button`
   }
 `;
 
-const SocialButtons = styled.button`
-  border-radius: 20px;
-  width: 80px;
-  margin-left: 10px;
-  margin-top: 20px;
-  &:hover {
-    background-color: rgb(0, 168, 204);
-  }
-`;
+// const SocialButtons = styled.button`
+//   border-radius: 20px;
+//   width: 80px;
+//   margin-left: 10px;
+//   margin-top: 20px;
+//   &:hover {
+//     background-color: rgb(0, 168, 204);
+//   }
+// `;
 
 const ValidationText = styled.div`
   color: #ff0000;
@@ -91,41 +90,22 @@ function ModalSignUp() {
       return false;
     }
 
-    // 회원가입
-    // signUpAPI(name, email, password).then(res => {
-    //   if (res !== '') {
-    //     window.alert('회원가입 성공!');
-    //     // setsignUpInfo('');
-    //     naviagte('/');
-    //     window.location.reload();
-    //   } else {
-    //     alert('회원가입 실패');
-    //   }
-    // });
-    // 회원가입 후 자동 로그인
-    axios(
-      {
-        method: 'post',
-        url: `${process.env.REACT_APP_API_URL}/user`,
-        data: {
-          name,
-          email,
-          password,
-        },
+    axios({
+      method: 'post',
+      url: `${process.env.REACT_APP_API_URL}/user`,
+      data: {
+        name,
+        email,
+        password,
       },
-      // { withCredentials: true },
-    )
+    })
       // eslint-disable-next-line no-unused-vars
       .then(res => {
         axios
-          .post(
-            `${process.env.REACT_APP_API_URL}/auth/login`,
-            {
-              email,
-              password,
-            },
-            // { withCredentials: true },
-          )
+          .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+            email,
+            password,
+          })
           // eslint-disable-next-line no-shadow
           .then(res => {
             const expires = dayjs().add('60', 'm').toDate();
@@ -290,7 +270,7 @@ function ModalSignUp() {
                 </Buttons>
               </div>
             </div>
-            <div className="p-5">
+            {/* <div className="p-5">
               <div className="modal-body border-top d-flex gap-4 m-auto">
                 <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
@@ -328,7 +308,7 @@ function ModalSignUp() {
                   />
                 </SocialButtons>
               </div>
-            </div>
+            </div> */}
             <div
               style={{
                 padding: '0 50px 0 50px',
