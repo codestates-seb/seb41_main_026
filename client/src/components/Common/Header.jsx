@@ -1,5 +1,3 @@
-/* developed by Jinwoo, Choi */
-/* ************************* */
 import { useEffect, useState, useRef, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,7 +15,6 @@ function Header() {
 
   const userId = useSelector(getUserId);
 
-  /* use Session Storage for searching keyword */
   function handleSearch() {
     localStorage.setItem('searchText', searchText);
     navigate('/search');

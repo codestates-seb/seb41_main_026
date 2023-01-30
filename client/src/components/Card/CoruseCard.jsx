@@ -21,18 +21,6 @@ const CardBox = styled.div`
   }
 `;
 
-// const CardImg = styled.img`
-//   -webkit-transform: scale(1);
-//   transform: scale(1);
-//   -webkit-transition: 0.3s ease-in-out;
-//   transition: 0.3s ease-in-out;
-
-//   :hover {
-//     -webkit-transform: scale(1.1);
-//     transform: scale(1.1);
-//   }
-// `;
-
 const CardTitle = styled.div`
   width: 261px;
   height: 24px;
@@ -45,18 +33,6 @@ const CardTitle = styled.div`
   margin-top: 13px;
   margin-bottom: 50px;
 `;
-
-// const CardText = styled.div`
-//   width: 261px;
-//   height: 66px;
-//   font-family: 'ABeeZee';
-//   font-weight: 400;
-//   font-size: 16px;
-//   line-height: 140%;
-//   color: #212529;
-//   margin-left: 15px;
-//   margin-top: 13px;
-// `;
 
 const CardButton = styled.button`
   background: #00a8cc;
@@ -90,7 +66,6 @@ function CourseCard({ ele, thumbnail }) {
               ),
           )}
           <CardTitle>{ele.courseName}</CardTitle>
-          {/* <CardText>{ele.content}</CardText> */}
           <CardButton className="btn btn-primary ms-2">
             코스 살펴보기
           </CardButton>

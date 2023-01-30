@@ -29,7 +29,6 @@ function MainSearch() {
         );
       });
       setFilterData(filteredData);
-      console.log(filteredData, result);
     }
   };
 

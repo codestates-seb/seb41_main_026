@@ -424,8 +424,6 @@ function RouteContainer({ id, courseData }) {
     }
   }, [courseData]);
 
-  console.log(profile);
-
   useEffect(() => {
     setFilteredImg(
       routeAllImg.filter(ele => {
@@ -434,7 +432,6 @@ function RouteContainer({ id, courseData }) {
     );
   }, []);
 
-  console.log(filteredImg);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
       <nav className="col-md-8 px-2">
