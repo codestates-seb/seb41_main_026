@@ -1,15 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { getCookie } from '../../util/cookie';
 
 const Container = styled.div`
   margin-top: 100px;
+  .iframeDiv {
+    width: 100%;
+    height: 750px;
+    border: none;
+    @media screen and (max-width: 768px) {
+      height: 510px;
+    }
+  }
 `;
 
 const CommentList = styled.div`
   display: flex;
-  height: 500px;
+  height: 600px;
   flex-direction: column;
   align-items: flex-end;
   padding: 20px 16px 5px;
@@ -103,6 +111,33 @@ const Delete = styled.img`
   cursor: pointer;
 `;
 
+const videoData = [
+  {
+    guideName: '최윤정',
+    linkUrl: 'https://widget.taggbox.com/119414',
+  },
+  {
+    guideName: '이동국',
+    linkUrl: 'https://widget.taggbox.com/121091',
+  },
+  {
+    guideName: '최진우',
+    linkUrl: 'https://widget.taggbox.com/121092',
+  },
+  {
+    guideName: '김원도',
+    linkUrl: 'https://widget.taggbox.com/121097',
+  },
+  {
+    guideName: '유성민',
+    linkUrl: 'https://widget.taggbox.com/121085',
+  },
+  {
+    guideName: '김동현',
+    linkUrl: 'https://widget.taggbox.com/121095',
+  },
+];
+
 function MainBox({ courseData, id, sessionUserId, commentRef }) {
   const [comment, setComment] = useState('');
   const [updateState, setUpdateState] = useState(false);
@@ -111,7 +146,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
   const commentHandler = e => {
     setComment(e.target.value);
   };
-
+  console.log(courseData);
   const postHandler = () => {
     if (comment.replace(/^\s+|\s+$/g, '') === '') {
       setComment('');
@@ -178,17 +213,31 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
       .then(() => window.location.reload());
   };
 
+  const [video, setVideo] = useState(null);
+
+  useEffect(() => {
+    if (courseData !== null) {
+      setVideo(
+        videoData.filter(i => {
+          return i.guideName === courseData.guideName;
+        }),
+      );
+    }
+  }, [courseData]);
+
   return (
-    <Container className="row min-vh-100 flex-column flex-md-row">
-      <main className="col-sm-8 px-0 flex-grow-1 mb-5">
-        <p className="fs-4 mb-3">관련 영상</p>
-        <iframe
-          title="taggbox"
-          src="https://widget.taggbox.com/119414"
-          style={{ width: '100%', height: '700px', border: 'none' }}
-        />
+    <Container className="row flex-column flex-md-row">
+      <main className="col-md-8 px-0 flex-grow-1 mb-5">
+        <p className="fs-4 mb-3 ms-3">관련 영상</p>
+        {video !== null && (
+          <iframe
+            title="taggbox"
+            src={video[0].linkUrl}
+            className="iframeDiv"
+          />
+        )}
       </main>
-      <aside className="col-sm-4 ps-3">
+      <aside className="col-md-4 ps-3">
         <p className="fs-4 mb-3">댓글 목록</p>
         <CommentList ref={commentRef}>
           {courseData !== null
@@ -233,13 +282,13 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
         <CommentInputSection>
           <CommentInput
             ref={blurRef}
-            className="col-sm-10"
+            className="col-9 col-sm-10"
             value={comment}
             placeholder="댓글 달기"
             onChange={commentHandler}
             onKeyUp={enterHandler}
           />
-          <CommentButton className="col-sm-2" onClick={postHandler}>
+          <CommentButton className="col-3 col-sm-2" onClick={postHandler}>
             {updateState ? '수정' : '게시'}
           </CommentButton>
         </CommentInputSection>

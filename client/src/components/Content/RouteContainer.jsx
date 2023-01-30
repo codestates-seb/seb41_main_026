@@ -7,7 +7,7 @@ import route from '../../img/route.png';
 import github from '../../img/vector.png';
 
 const Container = styled.div`
-  margin-top: 20px;
+  margin-top: 50px;
 
   .tabCustom button {
     background-color: #0c7b93;
@@ -263,6 +263,9 @@ function RouteContainer({ id, courseData }) {
         '/img/3paju2.jpeg',
         '/img/3paju3.jpeg',
         '/img/3paju4.jpeg',
+        '/img/3paju5.jpg',
+        '/img/3paju6.jpg',
+        '/img/3paju7.jpg',
       ],
     },
     {
@@ -434,7 +437,7 @@ function RouteContainer({ id, courseData }) {
 
   return (
     <Container className="row min-vh-100 flex-column flex-md-row my-5">
-      <nav className="col-md-8 px-2">
+      <nav className="col-md-8 px-2 mb-5">
         <div className="nav nav-pills tabCustom" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
@@ -459,6 +462,18 @@ function RouteContainer({ id, courseData }) {
             aria-selected="false"
           >
             일정
+          </button>
+          <button
+            className="nav-link"
+            id="nav-warning-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-warning"
+            type="button"
+            role="tab"
+            aria-controls="nav-warning"
+            aria-selected="false"
+          >
+            주의사항
           </button>
         </div>
         <div
@@ -521,6 +536,42 @@ function RouteContainer({ id, courseData }) {
                 </CourseBox2>
               </InfoBox>
             </InfoContainer>
+          </div>
+          <div
+            className="tab-pane"
+            id="nav-warning"
+            role="tabpanel"
+            aria-labelledby="nav-warning-tab"
+            tabIndex="0"
+          >
+            <div className="lh-lg fw-light text-white-50">
+              <p>
+                <span className="text-info fw-normal">✓</span> 본 코스 소개는
+                프로젝트의 일환으로 정보 전달을 위해 만들어졌습니다.
+              </p>
+              <p>
+                <span className="text-info fw-normal">✓</span> 하지만 모든
+                코스는 적절한 검증 절차를 거치지 않은 예시일 뿐이므로 이 일정을
+                따르는 것을 권장하지 않습니다.
+              </p>
+              <p>
+                <span className="text-info fw-normal">✓</span> 만일 이 일정을
+                따라하거나, 직접 경험하다 일어난 사고나 법적인 책임은 전적으로
+                당사자 본인에게 있습니다.
+              </p>
+              <p>
+                <span className="text-info fw-normal">✓</span> 아무쪼록 재밌게
+                보고 가셨으면 좋겠습니다.
+              </p>
+              <p>
+                <span className="text-info fw-normal">✓</span> 본 사이트에 관한
+                문의는 깃허브 주소를 통해 연락주시기 바랍니다.
+              </p>
+              <p>
+                <span className="text-info fw-normal">✓</span> 팀명:
+                코드스테이츠 41기 26조 여행가조
+              </p>
+            </div>
           </div>
         </div>
       </nav>

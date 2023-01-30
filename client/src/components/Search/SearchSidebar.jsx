@@ -107,7 +107,7 @@ function SearchSidebar({ getFilteredSearch }) {
   }, []);
 
   return (
-    <aside className="col-md-3 pb-23 pt-5">
+    <aside className="col-sm-3 pb-23 pt-5">
       <div className="mt-2 justify-content-around">
         <div className="p-1 d-flex flex-column">
           <div className="accordion" id="accordionPanel">

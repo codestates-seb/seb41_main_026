@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import CourseCard from '../Card/CoruseCard';
-import leftImg from '../../img/leftImg.png';
-import rightImg from '../../img/rightImg.png';
 import useAxios from '../../util/useAxios';
 
 const Container = styled.div`
@@ -13,8 +11,9 @@ const Container = styled.div`
 const BgImgBox = styled.div`
   width: 100vw;
   height: 100vh;
-  background-image: url(${({ bg }) => bg});
-  background-size: cover;
+  background: url(${({ bg }) => bg}) no-repeat center center/cover,
+    rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +28,7 @@ const Title = styled.div`
   font-weight: 500;
   font-size: 40px;
   line-height: 100%;
-  color: #c8c8c8;
+  color: #eee;
 `;
 
 const CardBox = styled.div`
@@ -53,18 +52,22 @@ const ButtonBox = styled.div`
   }
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   width: 40px;
   height: 40px;
-  border: 1px solid #dddddd;
   border-radius: 5px;
+  border: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 15px;
   margin-right: 15px;
-  background-color: white;
+  :hover {
+    background: #00a8cc;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
 `;
 
 const ArrowImg = styled.img`
@@ -74,9 +77,9 @@ const ArrowImg = styled.img`
 const bgLink = [
   { id: 0, region: '서울', imgLink: '/img/seoulBg.jpg' },
   { id: 1, region: '부산', imgLink: '/img/busanBg.jpg' },
-  { id: 2, region: '경상도', imgLink: '/img/jirisanBg.jpg' },
-  { id: 3, region: '경기도', imgLink: '/img/geonggidoBg.jpg' },
-  { id: 4, region: '강원도', imgLink: '/img/naksansaBg.jpg' },
+  { id: 2, region: '경상도', imgLink: '/img/ksd2Bg.jpg' },
+  { id: 3, region: '경기도', imgLink: '/img/kkdBg.jpg' },
+  { id: 4, region: '강원도', imgLink: '/img/rockBg.jpg' },
 ];
 
 const thumbnail = [
@@ -110,11 +113,11 @@ function RegionSection({ region }) {
   let filteredData = null;
 
   const rightHandler = () => {
-    setLocation(prev => prev + 1000);
+    setLocation(prev => prev + 620);
   };
 
   const leftHandler = () => {
-    setLocation(prev => prev - 1000);
+    setLocation(prev => prev - 620);
   };
 
   useEffect(() => {
@@ -141,11 +144,11 @@ function RegionSection({ region }) {
           <BgImgBox key={el.id} bg={el.imgLink}>
             <Title className="text-shadow">{region}</Title>
             <ButtonBox>
-              <Button>
-                <ArrowImg src={leftImg} onClick={leftHandler} />
+              <Button className="btn btn-light">
+                <ArrowImg src="/img/arrow-left.svg" onClick={leftHandler} />
               </Button>
-              <Button>
-                <ArrowImg src={rightImg} onClick={rightHandler} />
+              <Button className="btn btn-light">
+                <ArrowImg src="/img/arrow-right.svg" onClick={rightHandler} />
               </Button>
             </ButtonBox>
             <CardBox ref={ref} className="container">
