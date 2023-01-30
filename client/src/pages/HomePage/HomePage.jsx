@@ -20,6 +20,7 @@ const options = {
     'sectionFour',
     'sectionFive',
   ],
+  sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#000'],
   arrowNavigation: true,
   className: 'SectionContainer',
   delay: 1000,
