@@ -5,9 +5,9 @@ import { getUserId } from '../../redux/userSlice';
 function MyPageUsercard({ userData }) {
   const userId = useSelector(getUserId);
   return (
-    <div className="container col-xxl-8 px-3 py-3 mb-5">
+    <div className="container px-3 py-3 mb-5">
       <div className="row flex-lg-row-reverse align-items-center g-2 border border-3 rounded p-3">
-        <div className="col-10 col-sm-8 col-lg-6">
+        <div className="col-lg-6 mb-3" style={{ textAlign: '-webkit-center' }}>
           <img
             src={`https://source.boringavatars.com/beam/40/${userId}`}
             className="d-block mx-lg-auto img-fluid rounded-circle"

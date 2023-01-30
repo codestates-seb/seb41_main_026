@@ -52,7 +52,7 @@ function MyPageBody() {
     );
   }
   return (
-    <main className="col-sm-9 px-0 flex-grow-1 mb-5">
+    <main className="col-12 col-md-9 px-0 flex-grow-1 mb-5">
       <div className="container py-3">
         {pathname === '/mypage' ? (
           <article>

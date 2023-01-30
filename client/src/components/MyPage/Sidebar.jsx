@@ -22,7 +22,7 @@ const List = styled.li`
 function Sidebar() {
   const { pathname } = useLocation();
   return (
-    <aside className="col-sm-3 p-2">
+    <aside className="col-12 col-md-3 ps-2">
       <nav
         className="border border-2 rounded mt-2 justify-content-around"
         style={{ top: '100px', position: 'sticky' }}

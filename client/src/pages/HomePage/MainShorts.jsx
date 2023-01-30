@@ -11,7 +11,7 @@ function MainShorts() {
         <iframe
           title="taggbox"
           className="container"
-          src="https://widget.taggbox.com/119175"
+          src="https://widget.taggbox.com/121080"
           style={{ height: '100vh', border: 'none' }}
         />
       </div>

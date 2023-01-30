@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin-top: 50px;
+  margin: 80px 10px;
   .map-container {
     width: 66%;
     height: 500px;
@@ -154,7 +154,7 @@ function MapBox({ courseData }) {
   };
 
   return (
-    <Container className="row min-vh-100 flex-column flex-md-row">
+    <Container className="row flex-column flex-md-row">
       <LoadScript
         libraries={['places']}
         googleMapsApiKey="AIzaSyDuCjHf1X1675gihgZb4q1CHodMfo_9CxM"
@@ -291,7 +291,6 @@ function MapBox({ courseData }) {
                   onClick={() => locationHandler(idx, 'eat')}
                   style={{
                     maxWidth: '540px',
-                    backgroundColor: '#0c7b93',
                   }}
                 >
                   <div className="row g-2">
@@ -321,7 +320,6 @@ function MapBox({ courseData }) {
                   onClick={() => locationHandler(idx, 'sleep')}
                   style={{
                     maxWidth: '540px',
-                    backgroundColor: '#0c7b93',
                   }}
                 >
                   <div className="row g-2">
