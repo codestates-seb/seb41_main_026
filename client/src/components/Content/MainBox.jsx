@@ -7,32 +7,6 @@ const Container = styled.div`
   margin-top: 100px;
 `;
 
-// const ShortsBox = styled.div`
-//   flex: 0.6;
-// `;
-
-// const ShortsTitle = styled.div`
-//   position: relative;
-// `;
-
-// const ShortsText = styled.span`
-//   font-size: 20px;
-// `;
-
-// const CommentBox = styled.div`
-//   flex: 0.4;
-//   margin-left: 30px;
-// `;
-
-// const CommentTitle = styled.div`
-//   height: 24px;
-//   font-weight: 400;
-//   font-size: 20px;
-//   line-height: 24px;
-//   color: white;
-//   margin-bottom: 20px;
-// `;
-
 const CommentList = styled.div`
   display: flex;
   height: 500px;
@@ -158,7 +132,6 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
         )
         .then(() => window.location.reload());
     } else if (comment.length > 0 && updateState === true) {
-      console.log('이까지는 오나');
       axios
         .patch(
           `http://ec2-13-124-62-101.ap-northeast-2.compute.amazonaws.com:8080/comment/${patchId}`,
@@ -205,7 +178,6 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
       .then(() => window.location.reload());
   };
 
-  console.log(courseData);
   return (
     <Container className="row min-vh-100 flex-column flex-md-row">
       <main className="col-sm-8 px-0 flex-grow-1 mb-5">

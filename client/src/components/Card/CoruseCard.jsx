@@ -2,84 +2,75 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const CardBox = styled.div`
-  &:hover {
-    box-shadow: 0px 65.3611px 52.2889px rgba(68, 68, 68, 0.1),
-      0px 42.3637px 30.6229px rgba(68, 68, 68, 0.0759259),
-      0px 25.1761px 16.655px rgba(68, 68, 68, 0.0607407),
-      0px 13.0722px 8.49694px rgba(68, 68, 68, 0.05),
-      0px 5.32572px 4.26057px rgba(68, 68, 68, 0.0392593),
-      0px 1.21039px 2.05766px rgba(68, 68, 68, 0.0240741);
-    transform: translateY(-2px);
+  div {
+    overflow: hidden;
   }
-  width: 293px;
-  height: 391px;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-right: 9px;
-  background-color: white;
-`;
+  :hover {
+    transform: translateY(-2px);
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+  }
 
-const CardImg = styled.img`
-  width: 292px;
-  height: 199px;
-  top: 0;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  div img {
+    width: 292px;
+    height: 199px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
 `;
 
 const CardTitle = styled.div`
   width: 261px;
   height: 24px;
-  font-family: 'ABeeZee';
-  font-style: italic;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.38px;
-  color: #212529;
+  color: #fff;
   margin-left: 15px;
   margin-top: 13px;
-`;
-
-const CardText = styled.div`
-  width: 261px;
-  height: 66px;
-  font-family: 'ABeeZee';
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 140%;
-  color: #212529;
-  margin-left: 15px;
-  margin-top: 13px;
+  margin-bottom: 50px;
 `;
 
 const CardButton = styled.button`
-  width: 160px;
-  height: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 12px;
-  background: #b2d3be;
-  border-radius: 4px;
+  background: #00a8cc;
   border: none;
-  color: white;
-  margin-left: 15px;
-  margin-top: 13px;
   cursor: pointer;
+  color: #eee;
+  :hover {
+    background: #77d4fc;
+  }
 `;
 
 function CourseCard({ ele, thumbnail }) {
   return (
-    <CardBox>
-      {thumbnail.map(
-        el => ele.courseId === el.id && <CardImg src={el.imgLink} />,
-      )}
-      <CardTitle>{ele.courseName}</CardTitle>
-      <CardText>{ele.content}</CardText>
-      <Link style={{ textDecoration: 'none' }} to={`./course/${ele.courseId}`}>
-        <CardButton>코스 살펴보기</CardButton>
-      </Link>
+    <CardBox className="mb-3">
+      <div
+        className="card h-100 m-2 border-0"
+        style={{ backgroundColor: '#0c7b93' }}
+      >
+        <Link
+          style={{ textDecoration: 'none' }}
+          to={`./course/${ele.courseId}`}
+        >
+          {thumbnail.map(
+            el =>
+              ele.courseId === el.id && (
+                <img
+                  src={el.imgLink}
+                  alt="carouselImg"
+                  className="card-img-top hover"
+                />
+              ),
+          )}
+          <CardTitle>{ele.courseName}</CardTitle>
+          <CardButton className="btn btn-primary ms-2">
+            코스 살펴보기
+          </CardButton>
+        </Link>
+      </div>
     </CardBox>
   );
 }

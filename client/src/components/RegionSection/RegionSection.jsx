@@ -26,14 +26,13 @@ const Title = styled.div`
   width: 1200px;
   text-align: center;
   margin-bottom: 50px;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 40px;
   line-height: 100%;
   color: #c8c8c8;
 `;
 
 const CardBox = styled.div`
-  width: 1200px;
   display: flex;
   justify-content: space-between;
   overflow-x: scroll;
@@ -41,10 +40,6 @@ const CardBox = styled.div`
     display: none;
   }
   margin-bottom: 90px;
-
-  @media screen and (max-width: 500px) {
-    width: 375px;
-  }
 `;
 
 const ButtonBox = styled.div`
@@ -144,7 +139,7 @@ function RegionSection({ region }) {
       {bgLink.map(el =>
         region === el.region ? (
           <BgImgBox key={el.id} bg={el.imgLink}>
-            <Title>{region}</Title>
+            <Title className="text-shadow">{region}</Title>
             <ButtonBox>
               <Button>
                 <ArrowImg src={leftImg} onClick={leftHandler} />
@@ -153,7 +148,7 @@ function RegionSection({ region }) {
                 <ArrowImg src={rightImg} onClick={rightHandler} />
               </Button>
             </ButtonBox>
-            <CardBox ref={ref}>
+            <CardBox ref={ref} className="container">
               {filteredData === null ? (
                 <div />
               ) : (

@@ -81,40 +81,6 @@ const GuideText = styled.div`
   padding: 20px;
 `;
 
-// const GuideAnimationBox = styled.div`
-//   width: 783px;
-//   height: 408px;
-//   background: #0c7b93;
-//   box-shadow: 0px 20px 60px rgba(46, 33, 61, 0.08);
-//   border-radius: 10px;
-//   position: absolute;
-//   z-index: -1;
-//   bottom: 300px;
-//   @media screen and (max-width: 910px) {
-//     width: 550x;
-//   }
-//   @media screen and (max-width: 650px) {
-//     width: 400px;
-//   }
-// `;
-
-// const GuideDefalutBox = styled.div`
-//   width: 700px;
-//   height: 378px;
-//   background: #0c7b93;
-//   box-shadow: 0px 20px 60px rgba(46, 33, 61, 0.08);
-//   border-radius: 10px;
-//   position: absolute;
-//   bottom: 255px;
-//   z-index: -2;
-//   @media screen and (max-width: 910px) {
-//     width: 500x;
-//   }
-//   @media screen and (max-width: 650px) {
-//     width: 350px;
-//   }
-// `;
-
 function MainGuide() {
   const [guideData, setGuideData] = useState({
     name: '이동국',
@@ -178,8 +144,6 @@ function MainGuide() {
       return ele.guideName === guideData.name;
     });
   }
-
-  console.log(filteredData);
 
   return (
     <Layout header footer>
