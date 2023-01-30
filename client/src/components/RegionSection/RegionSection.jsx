@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CourseCard from '../Card/CoruseCard';
 import useAxios from '../../util/useAxios';
@@ -121,14 +121,16 @@ function RegionSection({ region }) {
   };
 
   useEffect(() => {
-    if (locationData !== null) {
+    if (locationData !== null && filteredData !== null) {
+      console.log(location);
       if (location < 0) {
         setLocation(0);
-      } else if (location > 290 * locationData.length) {
-        setLocation(290 * locationData.length);
+      } else if (location > 290 * filteredData.length) {
+        setLocation(290 * (filteredData.length - 2));
+      } else {
+        ref.current.scrollTo({ left: location, behavior: 'smooth' });
       }
     }
-    ref.current.scrollTo({ left: location, behavior: 'smooth' });
   }, [location]);
 
   if (locationData !== null) {
