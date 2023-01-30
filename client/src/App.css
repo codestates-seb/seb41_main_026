@@ -140,3 +140,7 @@ table {
   opacity: var(--bs-backdrop-opacity);
   z-index: auto;
 }
+
+.Navigation-Anchor {
+  background-color: #eee !important;
+}
