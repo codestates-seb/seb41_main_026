@@ -1,5 +1,3 @@
-/* developed by Jinwoo, Choi */
-/* ************************* */
 import { useEffect, useState, useRef, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,7 +15,6 @@ function Header() {
 
   const userId = useSelector(getUserId);
 
-  /* use Session Storage for searching keyword */
   function handleSearch() {
     localStorage.setItem('searchText', searchText);
     navigate('/search');
@@ -101,7 +98,6 @@ function Header() {
                 onChange={e => {
                   setSearchText(e.target.value);
                 }}
-                // onSubmit={handleSearch}
                 placeholder="검색하기"
                 aria-label="Search"
                 ref={search}
@@ -168,14 +164,14 @@ function Header() {
               </div>
             </div>
           ) : (
-            <>
+            <div className="d-flex column justify-content-end">
               <form className="d-flex justify-content-end">
                 <ModalLogin />
               </form>
               <form className="d-flex justify-content-end">
                 <ModalSignUp />
               </form>
-            </>
+            </div>
           )}
         </div>
       </div>

@@ -21,36 +21,14 @@ const Container = styled.div`
   }
 `;
 
-// const LocationBox = styled.div`
-//   width: 100%;
-//   height: 400px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: column;
-// `;
-
 const Location = styled.div`
   cursor: pointer;
   margin-top: 10px;
+  background-color: #0c7b93;
+  :hover {
+    background-color: #00a8cc;
+  }
 `;
-
-// const LocationImg = styled.img`
-//   width: 80px;
-//   height: 80px;
-//   position: absolute;
-//   top: -2px;
-// `;
-
-// const LocationText = styled.div`
-//   font-weight: 400;
-//   font-size: 18px;
-//   line-height: 100%;
-//   color: #313131;
-//   position: absolute;
-//   left: 100px;
-//   top: 30px;
-// `;
 
 const Category = styled.div`
   height: 40px;
@@ -90,7 +68,6 @@ function MapBox({ courseData }) {
 
   useEffect(() => {
     if (courseData !== null) {
-      console.log(courseData.travelSpots[0]);
       setCenter({
         lat: Number(courseData.travelSpots[0].lat),
         lng: Number(courseData.travelSpots[0].lng),
@@ -104,83 +81,7 @@ function MapBox({ courseData }) {
     }
   }, [courseData]);
 
-  // const travelSpot = [
-  //   {
-  //     id: 1,
-  //     name: '1. 한국 서울타워점',
-  //     position: { lat: 37.5512141, lng: 126.9882024 },
-  //   },
-  //   {
-  //     id: 2,
-  //     name: '2. 잠실 타워',
-  //     position: { lat: 37.739235, lng: 126.99025 },
-  //   },
-  //   {
-  //     id: 3,
-  //     name: '3. 한강 공원',
-  //     position: { lat: 37.052235, lng: 126.243683 },
-  //   },
-  //   {
-  //     id: 4,
-  //     name: '4. 명동 거리',
-  //     position: { lat: 37.712776, lng: 126.005974 },
-  //   },
-  // ];
-
-  // const eatSpot = [
-  //   {
-  //     id: 1,
-  //     name: '맛집1',
-  //     position: { lat: 37.3512141, lng: 126.9882024 },
-  //   },
-  //   {
-  //     id: 2,
-  //     name: '맛집2',
-  //     position: { lat: 37.939235, lng: 126.99025 },
-  //   },
-  //   {
-  //     id: 3,
-  //     name: '맛집3',
-  //     position: { lat: 37.072235, lng: 126.243683 },
-  //   },
-  //   {
-  //     id: 4,
-  //     name: '맛집4',
-  //     position: { lat: 37.712776, lng: 126.005974 },
-  //   },
-  // ];
-
-  // const sleepSpot = [
-  //   {
-  //     id: 1,
-  //     name: '숙소1',
-  //     lat: 37.4512141,
-  //     lng: 126.9882024,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: '숙소2',
-  //     lat: 37.639235,
-  //     lng: 126.99025,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: '숙소3',
-  //     lat: 37.062235,
-  //     lng: 126.243683,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: '숙소4',
-  //     lat: 37.538235,
-  //     lng: 126.59125,
-  //   },
-  // ];
-
   const locationHandler = (idValue, spot) => {
-    console.log(courseData.eats[0].lat);
-    console.log(idValue);
-    console.log(spot);
     if (spot === 'travel') {
       setCenter({
         lat: Number(courseData.travelSpots[idValue].lat),
@@ -236,7 +137,6 @@ function MapBox({ courseData }) {
   };
 
   const onPlacesChanged = () => {
-    console.log(searchBox.getPlaces());
     const [place] = searchBox.getPlaces();
     if (place) {
       setSearchMarker({
@@ -350,7 +250,7 @@ function MapBox({ courseData }) {
           </Category>
         </GoogleMap>
       </LoadScript>
-      <div className="col-sm-4 ps-3">
+      <div className="col-md-4 ps-3">
         {marker === 'travelSpot' && courseData !== null
           ? courseData.travelSpots.map((ele, idx) => {
               return (
@@ -361,7 +261,6 @@ function MapBox({ courseData }) {
                     onClick={() => locationHandler(idx, 'travel')}
                     style={{
                       maxWidth: '540px',
-                      backgroundColor: '#0c7b93',
                     }}
                   >
                     <div className="row g-2">
