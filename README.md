@@ -14,13 +14,8 @@
 |                                       <p align="left"> - 로그인, 회원가입, 로그아웃, 상태관리 |                                       -     유저플로우, 목업, 디자인 |                                           - 댓글 CRUD, 지도 |                             - 코스 CRUD<br/> - AWS(EC2, RDS, S3) 배포환경 구축 | - 코스 관련 데이터(Travel, Eat, Sleep, CourseData) CRUD |  - 회원 CRUD 기능<br/> - 토큰을 이용한 인증<br/> - 회원가입 유효성 체크<br/> - 댓글 CRUD 기능<br/> - DB 삽입<br/> |
 
 기술 스택
-
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
-  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-    <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-      <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-        <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
-        <img src="https://img.shields.io/badge/Storybook-FF4785?style=flat-square&logo=Storybook&logoColor=white"/>
+- 프론트엔드
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"><img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"><img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"><img src="https://img.shields.io/badge/Storybook-FF4785?style=flat-square&logo=Storybook&logoColor=white"/>
 
 
 ## 노션 (seb41_main_026)
