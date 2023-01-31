@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { setUserInfo } from '../../redux/userSlice';
 import { regEmail, regPassword } from '../../util/regStore';
-import whiteNaver from '../../img/whiteNaver.png';
+// import whiteNaver from '../../img/whiteNaver.png';
 import { handleEmail, handlePassword } from '../../util/alertStore';
 import { setCookie } from '../../util/cookie';
 import findPasswordApi from '../../API/findPasswordApi';
@@ -19,15 +19,15 @@ const Buttons = styled.button`
   }
 `;
 
-const SocialButtons = styled.button`
-  border-radius: 20px;
-  width: 80px;
-  margin-left: 10px;
-  margin-top: 20px;
-  &:hover {
-    background-color: rgb(0, 168, 204);
-  }
-`;
+// const SocialButtons = styled.button`
+//   border-radius: 20px;
+//   width: 80px;
+//   margin-left: 10px;
+//   margin-top: 20px;
+//   &:hover {
+//     background-color: rgb(0, 168, 204);
+//   }
+// `;
 
 function ModalLogin() {
   const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
@@ -37,11 +37,12 @@ function ModalLogin() {
 
   const navigate = useNavigate();
 
-  const loginRequestHandler = () => {
-    window.location.assign(
-      `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
-    );
-  };
+  // 구글 소셜 로그인
+  // const loginRequestHandler = () => {
+  //   window.location.assign(
+  //     `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
+  //   );
+  // };
 
   const handleInputValue = key => e => {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
@@ -62,25 +63,21 @@ function ModalLogin() {
     }
 
     axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        {
-          email,
-          password,
-        },
-        // { withCredentials: true },
-      )
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        email,
+        password,
+      })
       .then(res => {
-        const expires = dayjs().add('60', 'm').toDate();
+        const expires = dayjs().add('6', 'h').toDate();
         const { authorization, refresh, userid } = res.headers;
         setCookie('accessToken', decodeURIComponent(`${authorization}`), {
           expires,
         });
-        setCookie('refreshToken', refresh);
+        dispatch(setUserInfo({ userid, refresh, isLogin: true })); // userSlice에 유저 정보 저장
+
         navigate('/');
         window.location.reload();
 
-        dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
         window.alert('로그인 성공!');
       })
       // eslint-disable-next-line no-unused-vars
@@ -115,8 +112,8 @@ function ModalLogin() {
       .then(() => {
         window.alert('이메일이 발송되었습니다.');
       })
-      .catch(err => {
-        window.alert(err, '올바른 이메일을 입력해주세요.');
+      .catch(() => {
+        window.alert('올바른 이메일을 입력해주세요.');
       });
   };
 
@@ -214,9 +211,9 @@ function ModalLogin() {
                 </Buttons>
               </div>
             </div>
-            <div className="p-5">
-              <div className="modal-body border-top d-flex gap-4 m-auto">
-                <SocialButtons type="submit" className="btn btn-outline-light">
+            {/* <div className="p-5">
+              <div className="modal-body border-top d-flex gap-4 m-auto"> */}
+            {/* <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
                     src={`${process.env.PUBLIC_URL}/github.svg`}
                     alt="github icon"
@@ -254,9 +251,9 @@ function ModalLogin() {
                       marginBottom: '-6px',
                     }}
                   />
-                </SocialButtons>
-              </div>
-            </div>
+                </SocialButtons> */}
+            {/* </div>
+            </div> */}
             <div className="pe-5 ps-5">
               <div className="modal-footer">
                 <button

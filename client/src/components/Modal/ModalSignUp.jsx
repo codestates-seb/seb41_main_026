@@ -5,9 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { setUserInfo } from '../../redux/userSlice';
-// import signUpAPI from '../../API/signUpAPI';
 import { regEmail, regPassword, regName } from '../../util/regStore';
-import whiteNaver from '../../img/whiteNaver.png';
+// import whiteNaver from '../../img/whiteNaver.png';
 import {
   handleName,
   handleEmail,
@@ -24,15 +23,15 @@ const Buttons = styled.button`
   }
 `;
 
-const SocialButtons = styled.button`
-  border-radius: 20px;
-  width: 80px;
-  margin-left: 10px;
-  margin-top: 20px;
-  &:hover {
-    background-color: rgb(0, 168, 204);
-  }
-`;
+// const SocialButtons = styled.button`
+//   border-radius: 20px;
+//   width: 80px;
+//   margin-left: 10px;
+//   margin-top: 20px;
+//   &:hover {
+//     background-color: rgb(0, 168, 204);
+//   }
+// `;
 
 const ValidationText = styled.div`
   color: #ff0000;
@@ -109,14 +108,13 @@ function ModalSignUp() {
           })
           // eslint-disable-next-line no-shadow
           .then(res => {
-            const expires = dayjs().add('60', 'm').toDate();
+            const expires = dayjs().add('6', 'h').toDate();
             const { authorization, refresh, userid } = res.headers;
             setCookie('accessToken', decodeURIComponent(`${authorization}`), {
               expires,
             });
-            setCookie('refreshToken', refresh);
 
-            dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
+            dispatch(setUserInfo({ userid, refresh, isLogin: true, expires })); // userSlice에 유저 정보 저장
             naviagte('/');
             window.location.reload();
             window.alert('회원가입 성공!');
@@ -271,7 +269,7 @@ function ModalSignUp() {
                 </Buttons>
               </div>
             </div>
-            <div className="p-5">
+            {/* <div className="p-5">
               <div className="modal-body border-top d-flex gap-4 m-auto">
                 <SocialButtons type="submit" className="btn btn-outline-light">
                   <img
@@ -309,7 +307,7 @@ function ModalSignUp() {
                   />
                 </SocialButtons>
               </div>
-            </div>
+            </div> */}
             <div
               style={{
                 padding: '0 50px 0 50px',
