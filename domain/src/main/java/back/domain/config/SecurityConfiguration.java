@@ -120,7 +120,7 @@ OAuth2 로그인 설정 시작점
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
+//        corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedOrigins(
                 Arrays.asList("http://localhost:3000",
                         "http://travelproject.s3-website.ap-northeast-2.amazonaws.com/"
@@ -132,7 +132,7 @@ OAuth2 로그인 설정 시작점
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addExposedHeader("Authorization");
         corsConfiguration.addExposedHeader("Refresh");
-        corsConfiguration.addExposedHeader("userId");
+//        corsConfiguration.addExposedHeader("userId");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);

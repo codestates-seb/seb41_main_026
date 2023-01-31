@@ -46,7 +46,7 @@ public class TravelController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("{travelSpot-id}")
+    @PatchMapping("/{travelSpot-id}")
     public ResponseEntity travelPatch(@PathVariable("travelSpot-id") @Positive long id,
                                       @RequestBody TravelPatchDto travelPatchDto) {
         TravelSpot travelSpot = travelMapper.travelPatchDtoToTravel(travelPatchDto);
@@ -55,7 +55,7 @@ public class TravelController {
         return new ResponseEntity<>(travelMapper.travelToResponseDto(patched), HttpStatus.OK);
     }
 
-    @DeleteMapping("{travelSpot-id}")
+    @DeleteMapping("/{travelSpot-id}")
     public ResponseEntity travelDelete(@PathVariable("travelSpot-id") @Positive long id) {
         travelService.delete(id);
 
