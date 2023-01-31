@@ -13,10 +13,13 @@
  |                              [@ldk199662](https://github.com/ldk199662)                              |                           [@Jinwoo Choi](https://github.com/jingoworld)                            |                              [@yolodion](https://github.com/yolodion)                               |                                [@wondo07](https://github.com/wondo07)                                |       [@yulmuu](https://github.com/yulmuu)       | [@Seongmin](https://github.com/bimilless) |
 |                                       <p align="left"> - 로그인, 회원가입, 로그아웃, 상태관리 |                                       -     유저플로우, 목업, 디자인 |                                           - 댓글 CRUD, 지도 |                             - 코스 CRUD<br/> - AWS(EC2, RDS, S3) 배포환경 구축 | - 코스 관련 데이터(Travel, Eat, Sleep, CourseData) CRUD |  - 회원 CRUD 기능<br/> - 토큰을 이용한 인증<br/> - 회원가입 유효성 체크<br/> - 댓글 CRUD 기능<br/> - DB 삽입<br/> |
 
-기술 스택
+# 기술 스택
 
+## Front-end
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
 
+## Back-end
+<img src="https://img.shields.io/badge/spring boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/spring Data jpa-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/spring security-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"><img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/jwt-000000?style=for-the-badge&logo=JSON Web TOkens&logoColor=white"><img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=&logoColor=white"><img src="https://img.shields.io/badge/amazon rds-527FFF?style=for-the-badge&logo=amazon rds&logoColor=white"><img src="https://img.shields.io/badge/amazon ec2-FF9900?style=for-the-badge&logo=amazon rds&logoColor=white"><img src="https://img.shields.io/badge/amazon s3-569A31?style=for-the-badge&logo=amazon rds&logoColor=white">
 
 ## 노션 (seb41_main_026)
 ### https://www.notion.so/codestates/85b67efcacec4af2aebc031341c80412
