@@ -22,7 +22,6 @@ function Header() {
 
   function handleLogOut() {
     removeCookie('accessToken');
-    removeCookie('refreshToken');
     sessionStorage.clear();
     navigate('/');
     window.alert('로그아웃 되었습니다.');
@@ -44,7 +43,6 @@ function Header() {
     if (!getCookie('accessToken')) {
       sessionStorage.clear();
       localStorage.clear();
-      removeCookie('refreshToken');
     }
   }, []);
 
