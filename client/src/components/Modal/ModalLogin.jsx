@@ -37,6 +37,7 @@ function ModalLogin() {
 
   const navigate = useNavigate();
 
+  // 구글 소셜 로그인
   // const loginRequestHandler = () => {
   //   window.location.assign(
   //     `${process.env.REACT_APP_API_URL}/login/oauth2/code/google`,
@@ -62,25 +63,21 @@ function ModalLogin() {
     }
 
     axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        {
-          email,
-          password,
-        },
-        // { withCredentials: true },
-      )
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        email,
+        password,
+      })
       .then(res => {
-        const expires = dayjs().add('60', 'm').toDate();
+        const expires = dayjs().add('6', 'h').toDate();
         const { authorization, refresh, userid } = res.headers;
         setCookie('accessToken', decodeURIComponent(`${authorization}`), {
           expires,
         });
-        setCookie('refreshToken', refresh);
+        dispatch(setUserInfo({ userid, refresh, isLogin: true })); // userSlice에 유저 정보 저장
+
         navigate('/');
         window.location.reload();
 
-        dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
         window.alert('로그인 성공!');
       })
       // eslint-disable-next-line no-unused-vars
@@ -115,8 +112,8 @@ function ModalLogin() {
       .then(() => {
         window.alert('이메일이 발송되었습니다.');
       })
-      .catch(err => {
-        window.alert(err, '올바른 이메일을 입력해주세요.');
+      .catch(() => {
+        window.alert('올바른 이메일을 입력해주세요.');
       });
   };
 

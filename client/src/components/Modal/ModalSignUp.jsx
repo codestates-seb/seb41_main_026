@@ -108,14 +108,13 @@ function ModalSignUp() {
           })
           // eslint-disable-next-line no-shadow
           .then(res => {
-            const expires = dayjs().add('60', 'm').toDate();
+            const expires = dayjs().add('6', 'h').toDate();
             const { authorization, refresh, userid } = res.headers;
             setCookie('accessToken', decodeURIComponent(`${authorization}`), {
               expires,
             });
-            setCookie('refreshToken', refresh);
 
-            dispatch(setUserInfo({ userid })); // userSlice에 유저 정보 저장
+            dispatch(setUserInfo({ userid, refresh, isLogin: true, expires })); // userSlice에 유저 정보 저장
             naviagte('/');
             window.location.reload();
             window.alert('회원가입 성공!');

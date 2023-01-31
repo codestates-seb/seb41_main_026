@@ -40,6 +40,14 @@ function Header() {
     randomImg();
   }, []);
 
+  useEffect(() => {
+    if (!getCookie('accessToken')) {
+      sessionStorage.clear();
+      localStorage.clear();
+      removeCookie('refreshToken');
+    }
+  }, []);
+
   return (
     <nav
       className="navbar navbar-expand-lg sticky-top navbar-dark"
