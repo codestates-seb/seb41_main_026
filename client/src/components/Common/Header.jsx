@@ -46,6 +46,13 @@ function Header() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!userId) {
+      sessionStorage.clear();
+      removeCookie('accessToken');
+    }
+  }, []);
+
   return (
     <nav
       className="navbar navbar-expand-lg sticky-top navbar-dark"
