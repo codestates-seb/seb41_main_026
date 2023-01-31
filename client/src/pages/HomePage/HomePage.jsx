@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SectionsContainer, Section } from 'react-fullpage';
 import styled from 'styled-components';
 import Footer from '../../components/Common/Footer';
@@ -33,6 +34,24 @@ const options = {
 };
 
 function HomePage() {
+  useEffect(() => {
+    if (document.readyState === 'interactive') {
+      const location = window.location.href;
+      const index = location.indexOf('#');
+      const path = location.slice(index - 1);
+
+      if (
+        path === '/#sectionOne' ||
+        path === '/#sectionTwo' ||
+        path === '/#sectionThree' ||
+        path === '/#sectionFour' ||
+        path === '/#sectionFive'
+      ) {
+        window.location.replace('/');
+      }
+    }
+  }, [document]);
+
   return (
     <>
       <Container>
