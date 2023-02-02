@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 public class PathResponseDto {
 
-
+    private Long courseId;
     private Long pathId;
     private List<String> route;
 }

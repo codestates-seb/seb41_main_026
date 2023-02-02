@@ -41,20 +41,13 @@ public class TravelSpot {
 //    @JsonManagedReference
     private Course course;
 
-//    @ToString.Exclude
-//    @OneToMany(mappedBy = "travelSpot", fetch = FetchType.LAZY)
-//    @Setter
-////    @JsonBackReference
-//    private List<Path> paths = new ArrayList<>();
 
     public void addCourse(Course course) {
         this.course = course;
         course.addTravel(this);
     }
 
-//    public void addPath(Path path) {
-//        paths.add(path);
-//    }
+
 
 
 

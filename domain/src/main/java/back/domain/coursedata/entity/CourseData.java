@@ -26,7 +26,7 @@ public class CourseData {
     @Setter
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "LONGTEXT")
     @Setter
     private String text;
 
