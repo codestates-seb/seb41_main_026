@@ -18,26 +18,18 @@ public class PathService {
     private final PathRepository pathRepository;
 
     public Path save(Path path) {
-       Path saved = pathRepository.save(path);
-       return saved;
-    }
-
-    public Path post(Path path) {
-        Path saved = pathRepository.save(path);
-        return saved;
+        return pathRepository.save(path);
     }
 
     public Path get(Long pathId) {
-         Path path = verifiedPath(pathId);
-         return path;
+        return verifiedPath(pathId);
     }
 
 
     public Path verifiedPath(Long pathId){
         Optional<Path> optionalPath = pathRepository.findById(pathId);
-        Path path = optionalPath.orElseThrow(
+        return optionalPath.orElseThrow(
                 ()->new BusinessException(ErrorCode.NOT_FOUND));
-        return path;
     }
 
     public List<Path> gets() {

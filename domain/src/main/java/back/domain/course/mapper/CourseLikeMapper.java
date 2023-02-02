@@ -4,6 +4,7 @@ package back.domain.course.mapper;
 import back.domain.course.dto.CourseLikePatchDto;
 import back.domain.course.dto.CourseLikePostDto;
 import back.domain.course.dto.CourseLikeResponseDto;
+import back.domain.course.entity.Course;
 import back.domain.course.entity.CourseLike;
 import back.domain.user.entity.User;
 import org.mapstruct.IterableMapping;
@@ -17,7 +18,12 @@ import java.util.List;
 public interface CourseLikeMapper {
 
 
-    CourseLike CourseLikePostDtoToEntity(CourseLikePostDto courseLikePostDto);
+    default CourseLike CourseLikePostDtoToEntity(User user, Course course){
+        CourseLike courseLike = new CourseLike();
+        courseLike.setCourse(course);
+        courseLike.setUser(user);
+        return courseLike;
+    }
 
 
     default CourseLikeResponseDto CourseLikeEntityToResponseDto(CourseLike courseLike){

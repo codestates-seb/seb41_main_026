@@ -5,21 +5,19 @@ import back.domain.comment.entity.Comment;
 import back.domain.coursedata.entity.CourseData;
 import back.domain.eatsplot.entity.Eat;
 import back.domain.sleepspot.entity.Sleep;
+import back.domain.travelspot.entity.Path;
 import back.domain.travelspot.entity.TravelSpot;
-import back.domain.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @ToString
@@ -27,6 +25,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @NoArgsConstructor
+@Component
 public class Course {
 
     @Id
@@ -36,8 +35,7 @@ public class Course {
     @Setter
     @Column(nullable = false)
     private String courseName;
-
-
+    
     @Setter
     @Column(nullable = false)
     private int viewCount;
@@ -71,6 +69,11 @@ public class Course {
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
     private List<Sleep> sleeps = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE,targetEntity=Path.class)
+    private List<Path> paths = new ArrayList<>();
+
+
 
     @ToString.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
@@ -110,5 +113,9 @@ public class Course {
 
     public void addCourseData(CourseData courseData){
         courseDatas.add(courseData);
+    }
+
+    public void addPath(Path path){
+        paths.add(path);
     }
 }
