@@ -57,7 +57,8 @@ public class CourseService {
                 .ifPresent(findCourse::setGuideName);
         Optional.ofNullable(course.getGuideText())
                 .ifPresent(findCourse::setGuideText);
-        return findCourse;
+
+        return courseRepository.save(findCourse);
     }
 
     public void delete(Long courseId) {
