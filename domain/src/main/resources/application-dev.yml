@@ -7,7 +7,7 @@ spring:
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     #    show-sql: true
     properties:
       hibernate:
@@ -15,7 +15,7 @@ spring:
         # Fetch size 설정 1+N 문제 임시 해결
         default_batch_fetch_size: 1000
         # Entity에 예약어가 있다면 '' 자동 추가
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   #        auto_quote_keyword: true
   mail:
     host: smtp.gmail.com
