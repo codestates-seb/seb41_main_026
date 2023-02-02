@@ -11,23 +11,20 @@
 
 <!-- Table of Contents -->
 # 📔 목차
-  - [프로젝트 소개](#-프로젝트-소개)
-    * [배포](#-배포)
-    * [기술 스택](#%EF%B8%8F-기술-스택)
-    * [기능](#-기능)
-    * [색상 참조](#-색상-참조)
-    * [문서](#-문서)
+  - [배포](#-배포)
+  - [기술 스택](#%EF%B8%8F-기술-스택)
+  - [기능](#-기능)
+  - [색상 참조](#-색상-참조)
+  - [문서](#-문서)
   - [팀원들](#-팀원들)
 
 <br />
 <br />
 
 <!-- About the Project -->
-## 💡 프로젝트 소개
-
 
 <!-- Deploy -->
-### 💻 배포
+## 💻 배포
 - 배포 링크 : http://travelproject.s3-website.ap-northeast-2.amazonaws.com/
 - 손님용 아이디 : guest@guest.com
 - 손님용 비밀번호 : guest123
@@ -36,7 +33,7 @@
 <br />
 
   <!-- Tech Stack -->
-### ⚙️ 기술 스택
+## ⚙️ 기술 스택
 <ul>
   
 #### 🔸 프론트엔드
@@ -54,7 +51,7 @@
 <br />
 
 <!-- Features -->
-### ✨ 기능
+## ✨ 기능
 <ul>
 <details>
   <summary>로그인 관련</summary>
@@ -192,7 +189,7 @@
 <br />
 
 <!-- Color Reference -->
-### 🎨 색상 참조
+## 🎨 색상 참조
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
@@ -205,7 +202,7 @@
 <br />
 
 <!-- Documents -->
-### 📓 문서
+## 📓 문서
 - [협업 기록용 노션 페이지](https://www.notion.so/codestates/85b67efcacec4af2aebc031341c80412)
 - [목업 및 디자인 & 유저 플로우](https://www.figma.com/file/yDapLSSnYFZ1rOYUwSwuXR/MAINPROJECT_0103_WIREFRAME?node-id=0%3A1&t=vg0aiiLNbsrG4XbJ-1)
 - [사용자 요구사항 정의서](https://www.notion.so/codestates/3279f153c96c4597981f205c3a629ce2)
