@@ -83,6 +83,11 @@ const Comment = styled.div`
   border-radius: 10px;
 `;
 
+// const CommentName = styled.span`
+//   font-size: 12px;
+//   margin-top: 10px;
+// `;
+
 const CommentDate = styled.div`
   font-size: 12px;
   margin-top: 8px;
@@ -270,6 +275,7 @@ function MainBox({ courseData, id, sessionUserId, commentRef }) {
                       <Triangle bgMyColor={myComment} />
                     </Comment>
                     <CommentDate>
+                      익명{ele.userId} &ensp;
                       {ele.createdAt.slice(2, 10)}
                       &ensp;
                       {String(hour) + ele.createdAt.slice(-6, -3)}
