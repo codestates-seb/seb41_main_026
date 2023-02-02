@@ -6,7 +6,9 @@ import back.domain.course.dto.CourseLikeResponseDto;
 import back.domain.course.entity.CourseLike;
 import back.domain.course.mapper.CourseLikeMapper;
 import back.domain.course.service.CourseLikeService;
+import back.domain.course.service.CourseService;
 import back.domain.user.entity.User;
+import back.domain.course.entity.Course;
 import back.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class CourseLikeController {
     private final CourseLikeService courseLikeService;
     private final CourseLikeMapper courseLikeMapper;
     private final UserService userService;
+    private final CourseService courseService;
+
 
 
     /* 코스 추천 생성 (좋아요 누른 것)  */
@@ -35,9 +39,9 @@ public class CourseLikeController {
                                          @RequestBody CourseLikePostDto courseLikePostDto){
 
 
-        CourseLike courseLike = courseLikeMapper.CourseLikePostDtoToEntity(courseLikePostDto);
-        System.out.println("courseLike : "+ courseLike);
-        CourseLike save = courseLikeService.post(courseLike,courseId,courseLikePostDto.getUserId());
+        User user = userService.verifiedUser(courseLikePostDto.getUserId());
+        Course course = courseService.verifiedCourse(courseId);
+        CourseLike save = courseLikeService.post(user,course);
         CourseLikeResponseDto courseEntityToResponseDto = courseLikeMapper.CourseLikeEntityToResponseDto(save);
 
         return new ResponseEntity(
